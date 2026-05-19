@@ -126,4 +126,52 @@ $(function() {
             $activeSlide.find('.hero-img').css('transform', '');
         });
     }
+
+    // Global Purchase Button Handler
+    $(document).on('click', '.purchase-btn', function(e) {
+        e.preventDefault();
+        const $btn = $(this);
+        const courseData = {
+            id: $btn.data('id'),
+            title: $btn.data('title'),
+            price: $btn.data('price'),
+            instructor: $btn.data('instructor'),
+            img: $btn.data('img'),
+            rating: $btn.closest('.card').find('.rating-score').text() || '4.8'
+        };
+        
+        // Store in localStorage
+        localStorage.setItem('selectedCourse', JSON.stringify(courseData));
+        
+        // Redirect to checkout
+        // Check if we are in /pages/ or root to adjust path
+        const path = window.location.pathname;
+        if (path.includes('/pages/')) {
+            window.location.href = 'checkout.html';
+        } else {
+            window.location.href = '/pages/checkout.html';
+        }
+    });
+
+    // Scroll to Top Implementation
+    const scrollTopHTML = `
+        <button id="scrollTop" title="Go to top">
+            <i class="bi bi-arrow-up"></i>
+        </button>
+    `;
+    $('body').append(scrollTopHTML);
+
+    const $scrollBtn = $('#scrollTop');
+
+    $(window).on('scroll', function() {
+        if ($(window).scrollTop() > 300) {
+            $scrollBtn.addClass('visible');
+        } else {
+            $scrollBtn.removeClass('visible');
+        }
+    });
+
+    $scrollBtn.on('click', function() {
+        $('html, body').animate({ scrollTop: 0 }, 600);
+    });
 });

@@ -548,9 +548,13 @@ section {
 }
 
 .carousel-control-prev, .carousel-control-next {
-    width: 5%;
+    width: 60px;
+    height: 60px;
+    top: 50%;
+    transform: translateY(-50%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    border-radius: 50%;
 }
 
 .hero-slider-section:hover .carousel-control-prev,
@@ -558,11 +562,26 @@ section {
     opacity: 1;
 }
 
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover,
+.carousel-control-prev:focus, .carousel-control-next:focus {
+    background: transparent;
+    outline: none;
+}
+
 .carousel-control-prev:hover .control-btn,
 .carousel-control-next:hover .control-btn {
     background: var(--p-600);
     color: #fff;
     transform: scale(1.1);
+    box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
 }
 
 /* Trust Strip */
@@ -585,7 +604,7 @@ section {
 }
 
 .trust-icon-success { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
-.trust-icon-primary { background-color: rgba(5, 150, 105, 0.1); color: #059669; }
+.trust-icon-primary { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
 .trust-icon-warning { background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; }
 .trust-icon-info { background-color: rgba(14, 165, 233, 0.1); color: rgb(14, 165, 233); }
 
@@ -596,7 +615,8 @@ section {
 
 @media (max-width: 991.98px) {
     .trust-item {
-        justify-content: center;
+        justify-content: flex-start;
+        padding-left: 1rem;
         text-align: left;
     }
 }
@@ -670,12 +690,85 @@ section {
     }
 }
 
+@media (max-width: 767.98px) {
+    .carousel-control-prev, .carousel-control-next {
+        width: 44px;
+        height: 44px;
+    }
+    .carousel-control-prev { left: 10px; }
+    .carousel-control-next { right: 10px; }
+    .control-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+}
+
 @media (max-width: 575.98px) {
     .hero-slide-wrapper h1 {
         font-size: 2rem !important;
     }
     .hero-slide-wrapper .fs-lg {
         font-size: 1rem !important;
+    }
+    .hero-slide-wrapper .btn {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        font-size: 0.8125rem;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Scroll to Top Arrow */
+#scrollTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    background: var(--p-600);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#scrollTop.visible {
+    opacity: 1;
+    visibility: visible;
+    bottom: 40px;
+}
+
+#scrollTop:hover {
+    background: var(--p-700);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+}
+
+#scrollTop i {
+    font-size: 1.25rem;
+}
+
+@media (max-width: 575.98px) {
+    #scrollTop {
+        width: 40px;
+        height: 40px;
+        bottom: 20px;
+        right: 20px;
+    }
+    #scrollTop.visible {
+        bottom: 30px;
     }
 }
 
