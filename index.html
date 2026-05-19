@@ -22,8 +22,8 @@
     <div id="navbar-placeholder"></div>
 
     <!-- Hero Slider Section -->
-    <section class="hero-slider-section position-relative overflow-hidden bg-white p-0">
-        <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-pause="hover">
+    <section class="hero-slider-section position-relative overflow-hidden p-0" style="background-color: var(--s-900);">
+        <div id="heroCarousel" class="carousel slide carousel-fade h-100" data-bs-ride="carousel" data-bs-pause="hover">
             <!-- Indicators -->
             <div class="carousel-indicators mb-4">
                 <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -33,33 +33,35 @@
                 <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
             </div>
 
-            <div class="carousel-inner">
+            <div class="carousel-inner h-100">
                 <!-- Slide 1: Online Learning -->
-                <div class="carousel-item active" data-bs-interval="5000">
-                    <div class="hero-slide-wrapper">
+                <div class="carousel-item active h-100" data-bs-interval="6000">
+                    <div class="hero-slide-wrapper" style="background-color: var(--s-900); color: #fff;">
                         <div class="container h-100">
                             <div class="row align-items-center h-100 g-4 g-lg-5">
                                 <div class="col-lg-6 hero-content-col">
                                     <div class="animate-text">
-                                        <span class="premium-badge mb-3">Modern Learning Platform</span>
-                                        <h1 class="fw-bold mb-3 display-4">Master in-demand skills with guided online training</h1>
-                                        <p class="text-muted mb-4 pe-lg-5 fs-lg">
+                                        <span class="premium-badge mb-3" style="background: rgba(124, 58, 237, 0.1); color: var(--p-50); border-color: rgba(124, 58, 237, 0.2);">Modern Learning Platform</span>
+                                        <h1 class="fw-bold mb-3 display-4 text-white">Master in-demand skills with guided online training</h1>
+                                        <p class="opacity-75 mb-4 pe-lg-5 fs-lg text-white">
                                             Build confidence through practical projects, live mentorship, and flexible study pathways designed for modern professionals.
                                         </p>
-                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start">
+                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start flex-nowrap">
                                             <a href="/pages/courses.html" class="btn btn-primary btn-lg px-3 px-md-5">Explore Courses</a>
-                                            <a href="/pages/register.html" class="btn btn-light btn-lg px-3 px-md-5 shadow-sm">Start Free</a>
+                                            <a href="/pages/register.html" class="btn btn-lg px-3 px-md-5" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1);">Start Free</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 hero-image-col">
                                     <div class="position-relative hero-image-container">
-                                        <div class="blob-bg"></div>
-                                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200" alt="Online Learning" class="img-fluid hero-img">
+                                        <div class="blob-bg" style="background: var(--p-600); opacity: 0.15;"></div>
+                                        <div class="hero-img-wrap p-2 rounded-4" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);">
+                                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1200" alt="Online Learning" class="img-fluid rounded-3 shadow-lg">
+                                        </div>
                                         <!-- Floating Elements -->
-                                        <div class="floating-card-1 shadow-premium">
+                                        <div class="floating-card-1 shadow-premium bg-white text-dark">
                                             <div class="d-flex align-items-center gap-3">
-                                                <div class="icon-box bg-success text-white">
+                                                <div class="icon-box text-white" style="background: var(--p-600);">
                                                     <i class="bi bi-check-lg"></i>
                                                 </div>
                                                 <div>
@@ -76,28 +78,30 @@
                 </div>
 
                 <!-- Slide 2: Professional Certification -->
-                <div class="carousel-item" data-bs-interval="5000">
-                    <div class="hero-slide-wrapper slide-bg-alt">
+                <div class="carousel-item h-100" data-bs-interval="5000">
+                    <div class="hero-slide-wrapper" style="background-color: var(--s-900); color: #fff;">
                         <div class="container h-100">
                             <div class="row align-items-center h-100 g-4 g-lg-5">
                                 <div class="col-lg-6 hero-content-col">
                                     <div class="animate-text">
-                                        <span class="premium-badge secondary mb-3">Professional Certification</span>
-                                        <h1 class="fw-bold mb-3 display-4">Get certified by industry leaders and top experts</h1>
-                                        <p class="text-muted mb-4 pe-lg-5 fs-lg">
+                                        <span class="premium-badge mb-3" style="background: rgba(124, 58, 237, 0.1); color: var(--p-50); border-color: rgba(124, 58, 237, 0.2);">Professional Certification</span>
+                                        <h1 class="fw-bold mb-3 display-4 text-white">Get certified by industry leaders and top experts</h1>
+                                        <p class="opacity-75 mb-4 pe-lg-5 fs-lg text-white">
                                             Our dual-certificate programs provide the edge you need to stand out in the competitive job market.
                                         </p>
-                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start">
+                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start flex-nowrap">
                                             <a href="/pages/courses.html" class="btn btn-primary btn-lg px-3 px-md-5">View Certificates</a>
-                                            <a href="/pages/about.html" class="btn btn-light btn-lg px-3 px-md-5 shadow-sm">Learn More</a>
+                                            <a href="/pages/about.html" class="btn btn-lg px-3 px-md-5" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1);">Learn More</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 hero-image-col">
                                     <div class="position-relative hero-image-container">
-                                        <div class="blob-bg blob-secondary"></div>
-                                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1200" alt="Professional Certification" class="img-fluid hero-img">
-                                        <div class="floating-card-2 shadow-premium">
+                                        <div class="blob-bg" style="background: var(--p-700); opacity: 0.15;"></div>
+                                        <div class="hero-img-wrap p-2 rounded-4" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);">
+                                            <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1200" alt="Professional Certification" class="img-fluid rounded-3 shadow-lg">
+                                        </div>
+                                        <div class="floating-card-2 shadow-premium bg-white text-dark">
                                             <div class="text-center">
                                                 <div class="badge-icon mb-2">🏆</div>
                                                 <h6 class="mb-0 fw-bold small">Industry Recognized</h6>
@@ -112,30 +116,32 @@
                 </div>
 
                 <!-- Slide 3: Corporate Training -->
-                <div class="carousel-item" data-bs-interval="5000">
-                    <div class="hero-slide-wrapper">
+                <div class="carousel-item h-100" data-bs-interval="5000">
+                    <div class="hero-slide-wrapper" style="background-color: var(--s-900); color: #fff;">
                         <div class="container h-100">
                             <div class="row align-items-center h-100 g-4 g-lg-5">
                                 <div class="col-lg-6 hero-content-col">
                                     <div class="animate-text">
-                                        <span class="premium-badge mb-3">Corporate Training</span>
-                                        <h1 class="fw-bold mb-3 display-4">Upskill your entire team with tailored solutions</h1>
-                                        <p class="text-muted mb-4 pe-lg-5 fs-lg">
+                                        <span class="premium-badge mb-3" style="background: rgba(124, 58, 237, 0.1); color: var(--p-50); border-color: rgba(124, 58, 237, 0.2);">Corporate Training</span>
+                                        <h1 class="fw-bold mb-3 display-4 text-white">Upskill your entire team with tailored solutions</h1>
+                                        <p class="opacity-75 mb-4 pe-lg-5 fs-lg text-white">
                                             Empower your workforce with professional development programs designed for your specific business goals.
                                         </p>
-                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start">
+                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start flex-nowrap">
                                             <a href="/pages/contact.html" class="btn btn-primary btn-lg px-3 px-md-5">Contact Sales</a>
-                                            <a href="/pages/courses.html" class="btn btn-light btn-lg px-3 px-md-5 shadow-sm">For Business</a>
+                                            <a href="/pages/courses.html" class="btn btn-lg px-3 px-md-5" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1);">For Business</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 hero-image-col">
                                     <div class="position-relative hero-image-container">
-                                        <div class="blob-bg"></div>
-                                        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1200" alt="Corporate Training" class="img-fluid hero-img">
-                                        <div class="floating-card-1 shadow-premium">
+                                        <div class="blob-bg" style="background: var(--p-600); opacity: 0.15;"></div>
+                                        <div class="hero-img-wrap p-2 rounded-4" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);">
+                                            <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80&w=1200" alt="Corporate Training" class="img-fluid rounded-3 shadow-lg">
+                                        </div>
+                                        <div class="floating-card-1 shadow-premium bg-white text-dark">
                                             <div class="d-flex align-items-center gap-3">
-                                                <div class="icon-box bg-primary text-white">
+                                                <div class="icon-box text-white" style="background: var(--p-600);">
                                                     <i class="bi bi-briefcase"></i>
                                                 </div>
                                                 <div>
@@ -152,30 +158,32 @@
                 </div>
 
                 <!-- Slide 4: Skill Development -->
-                <div class="carousel-item" data-bs-interval="5000">
-                    <div class="hero-slide-wrapper slide-bg-alt">
+                <div class="carousel-item h-100" data-bs-interval="5000">
+                    <div class="hero-slide-wrapper" style="background-color: var(--s-900); color: #fff;">
                         <div class="container h-100">
                             <div class="row align-items-center h-100 g-4 g-lg-5">
                                 <div class="col-lg-6 hero-content-col">
                                     <div class="animate-text">
-                                        <span class="premium-badge secondary mb-3">Skill Development</span>
-                                        <h1 class="fw-bold mb-3 display-4">Learn at your own pace with bite-sized lessons</h1>
-                                        <p class="text-muted mb-4 pe-lg-5 fs-lg">
+                                        <span class="premium-badge mb-3" style="background: rgba(124, 58, 237, 0.1); color: var(--p-50); border-color: rgba(124, 58, 237, 0.2);">Skill Development</span>
+                                        <h1 class="fw-bold mb-3 display-4 text-white">Learn at your own pace with bite-sized lessons</h1>
+                                        <p class="opacity-75 mb-4 pe-lg-5 fs-lg text-white">
                                             Access over 500+ modules across design, development, marketing and product strategy.
                                         </p>
-                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start">
+                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start flex-nowrap">
                                             <a href="/pages/courses.html" class="btn btn-primary btn-lg px-3 px-md-5">Start Learning</a>
-                                            <a href="/pages/register.html" class="btn btn-light btn-lg px-3 px-md-5 shadow-sm">Join Free</a>
+                                            <a href="/pages/register.html" class="btn btn-lg px-3 px-md-5" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1);">Join Free</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 hero-image-col">
                                     <div class="position-relative hero-image-container">
-                                        <div class="blob-bg blob-secondary"></div>
-                                        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200" alt="Skill Development" class="img-fluid hero-img">
-                                        <div class="floating-card-3 shadow-premium">
+                                        <div class="blob-bg" style="background: var(--p-700); opacity: 0.15;"></div>
+                                        <div class="hero-img-wrap p-2 rounded-4" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);">
+                                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200" alt="Skill Development" class="img-fluid rounded-3 shadow-lg">
+                                        </div>
+                                        <div class="floating-card-3 shadow-premium bg-white text-dark">
                                             <div class="d-flex align-items-center gap-2">
-                                                <div class="stat-circle">⚡</div>
+                                                <div class="stat-circle" style="background: var(--p-50); color: var(--p-600);">⚡</div>
                                                 <div class="lh-1">
                                                     <div class="fw-bold fs-5">500+</div>
                                                     <div class="text-muted x-small">Modules</div>
@@ -190,28 +198,30 @@
                 </div>
 
                 <!-- Slide 5: Career Growth -->
-                <div class="carousel-item" data-bs-interval="5000">
-                    <div class="hero-slide-wrapper">
+                <div class="carousel-item h-100" data-bs-interval="5000">
+                    <div class="hero-slide-wrapper" style="background-color: var(--s-900); color: #fff;">
                         <div class="container h-100">
                             <div class="row align-items-center h-100 g-4 g-lg-5">
                                 <div class="col-lg-6 hero-content-col">
                                     <div class="animate-text">
-                                        <span class="premium-badge mb-3">Career Growth</span>
-                                        <h1 class="fw-bold mb-3 display-4">Accelerate your career with proven results</h1>
-                                        <p class="text-muted mb-4 pe-lg-5 fs-lg">
+                                        <span class="premium-badge mb-3" style="background: rgba(124, 58, 237, 0.1); color: var(--p-50); border-color: rgba(124, 58, 237, 0.2);">Career Growth</span>
+                                        <h1 class="fw-bold mb-3 display-4 text-white">Accelerate your career with proven results</h1>
+                                        <p class="opacity-75 mb-4 pe-lg-5 fs-lg text-white">
                                             Our students have landed roles at top-tier companies and leading tech teams across the globe.
                                         </p>
-                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start">
+                                        <div class="d-flex gap-2 gap-md-3 justify-content-center justify-content-lg-start flex-nowrap">
                                             <a href="/pages/courses.html" class="btn btn-primary btn-lg px-3 px-md-5">Join Success Stories</a>
-                                            <a href="/pages/contact.html" class="btn btn-light btn-lg px-3 px-md-5 shadow-sm">Talk to Coach</a>
+                                            <a href="/pages/contact.html" class="btn btn-lg px-3 px-md-5" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1);">Talk to Coach</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 hero-image-col">
                                     <div class="position-relative hero-image-container">
-                                        <div class="blob-bg"></div>
-                                        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200" alt="Career Growth" class="img-fluid hero-img">
-                                        <div class="floating-card-2 shadow-premium">
+                                        <div class="blob-bg" style="background: var(--p-600); opacity: 0.15;"></div>
+                                        <div class="hero-img-wrap p-2 rounded-4" style="background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);">
+                                            <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1200" alt="Career Growth" class="img-fluid rounded-3 shadow-lg">
+                                        </div>
+                                        <div class="floating-card-2 shadow-premium bg-white text-dark">
                                             <div class="d-flex align-items-center gap-2">
                                                 <div class="av-stack">
                                                     <img src="https://i.pravatar.cc/32?u=1" class="rounded-circle border border-white" width="24">
@@ -246,12 +256,12 @@
     </section>
 
     <!-- Platform Highlights Strip -->
-    <section class="trust-strip py-4 border-top border-bottom bg-white shadow-sm">
+    <section class="trust-strip py-3 border-bottom bg-white shadow-sm">
         <div class="container">
             <div class="row g-3 g-md-4">
                 <div class="col-6 col-lg-3">
                     <div class="trust-item d-flex align-items-center gap-3 px-2">
-                        <div class="trust-icon trust-icon-success">
+                        <div class="trust-icon" style="background: var(--p-50); color: var(--p-600);">
                             <i class="bi bi-laptop"></i>
                         </div>
                         <div>
@@ -262,7 +272,7 @@
                 </div>
                 <div class="col-6 col-lg-3">
                     <div class="trust-item d-flex align-items-center gap-3 px-2">
-                        <div class="trust-icon trust-icon-primary">
+                        <div class="trust-icon" style="background: var(--p-50); color: var(--p-600);">
                             <i class="bi bi-person-badge"></i>
                         </div>
                         <div>
@@ -273,7 +283,7 @@
                 </div>
                 <div class="col-6 col-lg-3">
                     <div class="trust-item d-flex align-items-center gap-3 px-2">
-                        <div class="trust-icon trust-icon-warning">
+                        <div class="trust-icon" style="background: var(--p-50); color: var(--p-600);">
                             <i class="bi bi-award"></i>
                         </div>
                         <div>
@@ -284,7 +294,7 @@
                 </div>
                 <div class="col-6 col-lg-3">
                     <div class="trust-item d-flex align-items-center gap-3 px-2">
-                        <div class="trust-icon trust-icon-info">
+                        <div class="trust-icon" style="background: var(--p-50); color: var(--p-600);">
                             <i class="bi bi-briefcase"></i>
                         </div>
                         <div>
@@ -377,30 +387,28 @@
                             <div class="course-image-wrapper">
                                 <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800" alt="UX Strategy">
                                 <div class="position-absolute top-0 start-0 m-3 z-2">
-                                    <span class="badge bg-white text-dark py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">Design</span>
+                                    <span class="badge bg-white text-dark py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.6rem; text-transform: uppercase;">Design</span>
                                 </div>
-                                <div class="position-absolute top-0 end-0 m-3 z-2">
-                                    <span class="badge bg-primary text-white py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem; border: none;">RM 499.00</span>
+                                <div class="position-absolute bottom-0 end-0 m-3 z-2">
+                                    <span class="badge bg-primary text-white py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">RM 499</span>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <h5 class="fw-bold mb-2">UX Strategy Immersive</h5>
-                                <p class="text-muted small mb-0">Master research, information architecture, and UI prototypes with Figma.</p>
-                            </div>
-                            <div class="card-footer-custom px-3 pb-3">
-                                <div class="course-card-rating-wrapper mb-3 d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <div class="star-rating me-2">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                        </div>
-                                        <span class="rating-score">4.9</span>
-                                        <span class="review-count ms-1">(324)</span>
+                            <div class="card-body p-3">
+                                <h6 class="fw-bold mb-2">UX Strategy Immersive</h6>
+                                <p class="text-muted mb-3 x-small">Master research, information architecture, and UI prototypes with Figma.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-star-fill text-warning x-small"></i>
+                                        <span class="fw-bold x-small">4.9</span>
+                                        <span class="text-muted x-small">(324)</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-clock x-small text-muted"></i>
+                                        <span class="text-muted x-small">24h</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer-custom p-3 bg-white border-top-0">
                                 <div class="d-grid gap-2">
                                     <a href="#" class="btn btn-primary btn-sm purchase-btn" 
                                        data-id="idx-ux-1"
@@ -408,7 +416,7 @@
                                        data-price="499.00"
                                        data-instructor="Alex Rivera"
                                        data-img="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800">Enroll Now</a>
-                                    <a href="/pages/course-details.html?id=ux-strategy" class="btn btn-outline-light text-dark border btn-sm">Details</a>
+                                    <a href="/pages/course-details.html?id=ux-strategy" class="btn btn-sm btn-light border-0" style="background: var(--s-50); color: var(--s-900);">Details</a>
                                 </div>
                             </div>
                         </div>
@@ -420,30 +428,28 @@
                             <div class="course-image-wrapper">
                                 <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Data Analytics">
                                 <div class="position-absolute top-0 start-0 m-3 z-2">
-                                    <span class="badge bg-white text-dark py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">Data Science</span>
+                                    <span class="badge bg-white text-dark py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.6rem; text-transform: uppercase;">Data</span>
                                 </div>
-                                <div class="position-absolute top-0 end-0 m-3 z-2">
-                                    <span class="badge bg-primary text-white py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem; border: none;">RM 599.00</span>
+                                <div class="position-absolute bottom-0 end-0 m-3 z-2">
+                                    <span class="badge bg-primary text-white py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">RM 599</span>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <h5 class="fw-bold mb-2">Data Analytics Pro</h5>
-                                <p class="text-muted small mb-0">Master high-level data visualization and SQL for large datasets.</p>
-                            </div>
-                            <div class="card-footer-custom px-3 pb-3">
-                                <div class="course-card-rating-wrapper mb-3 d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <div class="star-rating me-2">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                        </div>
-                                        <span class="rating-score">4.8</span>
-                                        <span class="review-count ms-1">(215)</span>
+                            <div class="card-body p-3">
+                                <h6 class="fw-bold mb-2">Data Analytics Pro</h6>
+                                <p class="text-muted mb-3 x-small">Master high-level data visualization and SQL for large datasets.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-star-fill text-warning x-small"></i>
+                                        <span class="fw-bold x-small">4.8</span>
+                                        <span class="text-muted x-small">(215)</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-clock x-small text-muted"></i>
+                                        <span class="text-muted x-small">32h</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer-custom p-3 bg-white border-top-0">
                                 <div class="d-grid gap-2">
                                     <a href="#" class="btn btn-primary btn-sm purchase-btn" 
                                        data-id="idx-data-2"
@@ -451,7 +457,7 @@
                                        data-price="599.00"
                                        data-instructor="Sarah Chen"
                                        data-img="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800">Enroll Now</a>
-                                    <a href="/pages/course-details.html?id=data-analytics" class="btn btn-outline-light text-dark border btn-sm">Details</a>
+                                    <a href="/pages/course-details.html?id=data-analytics" class="btn btn-sm btn-light border-0" style="background: var(--s-50); color: var(--s-900);">Details</a>
                                 </div>
                             </div>
                         </div>
@@ -463,30 +469,28 @@
                             <div class="course-image-wrapper">
                                 <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="Growth Marketing">
                                 <div class="position-absolute top-0 start-0 m-3 z-2">
-                                    <span class="badge bg-white text-dark py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">Marketing</span>
+                                    <span class="badge bg-white text-dark py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.6rem; text-transform: uppercase;">Marketing</span>
                                 </div>
-                                <div class="position-absolute top-0 end-0 m-3 z-2">
-                                    <span class="badge bg-primary text-white py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem; border: none;">RM 399.00</span>
+                                <div class="position-absolute bottom-0 end-0 m-3 z-2">
+                                    <span class="badge bg-primary text-white py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">RM 399</span>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <h5 class="fw-bold mb-2">Growth Marketing Lab</h5>
-                                <p class="text-muted small mb-0">Sharp framework for experimentation, PPC, and campaign reviews.</p>
-                            </div>
-                            <div class="card-footer-custom px-3 pb-3">
-                                <div class="course-card-rating-wrapper mb-3 d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <div class="star-rating me-2">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-half"></i>
-                                        </div>
-                                        <span class="rating-score">4.7</span>
-                                        <span class="review-count ms-1">(142)</span>
+                            <div class="card-body p-3">
+                                <h6 class="fw-bold mb-2">Growth Marketing Lab</h6>
+                                <p class="text-muted mb-3 x-small">Sharp framework for experimentation, PPC, and campaign reviews.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-star-fill text-warning x-small"></i>
+                                        <span class="fw-bold x-small">4.7</span>
+                                        <span class="text-muted x-small">(142)</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-clock x-small text-muted"></i>
+                                        <span class="text-muted x-small">18h</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer-custom p-3 bg-white border-top-0">
                                 <div class="d-grid gap-2">
                                     <a href="#" class="btn btn-primary btn-sm purchase-btn" 
                                        data-id="idx-growth-3"
@@ -494,7 +498,7 @@
                                        data-price="399.00"
                                        data-instructor="Marcus Thorne"
                                        data-img="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800">Enroll Now</a>
-                                    <a href="/pages/course-details.html?id=growth-marketing" class="btn btn-outline-light text-dark border btn-sm">Details</a>
+                                    <a href="/pages/course-details.html?id=growth-marketing" class="btn btn-sm btn-light border-0" style="background: var(--s-50); color: var(--s-900);">Details</a>
                                 </div>
                             </div>
                         </div>
@@ -506,29 +510,32 @@
                             <div class="course-image-wrapper">
                                 <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800" alt="Frontend Development">
                                 <div class="position-absolute top-0 start-0 m-3 z-2">
-                                    <span class="badge bg-white text-dark py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">Dev</span>
+                                    <span class="badge bg-white text-dark py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.6rem; text-transform: uppercase;">Dev</span>
                                 </div>
-                                <div class="position-absolute top-0 end-0 m-3 z-2">
-                                    <span class="badge bg-primary text-white py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem; border: none;">RM 649.00</span>
+                                <div class="position-absolute bottom-0 end-0 m-3 z-2">
+                                    <span class="badge bg-primary text-white py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">RM 649</span>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <h5 class="fw-bold mb-2">Frontend Mastery</h5>
-                                <p class="text-muted small mb-0">Build modern web applications with React, Tailwind, and TypeScript.</p>
-                            </div>
-                            <div class="card-footer-custom d-flex justify-content-between align-items-center">
-                                <div class="course-card-rating-wrapper">
-                                    <div class="star-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
+                            <div class="card-body p-3">
+                                <h6 class="fw-bold mb-2">Frontend Mastery</h6>
+                                <p class="text-muted mb-3 x-small">Build modern web applications with React, Tailwind, and TypeScript.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-star-fill text-warning x-small"></i>
+                                        <span class="fw-bold x-small">4.9</span>
+                                        <span class="text-muted x-small">(186)</span>
                                     </div>
-                                    <span class="rating-score">4.9</span>
-                                    <span class="review-count">(186)</span>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-clock x-small text-muted"></i>
+                                        <span class="text-muted x-small">48h</span>
+                                    </div>
                                 </div>
-                                <a href="#" class="btn btn-sm btn-light">Details</a>
+                            </div>
+                            <div class="card-footer-custom p-3 bg-white border-top-0">
+                                <div class="d-grid gap-2">
+                                    <a href="#" class="btn btn-primary btn-sm purchase-btn">Enroll Now</a>
+                                    <a href="#" class="btn btn-sm btn-light border-0" style="background: var(--s-50); color: var(--s-900);">Details</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -539,29 +546,32 @@
                             <div class="course-image-wrapper">
                                 <img src="https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?auto=format&fit=crop&q=80&w=800" alt="Product Management">
                                 <div class="position-absolute top-0 start-0 m-3 z-2">
-                                    <span class="badge bg-white text-dark py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">Business</span>
+                                    <span class="badge bg-white text-dark py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.6rem; text-transform: uppercase;">Business</span>
                                 </div>
-                                <div class="position-absolute top-0 end-0 m-3 z-2">
-                                    <span class="badge bg-primary text-white py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem; border: none;">RM 459.00</span>
+                                <div class="position-absolute bottom-0 end-0 m-3 z-2">
+                                    <span class="badge bg-primary text-white py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">RM 459</span>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <h5 class="fw-bold mb-2">Product Management 101</h5>
-                                <p class="text-muted small mb-0">Learn product discovery, roadmap planning, and stakeholder management.</p>
-                            </div>
-                            <div class="card-footer-custom d-flex justify-content-between align-items-center">
-                                <div class="course-card-rating-wrapper">
-                                    <div class="star-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
+                            <div class="card-body p-3">
+                                <h6 class="fw-bold mb-2">Product Management 101</h6>
+                                <p class="text-muted mb-3 x-small">Learn product discovery, roadmap planning, and stakeholder management.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-star-fill text-warning x-small"></i>
+                                        <span class="fw-bold x-small">4.8</span>
+                                        <span class="text-muted x-small">(95)</span>
                                     </div>
-                                    <span class="rating-score">4.8</span>
-                                    <span class="review-count">(95)</span>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-clock x-small text-muted"></i>
+                                        <span class="text-muted x-small">24h</span>
+                                    </div>
                                 </div>
-                                <a href="#" class="btn btn-sm btn-light">Details</a>
+                            </div>
+                            <div class="card-footer-custom p-3 bg-white border-top-0">
+                                <div class="d-grid gap-2">
+                                    <a href="#" class="btn btn-primary btn-sm purchase-btn">Enroll Now</a>
+                                    <a href="#" class="btn btn-sm btn-light border-0" style="background: var(--s-50); color: var(--s-900);">Details</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -572,29 +582,37 @@
                             <div class="course-image-wrapper">
                                 <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800" alt="Python for Data Science">
                                 <div class="position-absolute top-0 start-0 m-3 z-2">
-                                    <span class="badge bg-white text-dark py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">Data Science</span>
+                                    <span class="badge bg-white text-dark py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.6rem; text-transform: uppercase;">Data</span>
                                 </div>
-                                <div class="position-absolute top-0 end-0 m-3 z-2">
-                                    <span class="badge bg-primary text-white py-2 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem; border: none;">RM 349.00</span>
+                                <div class="position-absolute bottom-0 end-0 m-3 z-2">
+                                    <span class="badge bg-primary text-white py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">RM 349</span>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <h5 class="fw-bold mb-2">Python for Automation</h5>
-                                <p class="text-muted small mb-0">Automate boring tasks and build powerful scripts using Python.</p>
-                            </div>
-                            <div class="card-footer-custom d-flex justify-content-between align-items-center">
-                                <div class="course-card-rating-wrapper">
-                                    <div class="star-rating">
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
-                                        <i class="bi bi-star-fill"></i>
+                            <div class="card-body p-3">
+                                <h6 class="fw-bold mb-2">Python for Automation</h6>
+                                <p class="text-muted mb-3 x-small">Automate boring tasks and build powerful scripts using Python.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-star-fill text-warning x-small"></i>
+                                        <span class="fw-bold x-small">4.7</span>
+                                        <span class="text-muted x-small">(112)</span>
                                     </div>
-                                    <span class="rating-score">4.7</span>
-                                    <span class="review-count">(112)</span>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-clock x-small text-muted"></i>
+                                        <span class="text-muted x-small">16h</span>
+                                    </div>
                                 </div>
-                                <a href="#" class="btn btn-sm btn-light">Details</a>
+                            </div>
+                            <div class="card-footer-custom p-3 bg-white border-top-0">
+                                <div class="d-grid gap-2">
+                                    <a href="#" class="btn btn-primary btn-sm purchase-btn" 
+                                       data-id="idx-py-6"
+                                       data-title="Python for Automation"
+                                       data-price="349.00"
+                                       data-instructor="David Park"
+                                       data-img="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800">Enroll Now</a>
+                                    <a href="#" class="btn btn-sm btn-light border-0" style="background: var(--s-50); color: var(--s-900);">Details</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -609,24 +627,24 @@
     </section>
 
     <!-- Stats / Trust Section -->
-    <section class="bg-dark text-white py-5">
+    <section class="py-5" style="background-color: var(--s-900);">
         <div class="container">
             <div class="row g-4 text-center">
                 <div class="col-6 col-md-3">
-                    <h3 class="fw-bold mb-0 text-white">98%</h3>
-                    <p class="text-white opacity-75 small mb-0 tracking-wider">Satisfaction</p>
+                    <h2 class="fw-bold mb-1 text-white display-5">98%</h2>
+                    <p class="text-white opacity-50 small mb-0 tracking-wider text-uppercase fw-bold" style="font-size: 0.6rem; letter-spacing: 0.1em;">Satisfaction</p>
                 </div>
                 <div class="col-6 col-md-3">
-                    <h3 class="fw-bold mb-0 text-white">15k+</h3>
-                    <p class="text-white opacity-75 small mb-0 tracking-wider">Learners</p>
+                    <h2 class="fw-bold mb-1 text-white display-5">15k+</h2>
+                    <p class="text-white opacity-50 small mb-0 tracking-wider text-uppercase fw-bold" style="font-size: 0.6rem; letter-spacing: 0.1em;">Learners</p>
                 </div>
                 <div class="col-6 col-md-3">
-                    <h3 class="fw-bold mb-0 text-white">85+</h3>
-                    <p class="text-white opacity-75 small mb-0 tracking-wider">Expert Mentors</p>
+                    <h2 class="fw-bold mb-1 text-white display-5">85+</h2>
+                    <p class="text-white opacity-50 small mb-0 tracking-wider text-uppercase fw-bold" style="font-size: 0.6rem; letter-spacing: 0.1em;">Expert Mentors</p>
                 </div>
                 <div class="col-6 col-md-3">
-                    <h3 class="fw-bold mb-0 text-white">4.9</h3>
-                    <p class="text-white opacity-75 small mb-0 tracking-wider">App Rating</p>
+                    <h2 class="fw-bold mb-1 text-white display-5">4.9</h2>
+                    <p class="text-white opacity-50 small mb-0 tracking-wider text-uppercase fw-bold" style="font-size: 0.6rem; letter-spacing: 0.1em;">App Rating</p>
                 </div>
             </div>
         </div>

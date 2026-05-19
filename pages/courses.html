@@ -19,26 +19,23 @@
 
     <div id="navbar-placeholder"></div>
 
-    <header class="bg-white py-4 border-bottom">
+    <header class="bg-white py-4 border-bottom shadow-sm">
         <div class="container">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-2" style="font-size: var(--fs-xs);">
-                    <li class="breadcrumb-item"><a href="/index.html">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Courses</li>
-                </ol>
-            </nav>
             <div class="row align-items-center g-3">
                 <div class="col-lg-7">
-                    <span class="premium-badge mb-2">Catalog</span>
-                    <h2 class="fw-bold mb-1">Develop your skills</h2>
-                    <p class="text-muted small mb-0">Choose certificates, bootcamps, or focused tracks designed for modern professionals.</p>
+                    <nav aria-label="breadcrumb" class="mb-2">
+                        <ol class="breadcrumb mb-0" style="font-size: 0.65rem;">
+                            <li class="breadcrumb-item"><a href="/index.html" class="text-decoration-none text-muted">Home</a></li>
+                            <li class="breadcrumb-item active fw-bold text-primary" aria-current="page">Courses</li>
+                        </ol>
+                    </nav>
+                    <h3 class="fw-bold mb-1 tracking-tight">Master New Skills</h3>
+                    <p class="text-muted small mb-0 fw-medium">Expert-led courses designed for your career growth.</p>
                 </div>
-                <div class="col-lg-5 text-lg-end">
-                    <div class="d-flex flex-wrap gap-1 justify-content-lg-end pt-2">
-                        <button class="btn btn-sm btn-primary">All</button>
-                        <button class="btn btn-sm btn-light border">Design</button>
-                        <button class="btn btn-sm btn-light border">Data Science</button>
-                        <button class="btn btn-sm btn-light border">Marketing</button>
+                <div class="col-lg-5">
+                    <div class="search-box position-relative">
+                        <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+                        <input type="text" class="form-control ps-5 border-0 shadow-sm" placeholder="Search courses..." style="background: var(--s-50); height: 46px; border-radius: var(--radius-md);">
                     </div>
                 </div>
             </div>
@@ -109,36 +106,35 @@
                 <div id="course-container" class="row g-3">
                     <!-- Course Card 1 -->
                     <div class="col-md-6 course-item">
-                        <div class="card h-100">
+                        <div class="card h-100 card-hover">
                             <div class="course-image-wrapper">
                                 <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800" alt="UX Strategy">
-                                <span class="badge bg-white text-dark position-absolute top-0 end-0 m-2 shadow-sm px-2 py-1 fw-bold z-2 small" style="font-size: 0.7rem;">RM 499.00</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="mb-2">
-                                    <span class="text-primary fw-bold" style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em;">Design / Advanced</span>
+                                <div class="position-absolute top-0 start-0 m-3 z-2">
+                                    <span class="badge bg-white text-dark py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.6rem; text-transform: uppercase;">Advanced</span>
                                 </div>
-                                <h5 class="fw-bold mb-2">UX Strategy Immersive</h5>
-                                <p class="text-muted small mb-3">Master the intersection of business goals and user needs in a production environment.</p>
-                                <div class="d-flex align-items-center gap-2 mb-0">
-                                    <img src="https://i.pravatar.cc/32?u=mentor1" class="rounded-circle" width="24">
-                                    <span class="small text-muted" style="font-size: 0.75rem;">with <span class="text-dark fw-medium">Alex Rivera</span></span>
+                                <div class="position-absolute bottom-0 end-0 m-3 z-2">
+                                    <span class="badge bg-primary text-white py-1 px-3 fw-bold rounded-pill shadow-sm" style="font-size: 0.65rem;">RM 499</span>
                                 </div>
                             </div>
-                            <div class="card-footer-custom px-3 pb-3">
-                                <div class="course-card-rating-wrapper mb-3 d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <div class="star-rating me-2">
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                            <i class="bi bi-star-fill"></i>
-                                        </div>
-                                        <span class="rating-score">4.9</span>
-                                        <span class="review-count ms-1">(156)</span>
+                            <div class="card-body p-3">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span class="text-primary fw-bold" style="font-size: 0.6rem; text-transform: uppercase;">Design</span>
+                                    <span class="text-muted" style="font-size: 10px;">• 24 Lessons</span>
+                                </div>
+                                <h6 class="fw-bold mb-2 tracking-tight">UX Strategy Immersive</h6>
+                                <p class="text-muted mb-3 x-small">Master the intersection of business goals and user needs in a production environment.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <img src="https://i.pravatar.cc/32?u=mentor1" class="rounded-circle border border-2 border-white shadow-sm" width="24">
+                                        <span class="fw-bold x-small">Alex Rivera</span>
+                                    </div>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <i class="bi bi-star-fill text-warning x-small"></i>
+                                        <span class="fw-bold x-small">4.9</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer-custom p-3 bg-white border-top-0">
                                 <div class="d-grid gap-2">
                                     <a href="#" class="btn btn-primary btn-sm purchase-btn" 
                                        data-id="ux-strat-1"
@@ -146,7 +142,7 @@
                                        data-price="499.00"
                                        data-instructor="Alex Rivera"
                                        data-img="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=800">Enroll Now</a>
-                                    <a href="/pages/course-details.html?id=ux-strategy" class="btn btn-outline-light text-dark border btn-sm">Details</a>
+                                    <a href="/pages/course-details.html?id=ux-strategy" class="btn btn-sm btn-light border-0" style="background: var(--s-50); color: var(--s-900);">Details</a>
                                 </div>
                             </div>
                         </div>
