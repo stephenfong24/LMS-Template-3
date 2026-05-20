@@ -56,6 +56,69 @@ $(function() {
                 $(this).addClass('active');
             }
         });
+
+        // Language Selector Sync and Interactive UI
+        const $langDropdown = $('#langDropdown');
+        const $currentLangLabel = $('#currentLangLabel');
+        const $langOptEn = $('#langOptEn');
+        const $langOptBm = $('#langOptBm');
+        const $dropdownCheckEn = $('#dropdownCheckEn');
+        const $dropdownCheckBm = $('#dropdownCheckBm');
+
+        const $mobileLangBtnEn = $('#mobileLangBtnEn');
+        const $mobileLangBtnBm = $('#mobileLangBtnBm');
+        const $mobileCheckEnIcon = $('#mobileCheckEnIcon');
+        const $mobileCheckBmIcon = $('#mobileCheckBmIcon');
+
+        function setLanguage(lang) {
+            if (lang === 'EN') {
+                // Update Desktop Dropdown
+                $currentLangLabel.text('English');
+                $langOptEn.addClass('active');
+                $langOptBm.removeClass('active');
+                $dropdownCheckEn.removeClass('d-none');
+                $dropdownCheckBm.addClass('d-none');
+
+                // Update Mobile Pills
+                $mobileLangBtnEn.addClass('active-lang-btn text-dark').removeClass('text-muted');
+                $mobileLangBtnBm.removeClass('active-lang-btn text-dark').addClass('text-muted');
+                $mobileCheckEnIcon.removeClass('d-none');
+                $mobileCheckBmIcon.addClass('d-none');
+            } else if (lang === 'BM') {
+                // Update Desktop Dropdown
+                $currentLangLabel.text('Bahasa Malaysia');
+                $langOptEn.removeClass('active');
+                $langOptBm.addClass('active');
+                $dropdownCheckEn.addClass('d-none');
+                $dropdownCheckBm.removeClass('d-none');
+
+                // Update Mobile Pills
+                $mobileLangBtnBm.addClass('active-lang-btn text-dark').removeClass('text-muted');
+                $mobileLangBtnEn.removeClass('active-lang-btn text-dark').addClass('text-muted');
+                $mobileCheckBmIcon.removeClass('d-none');
+                $mobileCheckEnIcon.addClass('d-none');
+            }
+        }
+
+        $langOptEn.on('click', function(e) {
+            e.preventDefault();
+            setLanguage('EN');
+        });
+
+        $langOptBm.on('click', function(e) {
+            e.preventDefault();
+            setLanguage('BM');
+        });
+
+        $mobileLangBtnEn.on('click', function(e) {
+            e.preventDefault();
+            setLanguage('EN');
+        });
+
+        $mobileLangBtnBm.on('click', function(e) {
+            e.preventDefault();
+            setLanguage('BM');
+        });
     }
 
     // Reveal animations on scroll

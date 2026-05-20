@@ -21,6 +21,29 @@
                 <li class="nav-item">
                     <a class="nav-link fw-semibold" href="/pages/contact.html">Contact</a>
                 </li>
+                
+                <!-- Desktop Change Language Dropdown -->
+                <li class="nav-item dropdown ms-lg-3 me-lg-2">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-1 py-1 px-3" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: rgba(255, 255, 255, 0.8) !important; font-size: 0.85rem; font-weight: 500; border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius-md); background: rgba(255,255,255,0.04); transition: all 0.2s;">
+                        <i class="bi bi-globe" style="font-size: 0.9rem;"></i>
+                        <span id="currentLangLabel">English</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-2 py-1 animated-dropdown" aria-labelledby="langDropdown" style="background: var(--s-900); border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: var(--radius-md); min-width: 170px;">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between text-white py-2 px-3 active" href="#" id="langOptEn">
+                                <span>English</span>
+                                <i class="bi bi-check-lg text-primary" id="dropdownCheckEn"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center justify-content-between text-white py-2 px-3" href="#" id="langOptBm">
+                                <span>Bahasa Malaysia</span>
+                                <i class="bi bi-check-lg text-primary d-none" id="dropdownCheckBm"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
                 <li class="nav-item ms-3">
                     <a class="btn btn-sm btn-light border-0 px-4" style="background: rgba(255,255,255,0.1); color: #fff;" href="/pages/login.html">Login</a>
                 </li>
@@ -67,6 +90,19 @@
                 <i class="bi bi-chat-dots"></i>
                 <span>Contact</span>
             </a>
+            
+            <!-- Compact Premium Mobile Language Selector -->
+            <div class="mt-4 px-3 py-2 bg-light rounded-4 border border-light" style="background: var(--s-50) !important;">
+                <p class="text-muted fw-bold mb-2 ps-1" style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;">Language / Bahasa</p>
+                <div class="d-flex p-1 bg-white rounded-3 border align-items-center" style="border-color: rgba(0,0,0,0.06) !important;">
+                    <button id="mobileLangBtnEn" type="button" class="btn btn-sm w-100 py-1.5 px-3 rounded-2 fw-semibold d-flex align-items-center justify-content-center gap-2 transition-all text-dark active-lang-btn" style="font-size: 0.75rem; border: 0; outline: none; transition: all 0.2s;">
+                        <i class="bi bi-check-lg me-2" id="mobileCheckEnIcon"></i> English
+                    </button>
+                    <button id="mobileLangBtnBm" type="button" class="btn btn-sm w-100 py-1.5 px-3 rounded-2 fw-semibold d-flex align-items-center justify-content-center gap-2 transition-all text-muted" style="font-size: 0.75rem; border: 0; outline: none; transition: all 0.2s;">
+                        <i class="bi bi-check-lg d-none me-2" id="mobileCheckBmIcon"></i> BM
+                    </button>
+                </div>
+            </div>
         </nav>
     </div>
     
