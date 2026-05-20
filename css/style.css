@@ -248,12 +248,15 @@ section {
 .nav-link:hover, .nav-link.active { color: var(--p-600) !important; }
 
 /* Forms */
-.form-label {
-    font-size: var(--fs-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--s-500);
-    margin-bottom: var(--s-2);
+.form-label,
+.form-label.text-muted {
+    font-size: var(--fs-xs) !important;
+    font-weight: 700 !important;
+    text-transform: none !important;
+    color: var(--s-800) !important; /* Elegant dark navy/slate for distinct, high-contrast labels */
+    margin-bottom: var(--s-2) !important;
+    display: inline-block !important;
+    letter-spacing: normal !important;
 }
 
 .form-control {
@@ -264,6 +267,16 @@ section {
     font-size: var(--fs-base);
     padding: 0 var(--s-4);
     transition: var(--transition);
+    color: var(--s-900);
+}
+
+.form-control::placeholder,
+input::placeholder,
+textarea::placeholder,
+.form-select::placeholder {
+    color: #94a3b8 !important; /* Soft, muted slate placeholder to clearly differentiate from dark labels */
+    opacity: 0.85 !important;
+    font-weight: 400 !important;
 }
 
 .form-control:focus {
