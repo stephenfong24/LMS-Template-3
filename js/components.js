@@ -69,13 +69,13 @@ $(function() {
         $('#mobileNavToggle').on('click', function() {
             $mobileNav.addClass('active');
             $navOverlay.fadeIn(300);
-            $('body').css('overflow', 'hidden');
+            $('html, body').addClass('mobile-nav-active').css('overflow', 'hidden');
         });
 
         $('#mobileNavClose, #navOverlay').on('click', function() {
             $mobileNav.removeClass('active');
             $navOverlay.fadeOut(300);
-            $('body').css('overflow', 'auto');
+            $('html, body').removeClass('mobile-nav-active').css('overflow', 'auto');
         });
 
         // Set active nav link based on current path
