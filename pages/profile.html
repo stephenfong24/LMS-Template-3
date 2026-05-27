@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Elevate Academy</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        .profile-card {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid rgba(0,0,0,0.06);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.03) !important;
+        }
+        .avatar-preview-container {
+            position: relative;
+            display: inline-block;
+        }
+        .avatar-hover-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            cursor: pointer;
+            transition: opacity 0.25s ease;
+        }
+        .avatar-preview-container:hover .avatar-hover-overlay {
+            opacity: 1;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #7c3aed !important;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12) !important;
+        }
+        .avatar-option-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .avatar-option-img:hover {
+            transform: scale(1.1);
+        }
+        .avatar-option-img.active {
+            border-color: #7c3aed;
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+        }
+        /* Notification toast style */
+        .toast-container-custom {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1060;
+            pointer-events: none;
+        }
+        .toast-animate {
+            display: flex;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-left: 4px solid #10b981;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2) !important;
+            border-radius: var(--radius-md);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+            pointer-events: none;
+            visibility: hidden;
+        }
+        .toast-animate.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-light-alt" style="background-color: var(--s-50); min-height: 100vh; display: flex; flex-direction: column;">
+    
+    <!-- Header placeholder -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Notification Toast Placeholder -->
+    <div class="toast-container-custom">
+        <div id="successToast" class="toast-animate p-3 text-white gap-3 rounded-3" style="min-width: 320px;">
+            <div class="bg-success bg-opacity-15 rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background-color: rgba(16, 185, 129, 0.15) !important;">
+                <i class="fa-solid fa-circle-check text-success"></i>
+            </div>
+            <div class="flex-grow-1">
+                <h6 class="mb-0 fw-bold" id="toastTitle">Changes Saved</h6>
+                <span class="x-small text-white-50" id="toastDesc">Your student profile updates are now synced live.</span>
+            </div>
+            <button type="button" class="btn-close d-none" id="closeToastBtn"></button>
+        </div>
+    </div>
+
+    <main class="container py-5 flex-grow-1">
+        <!-- Locked State Placeholder (Shown if logged out) -->
+        <div id="locked-state" class="row justify-content-center d-none" style="margin-top: 5vh; margin-bottom: 5vh;">
+            <div class="col-lg-6 col-md-8 text-center">
+                <div class="card p-5 border-0 shadow-sm rounded-4 bg-white">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light text-primary mb-4 shadow-sm" style="width: 80px; height: 80px; border: 1px solid rgba(124,58,237,0.1) !important;">
+                        <i class="fa-solid fa-lock fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark tracking-tight mb-2">Profile Locked</h3>
+                    <p class="text-muted small mx-auto mb-4" style="max-width: 380px;">
+                        You must be signed in to view and customize your student profile achievements, linked details, and learning settings.
+                    </p>
+                    <div class="d-grid gap-2 col-8 mx-auto">
+                        <a href="login.html" class="btn btn-primary py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2 rounded-3">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Account
+                        </a>
+                        <a href="courses.html" class="btn btn-outline-secondary py-2.5 fw-medium rounded-3 text-muted">
+                            Explore Public Courses
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connected profile workspace -->
+        <div id="profile-workspace" class="d-none">
+            <!-- Breadcrumb Navigation -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="/index.html" class="text-decoration-none text-muted">Home</a></li>
+                            <li class="breadcrumb-item"><a href="my-learnings.html" class="text-decoration-none text-muted">Dashboard</a></li>
+                            <li class="breadcrumb-item active text-dark fw-semibold" aria-current="page">Student Profile</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="row g-4 d-flex">
+                <!-- Left Avatar/Meta Layout -->
+                <div class="col-lg-4 col-md-5">
+                    <div class="card border-0 profile-card p-4 text-center h-100 d-flex flex-column align-items-center justify-content-between">
+                        <div class="w-100">
+                            <span class="badge bg-opacity-10 text-uppercase tracking-wider fw-bold rounded-pill mb-4 px-3 py-1.5" style="background-color: rgba(124, 58, 237, 0.1); color: #7c3aed; font-size: 0.65rem;" id="badgeRole">Premium Learner</span>
+                            
+                            <!-- Avatar Preview -->
+                            <div class="avatar-preview-container mb-3 shadow-sm rounded-circle" data-bs-toggle="modal" data-bs-target="#avatarModal" style="cursor: pointer;">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Student Profile Avatar" class="rounded-circle border border-opacity-10" style="width: 120px; height: 120px; object-fit: cover;" id="profileAvatarPreview">
+                                <div class="avatar-hover-overlay" id="changeAvatarOverlay">
+                                    <i class="fa-solid fa-camera fs-4"></i>
+                                </div>
+                            </div>
+                            
+                            <h4 class="fw-bold text-dark mb-1 tracking-tight" id="profileFullNamePreview">Guest Student</h4>
+                            <p class="text-muted x-small text-lowercase mb-3" id="profileEmailPreview">verylongemailaddress@exampledomain.com</p>
+                            
+                            <button class="btn btn-sm btn-outline-primary px-3 py-1.5 rounded-3 fw-semibold mb-4" style="font-size: 0.8rem; border-color: #7c3aed; color: #7c3aed;" data-bs-toggle="modal" data-bs-target="#avatarModal">
+                                <i class="fa-solid fa-user-pen me-1.5"></i> Change Avatar
+                            </button>
+                        </div>
+                        
+                        <!-- Account Meta Statistics -->
+                        <div class="w-100 border-top pt-4">
+                            <div class="row row-cols-2 g-2">
+                                <div class="col text-start">
+                                    <span class="d-block text-muted text-uppercase tracking-wider font-sans mb-1" style="font-size: 0.6rem;">Account Status</span>
+                                    <span class="badge bg-success bg-opacity-15 text-success rounded-2 px-2.5 py-1 fw-bold border border-success border-opacity-10" style="font-size: 0.65rem;" id="badgeStatus">Active Student</span>
+                                </div>
+                                <div class="col text-start ps-3">
+                                    <span class="d-block text-muted text-uppercase tracking-wider font-sans mb-1" style="font-size: 0.6rem;">Registration Date</span>
+                                    <span class="fw-bold fs-6 text-dark font-mono" style="font-size: 0.8rem !important;" id="joinedDateSpan">2026-01-15</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Account Completion State -->
+                            <div class="mt-4 text-start">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="x-small text-muted fw-semibold">Profile Completion</span>
+                                    <span class="x-small fw-bold text-primary font-mono" id="compScore">90%</span>
+                                </div>
+                                <div class="progress" style="height: 6px; border-radius: 10px; background-color: var(--s-100);">
+                                    <div class="progress-bar" id="compBar" role="progressbar" style="width: 90%; background-color: #7c3aed !important; border-radius: 10px;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Settings Form Panel -->
+                <div class="col-lg-8 col-md-7">
+                    <div class="card border-0 profile-card p-4">
+                        <div class="border-bottom pb-3 mb-4 d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="fw-bold tracking-tight text-dark mb-1">Profile Information</h5>
+                                <p class="text-muted x-small mb-0">Update your academy identity settings & sync choices.</p>
+                            </div>
+                            <span class="text-muted font-mono" style="font-size: 11px;"><i class="fa-solid fa-shield-halved text-primary opacity-75"></i> Secured</span>
+                        </div>
+
+                        <!-- Editable Settings Form -->
+                        <form id="profileForm">
+                            <div class="row g-3">
+                                <!-- Full Name -->
+                                <div class="col-md-6 text-start">
+                                    <label for="fullNameInput" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Full Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-user-large" style="font-size: 0.85rem;"></i></span>
+                                        <input type="text" class="form-control border-start-0" id="fullNameInput" placeholder="e.g. Stephen Miller" required>
+                                    </div>
+                                </div>
+
+                                <!-- Email Address -->
+                                <div class="col-md-6 text-start">
+                                    <label for="emailInput" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Email Address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-envelope" style="font-size: 0.85rem;"></i></span>
+                                        <input type="email" class="form-control border-start-0 text-lowercase" id="emailInput" placeholder="e.g. user@domain.com" required>
+                                    </div>
+                                </div>
+
+                                <!-- Phone Number -->
+                                <div class="col-md-6 text-start">
+                                    <label for="phoneInput" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Phone Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-phone" style="font-size: 0.85rem;"></i></span>
+                                        <input type="tel" class="form-control border-start-0" id="phoneInput" placeholder="e.g. +60 12-345 6789">
+                                    </div>
+                                </div>
+
+                                <!-- Account Role Type -->
+                                <div class="col-md-6 text-start">
+                                    <label for="learningTrackSelect" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Primary Track Goal</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light border-end-0 text-muted"><i class="fa-solid fa-graduation-cap" style="font-size: 0.85rem;"></i></span>
+                                        <select class="form-select border-start-0" id="learningTrackSelect">
+                                            <option value="Advanced Design">Advanced UX UI Design</option>
+                                            <option value="Data Science Track">Data Science Pro</option>
+                                            <option value="AI Finetuning">AI Research Developer</option>
+                                            <option value="Product Strategy">Enterprise Management</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Bio Block -->
+                                <div class="col-12 text-start mt-4">
+                                    <label for="bioInput" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Professional Bio</label>
+                                    <textarea class="form-control" id="bioInput" rows="4" placeholder="Share your credentials, skills, or learning aspirations with cohort classmates..." style="resize: none;"></textarea>
+                                </div>
+
+                                <!-- Notification Sync Section -->
+                                <div class="col-12 mt-4 text-start">
+                                    <div class="p-3 bg-light rounded-4 border">
+                                        <h6 class="fw-bold text-dark mb-2" style="font-size: 0.85rem;"><i class="fa-solid fa-bell text-primary me-1.5 align-middle"></i> Learner Notification Settings</h6>
+                                        <div class="form-check form-switch mb-2">
+                                            <input class="form-check-input" type="checkbox" id="emailAlertsCheck" checked>
+                                            <label class="form-check-label text-muted small" for="emailAlertsCheck">Email reminders before live mentor workshops</label>
+                                        </div>
+                                        <div class="form-check form-switch mb-0">
+                                            <input class="form-check-input" type="checkbox" id="cohortNotesCheck" checked>
+                                            <label class="form-check-label text-muted small" for="cohortNotesCheck">Direct dashboard messaging updates from cohort instructors</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Row -->
+                                <div class="col-12 mt-4 text-end">
+                                    <button class="btn btn-primary d-inline-flex align-items-center justify-content-center gap-2 px-5 py-2.5 rounded-3 fw-bold shadow-sm" type="submit" id="saveBtn">
+                                        <i class="fa-solid fa-floppy-disk"></i> Save Profile Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Premium Avatar Selection (Smooth visual choice) -->
+    <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4" style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08) !important;">
+                <div class="modal-header border-bottom border-white border-opacity-10 py-3">
+                    <h5 class="modal-title fw-bold text-white tracking-tight" id="avatarModalLabel"><i class="fa-solid fa-masks-theater text-primary me-2"></i>Select Avatar Profile Portrait</h5>
+                    <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <p class="text-white-50 x-small mb-4">Choose from our premium student network personas to sync live with your global navbar.</p>
+                    
+                    <div class="d-flex flex-wrap gap-3 justify-content-center mb-4" style="max-width: 420px; margin: 0 auto;">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200" alt="Curly hair smile (woman)" class="avatar-option-img" data-src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200">
+                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=200" alt="Joyful man" class="avatar-option-img" data-src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=200">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" alt="Tech developer (woman)" class="avatar-option-img" data-src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200" alt="Smiling businessman" class="avatar-option-img" data-src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200" alt="Bright smile curly (woman)" class="avatar-option-img" data-src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200" alt="Professional developer (man)" class="avatar-option-img" data-src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200">
+                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200" alt="Creative designer (woman)" class="avatar-option-img" data-src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200">
+                        <img src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&q=80&w=200" alt="Tech enthusiast (man)" class="avatar-option-img" data-src="https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&q=80&w=200">
+                    </div>
+
+                    <button type="button" class="btn btn-primary px-5 py-2.5 rounded-3 fw-bold w-100" id="confirmAvatarBtn" data-bs-dismiss="modal">
+                        Select Portrait
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/main.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Check logged in state to trigger workspace display
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                $('#locked-state').addClass('d-none');
+                $('#profile-workspace').removeClass('d-none');
+                loadProfileForm();
+            } else {
+                $('#locked-state').removeClass('d-none');
+                $('#profile-workspace').addClass('d-none');
+            }
+
+            let tempSelectedAvatarUrl = '';
+
+            // Load profile details from database/localStorage
+            function loadProfileForm() {
+                const profile = JSON.parse(localStorage.getItem('userProfile')) || {
+                    fullName: "Guest Student",
+                    email: "verylongemailaddress@exampledomain.com",
+                    phone: "+60 12-345 6789",
+                    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
+                    status: "Active Student",
+                    joinedDate: "2026-01-15",
+                    role: "Premium Learner",
+                    bio: "Actively studying digital designs and modern system integrations to land high impact roles.",
+                    trackGoal: "Advanced Design",
+                    emailAlerts: true,
+                    cohortNotes: true
+                };
+
+                // Form values
+                $('#fullNameInput').val(profile.fullName);
+                $('#emailInput').val(profile.email);
+                $('#phoneInput').val(profile.phone || '');
+                $('#learningTrackSelect').val(profile.trackGoal || 'Advanced Design');
+                $('#bioInput').val(profile.bio || '');
+                $('#emailAlertsCheck').prop('checked', !!profile.emailAlerts);
+                $('#cohortNotesCheck').prop('checked', !!profile.cohortNotes);
+
+                // Preview values
+                $('#profileFullNamePreview').text(profile.fullName);
+                $('#profileEmailPreview').text(profile.email);
+                $('#profileAvatarPreview').attr('src', profile.avatar);
+                $('#badgeRole').text(profile.role || 'Premium Learner');
+                $('#badgeStatus').text(profile.status || 'Active Student');
+                $('#joinedDateSpan').text(profile.joinedDate || '2026-01-15');
+
+                // Determine active status avatar in modal
+                $('.avatar-option-img').each(function() {
+                    if ($(this).data('src') === profile.avatar) {
+                        $(this).addClass('active');
+                    } else {
+                        $(this).removeClass('active');
+                    }
+                });
+
+                tempSelectedAvatarUrl = profile.avatar;
+                recalculateCompletion(profile);
+            }
+
+            // High premium math logic to calculate account profile completion %
+            function recalculateCompletion(profile) {
+                let score = 50; // default base score
+                if (profile.fullName && profile.fullName !== "Guest Student") score += 10;
+                if (profile.email && profile.email !== "verylongemailaddress@exampledomain.com") score += 10;
+                if (profile.phone && profile.phone.length > 5) score += 10;
+                if (profile.bio && profile.bio.length > 10) score += 10;
+                if (profile.trackGoal) score += 10;
+                
+                if (score > 100) score = 100;
+
+                $('#compScore').text(score + '%');
+                $('#compBar').css('width', score + '%').attr('aria-valuenow', score);
+            }
+
+            // Click avatar portrait image choices inside the elegant premium modal
+            $('.avatar-option-img').on('click', function() {
+                $('.avatar-option-img').removeClass('active');
+                $(this).addClass('active');
+                tempSelectedAvatarUrl = $(this).data('src');
+            });
+
+            // Confirm chosen avatar change
+            $('#confirmAvatarBtn').on('click', function() {
+                if (tempSelectedAvatarUrl) {
+                    $('#profileAvatarPreview').attr('src', tempSelectedAvatarUrl);
+                    
+                    // Directly save the selected avatar and alert the global state/header instantly
+                    const currentProfile = JSON.parse(localStorage.getItem('userProfile')) || {};
+                    currentProfile.avatar = tempSelectedAvatarUrl;
+                    localStorage.setItem('userProfile', JSON.stringify(currentProfile));
+                    
+                    // Sync immediately on the live page navbar as well
+                    $('#userProfileDropdown img, #mobileUserProfileSection img, .nav-item.dropdown img').attr('src', tempSelectedAvatarUrl);
+                    
+                    showToast("Avatar Updated", "Your portrait choice is saved and displayed immediately.");
+                }
+            });
+
+             // Manage Submit actions
+            $('#profileForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const $btn = $('#saveBtn');
+                $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving details...');
+
+                // Form object structure
+                const updatedProfile = {
+                    fullName: $.trim($('#fullNameInput').val()),
+                    email: $.trim($('#emailInput').val()).toLowerCase(),
+                    phone: $.trim($('#phoneInput').val()),
+                    avatar: tempSelectedAvatarUrl || $('#profileAvatarPreview').attr('src'),
+                    status: $('#badgeStatus').text(),
+                    joinedDate: $('#joinedDateSpan').text(),
+                    role: $('#badgeRole').text(),
+                    bio: $.trim($('#bioInput').val()),
+                    trackGoal: $('#learningTrackSelect').val(),
+                    emailAlerts: $('#emailAlertsCheck').is(':checked'),
+                    cohortNotes: $('#cohortNotesCheck').is(':checked')
+                };
+
+                setTimeout(function() {
+                    // Save to local persistence database representation
+                    localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
+                    localStorage.setItem('isLoggedIn', 'true'); // Keep logged in
+                    
+                    // Update preview content panel on the fly
+                    $('#profileFullNamePreview').text(updatedProfile.fullName);
+                    $('#profileEmailPreview').text(updatedProfile.email);
+                    
+                    // Sync with standard global navbar headers instantly
+                    $('#nav-full-name, #mobile-nav-full-name').text(updatedProfile.fullName);
+                    $('#nav-email, #mobile-nav-email').text(updatedProfile.email);
+                    $('#userProfileDropdown img, #mobileUserProfileSection img, .nav-item.dropdown img').attr('src', updatedProfile.avatar);
+                    
+                    recalculateCompletion(updatedProfile);
+
+                    // Re-enable save button
+                    $btn.prop('disabled', false).html('<i class="fa-solid fa-floppy-disk"></i> Save Profile Changes');
+
+                    // Show beautiful toast notice
+                    showToast("Profile Saved", "Your information was successfully synced across Elevate.");
+                }, 1000);
+            });
+
+            // Toast feedback timing module
+            let toastTimer;
+            function showToast(title, description) {
+                clearTimeout(toastTimer);
+                $('#toastTitle').text(title);
+                $('#toastDesc').text(description);
+                $('#successToast').addClass('show');
+
+                toastTimer = setTimeout(function() {
+                    $('#successToast').removeClass('show');
+                }, 4000);
+            }
+
+            $('#closeToastBtn').on('click', function() {
+                $('#successToast').removeClass('show');
+            });
+        });
+    </script>
+</body>
+</html>

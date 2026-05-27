@@ -21,6 +21,47 @@ $(function() {
         $('#sidebar-placeholder').load('/components/sidebar.html');
     }
 
+    // Universal robust dropdown event handler on the document level to guarantee
+    // clean toggling of dynamically loaded bootstrap navbar fragments.
+    $(document).on('click', '[data-bs-toggle="dropdown"]', function(e) {
+        // If Bootstrap is loaded, let it handle the dropdown natively to prevent double-toggling conflicts
+        if (typeof bootstrap !== 'undefined' && bootstrap.Dropdown) {
+            return;
+        }
+
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const $toggle = $(this);
+        const $menu = $toggle.next('.dropdown-menu');
+        const $parent = $toggle.parent();
+        const isOpen = $menu.hasClass('show');
+        
+        // Close all other open dropdowns first to keep clean UX
+        $('.dropdown-menu.show').not($menu).removeClass('show');
+        $('[data-bs-toggle="dropdown"]').not($toggle).attr('aria-expanded', 'false');
+        $('.dropdown.show').not($parent).removeClass('show');
+        
+        if (isOpen) {
+            $menu.removeClass('show');
+            $toggle.attr('aria-expanded', 'false');
+            $parent.removeClass('show');
+        } else {
+            $menu.addClass('show');
+            $toggle.attr('aria-expanded', 'true');
+            $parent.addClass('show');
+        }
+    });
+
+    // Handle clicks outside active dropdowns to collapse them cleanly
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.dropdown').length) {
+            $('.dropdown-menu.show').removeClass('show');
+            $('[data-bs-toggle="dropdown"]').attr('aria-expanded', 'false');
+            $('.dropdown.show').removeClass('show');
+        }
+    });
+
     function initNavbarLogic() {
         const $mobileNav = $('#mobileNav');
         const $navOverlay = $('#navOverlay');
@@ -58,6 +99,20 @@ $(function() {
         });
 
         // Simulating the user details & premium login header states
+        let userProfile = JSON.parse(localStorage.getItem('userProfile'));
+        if (!userProfile) {
+            userProfile = {
+                fullName: "Guest Student",
+                email: "verylongemailaddress@exampledomain.com",
+                phone: "+60 12-345 6789",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
+                status: "Active Student",
+                joinedDate: "2026-01-15",
+                role: "Premium Learner"
+            };
+            localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        }
+
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         if (isLoggedIn) {
             $('#navbar-login-item, #navbar-register-item').addClass('d-none');
@@ -68,11 +123,10 @@ $(function() {
             $('.guest-nav-item').addClass('d-none');
             $('.auth-nav-item').removeClass('d-none');
             
-            // Standard demo user details as requested
-            const demoEmail = "verylongemailaddress@exampledomain.com";
-            const demoName = "Guest Student";
-            $('#nav-full-name, #mobile-nav-full-name').text(demoName);
-            $('#nav-email, #mobile-nav-email').text(demoEmail);
+            // Render user details dynamically
+            $('#nav-full-name, #mobile-nav-full-name').text(userProfile.fullName);
+            $('#nav-email, #mobile-nav-email').text(userProfile.email);
+            $('#userProfileDropdown img, #mobileUserProfileSection img, .nav-item.dropdown img').attr('src', userProfile.avatar);
         } else {
             $('#navbar-login-item, #navbar-register-item').removeClass('d-none');
             $('#mobileAuthButtons').removeClass('d-none');
@@ -83,14 +137,32 @@ $(function() {
             $('.auth-nav-item').addClass('d-none');
         }
 
+
         // Logout action flows
         $('#navbar-logout-btn, #mobile-navbar-logout-btn').on('click', function(e) {
             e.preventDefault();
+            
+            // Overlay transition
+            const $overlay = $('<div id="logout-transition-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; bg-color:#0f172a; background:rgba(15,23,42,0.95); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; opacity:0; transition:opacity 0.4s ease;"><div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"><span class="visually-hidden">Loading...</span></div><h4 class="text-white fw-bold">Signing out safely...</h4><p class="text-white-50 x-small">Clearing virtual session credentials.</p></div>');
+            $('body').append($overlay);
+            
+            // Trigger reflow & fade in
+            setTimeout(() => {
+                $overlay.css('opacity', '1');
+            }, 10);
+            
             localStorage.setItem('isLoggedIn', 'false');
-            $('body').css('opacity', '0.5');
+            
             setTimeout(function() {
-                window.location.href = '/index.html';
-            }, 300);
+                // Ensure navbar state refreshes immediately or after redirect
+                $('#userProfileDropdown, #mobileUserProfileSection').addClass('d-none');
+                $('#navbar-login-item, #navbar-register-item').removeClass('d-none');
+                $('#mobileAuthButtons').removeClass('d-none');
+                $('.guest-nav-item').removeClass('d-none');
+                $('.auth-nav-item').addClass('d-none');
+                
+                window.location.href = '/pages/login.html?logout=success';
+            }, 1200);
         });
 
         // Language Selector Sync and Interactive UI

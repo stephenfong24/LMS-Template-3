@@ -35,7 +35,7 @@
                     <p class="text-muted small mb-4">Log in to your account to continue your learning track.</p>
                     
                     <!-- Premium Guest info card -->
-                    <div class="p-3 mb-4 rounded-4 d-flex align-items-start gap-2.5" style="background-color: rgba(124, 58, 237, 0.06); border: 1px solid rgba(124, 58, 237, 0.1) !important; color: var(--p-700);">
+                    <div class="p-3 mb-4 rounded-4 d-flex align-items-start gap-3" style="background-color: rgba(124, 58, 237, 0.06); border: 1px solid rgba(124, 58, 237, 0.1) !important; color: var(--p-700);">
                         <i class="fa-solid fa-circle-user mt-0.5 fs-5 flex-shrink-0 text-primary"></i>
                         <div style="font-size: 0.8rem;">
                             <span class="fw-bold d-block text-dark mb-0.5">Demo Guest Session Credentials</span>
@@ -46,6 +46,11 @@
                     <!-- Failed status holder -->
                     <div id="login-error-alert" class="alert alert-danger border-0 rounded-4 px-3 py-2.5 d-none x-small mb-3" style="font-size: 0.75rem;">
                         <!-- Injected dynamically -->
+                    </div>
+
+                    <!-- Logout success status holder -->
+                    <div id="logout-success-alert" class="alert alert-success border-0 rounded-4 px-3 py-2.5 d-none x-small mb-3" style="font-size: 0.75rem; background-color: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.12) !important; color: #10b981;">
+                        <i class="fa-solid fa-circle-check me-1.5 text-success"></i> Signed out safely. Your active learning sessions have been suspended. Welcome back anytime!
                     </div>
 
                     <form id="loginForm">
@@ -98,6 +103,12 @@
     
     <script>
         $(document).ready(function() {
+            // Check for logout parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('logout') === 'success') {
+                $('#logout-success-alert').removeClass('d-none');
+            }
+
             // Handle form simulation on submit
             $('#loginForm').on('submit', function(e) {
                 e.preventDefault();

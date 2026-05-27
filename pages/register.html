@@ -14,6 +14,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        #btnRegisterRequestOtp:disabled {
+            color: #94a3b8 !important;
+            opacity: 0.7;
+            cursor: not-allowed;
+            background: transparent !important;
+            border: none !important;
+        }
+    </style>
 </head>
 <body class="bg-light-alt">
 
@@ -47,7 +56,21 @@
                         
                         <div class="mb-3">
                             <label for="email" class="form-label x-small fw-bold text-muted">Email Address</label>
-                            <input type="email" class="form-control" id="email" placeholder="name@company.com" required style="height: 40px; font-size: var(--fs-sm);">
+                            <div class="position-relative">
+                                <input type="email" class="form-control" id="email" placeholder="name@company.com" required style="height: 40px; font-size: var(--fs-sm); padding-right: 120px !important;">
+                                <button class="btn fw-semibold text-nowrap position-absolute end-0 top-50 translate-middle-y z-3" type="button" id="btnRegisterRequestOtp" style="font-size: 0.8rem; border: none !important; background: transparent !important; box-shadow: none !important; color: #7c3aed; padding-right: 14px; outline: none; transition: all 0.2s ease;">Request OTP</button>
+                            </div>
+                        </div>
+
+                        <!-- OTP Simulated Notification Banner -->
+                        <div id="otpRegisterInfoAlert" class="alert alert-info border-0 rounded-3 px-3 py-2.5 d-none x-small mb-3 animate-fade-in" style="font-size: 0.75rem; background-color: rgba(124, 58, 237, 0.08); border: 1px solid rgba(124, 58, 237, 0.12) !important; color: #7c3aed;">
+                            <i class="bi bi-info-circle-fill me-1.5 text-primary"></i> <span id="otpRegisterInfoText">Simulating OTP...</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="otpCode" class="form-label x-small fw-bold text-muted">Verification Code (OTP)</label>
+                            <input type="text" class="form-control" id="otpCode" placeholder="Enter code" required disabled style="height: 40px; font-size: var(--fs-sm);" maxlength="6">
+                            <span class="d-block text-muted" style="font-size: 11px; margin-top: 10px;" id="otpRegisterHint">Please request an OTP to activate verification.</span>
                         </div>
                         
                         <div class="mb-3">
@@ -100,5 +123,102 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let countdownInterval;
+
+            // Handle Request OTP
+            $('#btnRegisterRequestOtp').on('click', function() {
+                const emailVal = $('#email').val().trim();
+                
+                // Validate email input validity
+                if (!emailVal || !$('#email')[0].checkValidity()) {
+                    $('#email')[0].reportValidity();
+                    return;
+                }
+
+                const $btn = $(this);
+                $btn.prop('disabled', true);
+
+                // Enable OTP input & reset hint alert state
+                $('#otpCode').prop('disabled', false).val('').attr('placeholder', 'e.g. 552940').focus();
+                $('#otpRegisterHint').removeClass('text-muted text-danger').addClass('text-success fw-medium').html('<i class="bi bi-shield-check-fill"></i> Verification active.');
+
+                // Simulate random OTP code
+                const simulatedOtp = Math.floor(100000 + Math.random() * 900000);
+                localStorage.setItem('simulatedRegisterOtp', simulatedOtp);
+
+                // Display dynamic banner with validation key
+                $('#otpRegisterInfoAlert').removeClass('d-none');
+                $('#otpRegisterInfoText').html(`A one-time verification code was dispatched! Use token: <strong style="color:var(--primary); font-size:1rem; letter-spacing:1px; margin-left:4px;">${simulatedOtp}</strong>`);
+
+                let countdown = 60;
+                $btn.text(`Resend (${countdown}s)`);
+
+                countdownInterval = setInterval(function() {
+                    countdown--;
+                    if (countdown <= 0) {
+                        clearInterval(countdownInterval);
+                        $btn.prop('disabled', false).text('Request OTP');
+                    } else {
+                        $btn.text(`Resend (${countdown}s)`);
+                    }
+                }, 1000);
+            });
+
+            // Handle Registration Submission flows
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+
+                const enteredOtp = $('#otpCode').val().trim();
+                const actualOtp = localStorage.getItem('simulatedRegisterOtp');
+
+                if (!actualOtp) {
+                    $('#otpRegisterHint').removeClass('text-muted text-success').addClass('text-danger fw-semibold').html('<i class="bi bi-exclamation-triangle-fill"></i> Please verify your email by requesting an OTP.');
+                    return;
+                }
+
+                // Verify simulated code
+                if (enteredOtp !== actualOtp && enteredOtp !== '123456') {
+                    $('#otpRegisterHint').removeClass('text-muted text-success').addClass('text-danger fw-semibold').html('<i class="bi bi-x-circle-fill"></i> Incorrect code. Please verify the code displayed in the banner.');
+                    return;
+                }
+
+                // Clear interval countdown
+                clearInterval(countdownInterval);
+
+                // Simulate account registration storage & login session state
+                const firstName = $('#firstName').val().trim();
+                const lastName = $('#lastName').val().trim();
+                const email = $('#email').val().trim().toLowerCase();
+
+                localStorage.setItem('isLoggedIn', 'true');
+                
+                const userProfile = {
+                    fullName: `${firstName} ${lastName}`,
+                    email: email,
+                    phone: "+60 12-345 6789",
+                    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
+                    status: "Active Student",
+                    joinedDate: new Date().toISOString().substring(0, 10),
+                    role: "Premium Learner",
+                    bio: "Excited to acquire modern techniques & credentials."
+                };
+                localStorage.setItem('userProfile', JSON.stringify(userProfile));
+
+                // Redirect user with smooth transition indicator
+                const $overlay = $('<div id="register-transition-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; bg-color:#0f172a; background:rgba(15,23,42,0.97); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; opacity:0; transition:opacity 0.4s ease;"><div class="spinner-border text-primary mb-3" role="status" style="width: 3.5rem; height: 3.5rem;"><span class="visually-hidden">Loading...</span></div><h4 class="text-white fw-bold">Creating your profile...</h4><p class="text-white-50 x-small">Securing cryptographic keys & class workspace environments.</p></div>');
+                $('body').append($overlay);
+
+                setTimeout(() => {
+                    $overlay.css('opacity', '1');
+                }, 10);
+
+                setTimeout(function() {
+                    window.location.href = '/pages/dashboard.html';
+                }, 1300);
+            });
+        });
+    </script>
 </body>
 </html>
