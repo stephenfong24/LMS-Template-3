@@ -8,7 +8,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -23,39 +23,119 @@
             --primary-light: rgba(124, 58, 237, 0.08);
             --primary-border: rgba(124, 58, 237, 0.15);
             --radius-premium: 16px;
-            --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.03), 0 1px 2px rgba(15, 23, 42, 0.01);
+            --shadow-soft-lg: 0 10px 30px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.01);
+            --shadow-soft-sm: 0 4px 20px rgba(15, 23, 42, 0.02), 0 1px 2px rgba(15, 23, 42, 0.01);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace !important;
         }
         
-        .saas-table-card {
+        .premium-dashboard-card {
+            background: #ffffff;
+            border-radius: var(--radius-premium);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: var(--shadow-soft-sm) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .purchase-card {
             background: #ffffff;
             border-radius: var(--radius-premium);
             border: 1px solid rgba(15, 23, 42, 0.05);
-            box-shadow: var(--shadow-soft) !important;
-            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.015);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .receipt-item-row {
-            transition: background-color 0.2s ease;
+        .purchase-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.15);
+            box-shadow: var(--shadow-soft-lg) !important;
         }
 
-        .receipt-item-row:hover {
+        .compact-payment-chip {
             background-color: #f8fafc;
-        }
-
-        .btn-invoice {
-            font-size: 0.8125rem;
-            font-weight: 500;
-            padding: 6px 12px;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            color: #4b5563;
-            background: #f3f4f6;
-            border: 1px solid #e5e7eb;
-            transition: all 0.15s ease;
+            font-size: 0.725rem;
+            font-weight: 500;
+            padding: 4px 10px;
         }
 
-        .btn-invoice:hover {
-            background: #e5e7eb;
-            color: #111827;
+        .filter-input-group {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .filter-input-group:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+        }
+
+        .filter-select {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-weight: 500;
+            color: #475569;
+            transition: all 0.2s ease;
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+            outline: none;
+        }
+
+        .btn-premium-action {
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: 0.8125rem;
+            transition: all 0.2s ease;
+        }
+
+        .detail-badge-title {
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .course-icon-bg {
+            width: 46px; 
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Semantic colors for modern pills */
+        .status-pill-paid {
+            background-color: #ecfdf5 !important;
+            color: #047857 !important;
+            border: 1px solid #a7f3d0 !important;
+        }
+
+        .status-pill-pending {
+            background-color: #fffbeb !important;
+            color: #b45309 !important;
+            border: 1px solid #fde68a !important;
+        }
+
+        .status-pill-refunded {
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+            border: 1px solid #fecaca !important;
         }
     </style>
 </head>
@@ -64,7 +144,7 @@
     <!-- Header placeholder -->
     <div id="navbar-placeholder"></div>
 
-    <main class="container py-5 flex-grow-1">
+    <main class="container px-4 px-md-3 py-5 flex-grow-1">
         <!-- Locked State Placeholder (Shown if logged out) -->
         <div id="locked-state" class="row justify-content-center d-none" style="margin-top: 5vh; margin-bottom: 5vh;">
             <div class="col-lg-6 col-md-8 text-center">
@@ -88,82 +168,136 @@
             </div>
         </div>
 
-        <!-- Authorized Purchase Area (Shown if logged in) -->
-        <div id="authorized-purchase-workspace" class="d-none">
-            <div class="row mb-4">
+        <!-- Authorized Purchase Area -->
+        <div id="authorized-purchase-workspace" class="d-none animate-fade-in">
+            <!-- Header Section -->
+            <div class="row align-items-center mb-5 g-4">
                 <div class="col-12 text-center text-md-start">
-                    <span class="badge px-3 py-1.5 rounded-pill fw-semibold mb-2.5" style="font-size: 0.7rem; border: 1px solid rgba(124,58,237,0.15) !important; background-color: rgba(124, 58, 237, 0.1) !important; color: #7c3aed !important;">
-                        <i class="fa-solid fa-credit-card me-1"></i> Transaction Record Vault
+                    <span class="badge px-3 py-1.5 rounded-pill fw-semibold mb-3 d-inline-flex align-items-center" style="font-size: 0.725rem; border: 1px solid rgba(124,58,237,0.15) !important; background-color: rgba(124, 58, 237, 0.08) !important; color: #7c3aed !important;">
+                        <i class="fa-solid fa-credit-card me-2"></i> Transaction Record Vault
                     </span>
-                    <h2 class="fw-extrabold text-dark tracking-tight mb-1">Billing & Purchase History</h2>
-                    <p class="text-muted small">Manage your payments, active subscriptions, and download original tax invoices.</p>
+                    <h1 class="fw-extrabold text-dark tracking-tight mb-1" style="font-size: 2rem;">Billing & Purchase History</h1>
+                    <p class="text-muted small mb-0">View instant payment receipts, track invoice ledgers, and download official tax documents.</p>
                 </div>
             </div>
 
-            <div class="saas-table-card">
-                <div class="p-4 border-bottom bg-white d-flex align-items-center justify-content-between flex-wrap gap-2">
-                    <h6 class="fw-bold mb-0 text-dark">Invoice Ledger Table</h6>
-                    <span class="badge bg-light text-dark border px-2 py-1.5 rounded-3 font-sans" style="font-size: 0.75rem;"><strong class="text-primary">Status:</strong> Account in good standing</span>
+            <!-- Interactive Filter, Search, and Sort Panel -->
+            <div class="premium-dashboard-card p-3 mb-4">
+                <div class="row g-3 align-items-center">
+                    <!-- Search Input -->
+                    <div class="col-lg-5 col-md-12">
+                        <div class="filter-input-group d-flex align-items-center px-3 py-1">
+                            <i class="fa-solid fa-magnifying-glass text-muted me-2" style="font-size: 0.9rem;"></i>
+                            <input type="text" id="searchInput" class="form-control border-0 bg-transparent py-2 shadow-none font-sans" placeholder="Search by course name or invoice ID..." style="font-size: 0.875rem;">
+                        </div>
+                    </div>
+                    <!-- Status Filter -->
+                    <div class="col-lg-3 col-sm-6">
+                        <select id="statusFilter" class="form-select filter-select py-2.5 font-sans" style="font-size: 0.875rem;">
+                            <option value="all">All Statuses</option>
+                            <option value="paid">Paid</option>
+                            <option value="pending">Pending</option>
+                            <option value="refunded">Revoked</option>
+                        </select>
+                    </div>
+                    <!-- Date/Year Sort -->
+                    <div class="col-lg-4 col-sm-6">
+                        <select id="sortFilter" class="form-select filter-select py-2.5 font-sans" style="font-size: 0.875rem;">
+                            <option value="latest">Sort by: Latest Purchases</option>
+                            <option value="oldest">Sort by: Oldest Purchases</option>
+                            <option value="highest">Sort by: Highest Price</option>
+                            <option value="lowest">Sort by: Lowest Price</option>
+                        </select>
+                    </div>
                 </div>
-                
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0" style="min-width: 800px;">
-                        <thead class="table-light text-uppercase font-sans" style="border-bottom: 2px solid #f1f5f9; font-size: 0.7rem; letter-spacing: 0.05em; color: #64748b;">
-                            <tr>
-                                <th scope="col" class="py-3 px-4">Invoice ID</th>
-                                <th scope="col" class="py-3">Purchased Course</th>
-                                <th scope="col" class="py-3">Transaction Date</th>
-                                <th scope="col" class="py-3">Method</th>
-                                <th scope="col" class="py-3">Amount Paid</th>
-                                <th scope="col" class="py-3">Status</th>
-                                <th scope="col" class="py-3 px-4 text-end">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody class="font-sans" style="font-size: 0.85rem; color: #334155;">
-                            <tr class="receipt-item-row" style="border-bottom: 1px solid #f1f5f9;">
-                                <td class="px-4 py-3.5"><strong class="font-mono text-dark" style="font-size: 0.8rem;">#INV-9284102</strong></td>
-                                <td class="py-3.5">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="bg-primary-subtle text-primary rounded d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 0.85rem;">
-                                            <i class="fa-solid fa-brain"></i>
-                                        </div>
-                                        <div>
-                                            <span class="fw-bold text-dark d-block">AI & Large Language Model Specialization</span>
-                                            <span class="text-muted x-small">Ultimate Masterclass Cohort Bundle</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-3.5">May 21, 2026</td>
-                                <td class="py-3.5"><span class="badge bg-light border text-dark font-mono" style="font-size: 0.7rem;"><i class="fa-brands fa-cc-visa text-primary me-1"></i> Visaending in 1032</span></td>
-                                <td class="py-3.5"><strong class="text-dark">$189.00 USD</strong></td>
-                                <td class="py-3.5"><span class="badge bg-success-subtle text-success border border-success border-opacity-20 rounded-pill px-2.5 py-1 fw-semibold" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check me-1"></i> Paid in Full</span></td>
-                                <td class="px-4 py-3.5 text-end"><button class="btn btn-invoice download-bill-trigger" data-inv="INV-9284102"><i class="fa-solid fa-download me-1"></i> Invoice</button></td>
-                            </tr>
-                            <tr class="receipt-item-row">
-                                <td class="px-4 py-3.5"><strong class="font-mono text-dark" style="font-size: 0.8rem;">#INV-8419204</strong></td>
-                                <td class="py-3.5">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="bg-success-subtle text-success rounded d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 0.85rem;">
-                                            <i class="fa-solid fa-code"></i>
-                                        </div>
-                                        <div>
-                                            <span class="fw-bold text-dark d-block">Full-Stack SaaS Platform Architecture</span>
-                                            <span class="text-muted x-small">Independent Engineering Track</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-3.5">Jan 16, 2026</td>
-                                <td class="py-3.5"><span class="badge bg-light border text-dark font-mono" style="font-size: 0.7rem;"><i class="fa-brands fa-cc-mastercard text-danger me-1"></i> Mastercard ending in 8421</span></td>
-                                <td class="py-3.5"><strong class="text-dark">$149.00 USD</strong></td>
-                                <td class="py-3.5"><span class="badge bg-success-subtle text-success border border-success border-opacity-20 rounded-pill px-2.5 py-1 fw-semibold" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check me-1"></i> Paid in Full</span></td>
-                                <td class="px-4 py-3.5 text-end"><button class="btn btn-invoice download-bill-trigger" data-inv="INV-8419204"><i class="fa-solid fa-download me-1"></i> Invoice</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            </div>
+
+            <!-- Responsive List Cards Container -->
+            <div id="invoiceListContainer">
+                <!-- JavaScript will populate cards here dynamically -->
+            </div>
+
+            <!-- Empty State Container -->
+            <div id="emptyInvoiceState" class="text-center py-5 px-4 bg-white rounded-4 border border-light shadow-sm d-none">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light text-muted mb-4" style="width: 70px; height: 70px;">
+                    <i class="fa-solid fa-file-invoice fs-2"></i>
                 </div>
+                <h4 class="fw-bold text-dark mb-2">No Transactions Found</h4>
+                <p class="text-muted small mx-auto mb-4" style="max-width: 400px;">
+                    We couldn't find any financial records matching your search queries or active filters. Please adjust your criteria.
+                </p>
+                <button type="button" id="resetFiltersBtn" class="btn btn-primary btn-premium-action px-4 py-2.5">
+                    <i class="fa-solid fa-rotate-left me-1"></i> Reset Filters
+                </button>
             </div>
         </div>
     </main>
+
+    <!-- Details Modal Setup -->
+    <div class="modal fade" id="receiptDetailsModal" tabindex="-1" aria-labelledby="receiptDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header border-0 bg-light-alt px-4 pt-4 pb-1">
+                    <h5 class="modal-title fw-bold text-dark" id="receiptDetailsModalLabel"><i class="fa-solid fa-receipt text-primary me-2"></i>Official Receipt</h5>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 pt-1">
+                    <div class="text-center py-3 mb-4 border-bottom border-dashed">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-2" style="width: 50px; height: 50px;">
+                            <i class="fa-solid fa-circle-check fs-4"></i>
+                        </div>
+                        <h4 class="fw-extrabold text-dark mb-1" id="mAmount">RM 189.00</h4>
+                        <span class="badge status-pill-paid d-inline-flex align-items-center" id="mStatus"><i class="fa-solid fa-circle-check me-2"></i>Paid</span>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <span class="detail-badge-title d-block">Invoice Number</span>
+                            <span class="font-mono text-dark fw-bold small" id="mInvoiceId">#INV-9284102</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="detail-badge-title d-block">Transaction Date</span>
+                            <span class="text-secondary small" id="mDate">May 21, 2026</span>
+                        </div>
+                        <div class="col-12">
+                            <span class="detail-badge-title d-block">Purchased Course</span>
+                            <span class="text-dark fw-semibold small d-block" id="mCourse">AI & Large Language Model Specialization</span>
+                            <span class="text-muted x-small" id="mSubtitle">Ultimate Masterclass Cohort Bundle</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="detail-badge-title d-block">Payment Method</span>
+                            <span class="text-dark small" id="mMethod">Visa ending in 1032</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="detail-badge-title d-block">Reference Token</span>
+                            <span class="font-mono text-muted x-small" id="mToken">tx_7c3aed9284102</span>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-light rounded-3 mt-4" style="background-color: #f8fafc !important;">
+                        <div class="d-flex justify-content-between mb-1.5 small text-muted">
+                            <span>Subtotal</span>
+                            <span id="mSubtotal">RM 189.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-1.5 small text-muted">
+                            <span>VAT / Sales Tax (0%)</span>
+                            <span>RM 0.00</span>
+                        </div>
+                        <div class="d-flex justify-content-between pt-2 border-top fw-bold text-dark small">
+                            <span>Total Charge</span>
+                            <span id="mTotal">RM 189.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-1 d-flex gap-2">
+                    <button type="button" class="btn btn-light btn-premium-action flex-grow-1" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-premium-action flex-grow-1 download-bill-trigger modal-download-btn" data-inv="">
+                        <i class="fa-solid fa-download me-1"></i> Retrieve Proof
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer placeholder -->
     <div id="footer-placeholder"></div>
@@ -176,6 +310,7 @@
     
     <script>
         $(document).ready(function() {
+            // Check auth state
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             if (isLoggedIn) {
                 $('#locked-state').addClass('d-none');
@@ -185,17 +320,210 @@
                 $('#authorized-purchase-workspace').addClass('d-none');
             }
 
-            $('.download-bill-trigger').click(function() {
+            // Real Interactive Database Model for Purchases
+            const purchaseHistoryData = [
+                {
+                    id: "INV-9284102",
+                    courseTitle: "AI & Large Language Model Specialization",
+                    courseSubtitle: "Ultimate Masterclass Cohort Bundle",
+                    category: "Artificial Intelligence",
+                    courseImage: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600",
+                    date: "May 21, 2026",
+                    dateRaw: "2026-05-21",
+                    methodRef: "Visa ending in 1032",
+                    methodIcon: "fa-brands fa-cc-visa text-primary",
+                    amount: 189.00,
+                    status: "paid",
+                    statusLabel: "Paid",
+                    token: "tx_visa_9284102a98f"
+                },
+                {
+                    id: "INV-8419204",
+                    courseTitle: "Full-Stack SaaS Platform Architecture",
+                    courseSubtitle: "Independent Engineering Track",
+                    category: "Software Engineering",
+                    courseImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600",
+                    date: "Jan 16, 2026",
+                    dateRaw: "2026-01-16",
+                    methodRef: "Mastercard ending in 8421",
+                    methodIcon: "fa-brands fa-cc-mastercard text-danger",
+                    amount: 149.00,
+                    status: "paid",
+                    statusLabel: "Paid",
+                    token: "tx_mc_8419204f77c"
+                },
+                {
+                    id: "INV-7103859",
+                    courseTitle: "Executive Leadership & Scrum Strategy",
+                    courseSubtitle: "Enterprise Operations Certification",
+                    category: "Leadership",
+                    courseImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=600",
+                    date: "Feb 08, 2025",
+                    dateRaw: "2025-02-08",
+                    methodRef: "PayPal (billing@gmail.com)",
+                    methodIcon: "fa-brands fa-paypal text-info",
+                    amount: 99.00,
+                    status: "refunded",
+                    statusLabel: "Revoked",
+                    token: "tx_pp_7103859d04b"
+                },
+                {
+                    id: "INV-6092147",
+                    courseTitle: "UI/UX High-Fidelity Prototyping",
+                    courseSubtitle: "Figma to Code Production Pipeline",
+                    category: "Design Strategy",
+                    courseImage: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=600",
+                    date: "May 02, 2026",
+                    dateRaw: "2026-05-02",
+                    methodRef: "FPX Online Banking",
+                    methodIcon: "fa-solid fa-building-columns text-secondary",
+                    amount: 120.00,
+                    status: "pending",
+                    statusLabel: "Pending",
+                    token: "tx_fpx_6092147c21e"
+                }
+            ];
+
+            // Render function
+            function renderInvoices() {
+                const searchVal = $('#searchInput').val().toLowerCase();
+                const statusVal = $('#statusFilter').val();
+                const sortVal = $('#sortFilter').val();
+
+                // Filtration
+                let filtered = purchaseHistoryData.filter(item => {
+                    const matchesSearch = item.courseTitle.toLowerCase().includes(searchVal) || 
+                                          item.courseSubtitle.toLowerCase().includes(searchVal) ||
+                                          item.id.toLowerCase().includes(searchVal);
+                    
+                    const matchesStatus = (statusVal === 'all') || (item.status === statusVal);
+                    
+                    return matchesSearch && matchesStatus;
+                });
+
+                // Sorting
+                if (sortVal === 'latest') {
+                    filtered.sort((a,b) => new Date(b.dateRaw) - new Date(a.dateRaw));
+                } else if (sortVal === 'oldest') {
+                    filtered.sort((a,b) => new Date(a.dateRaw) - new Date(b.dateRaw));
+                } else if (sortVal === 'highest') {
+                    filtered.sort((a,b) => b.amount - a.amount);
+                } else if (sortVal === 'lowest') {
+                    filtered.sort((a,b) => a.amount - b.amount);
+                }
+
+                const $container = $('#invoiceListContainer');
+                $container.empty();
+
+                if (filtered.length === 0) {
+                    $container.addClass('d-none');
+                    $('#emptyInvoiceState').removeClass('d-none');
+                    return;
+                }
+
+                $('#emptyInvoiceState').addClass('d-none');
+                $container.removeClass('d-none');
+
+                filtered.forEach(item => {
+                    let statusClass = 'status-pill-paid';
+                    let statusIcon = 'fa-solid fa-circle-check';
+                    if (item.status === 'pending') {
+                        statusClass = 'status-pill-pending';
+                        statusIcon = 'fa-solid fa-clock';
+                    } else if (item.status === 'refunded') {
+                        statusClass = 'status-pill-refunded';
+                        statusIcon = 'fa-solid fa-circle-xmark';
+                    }
+
+                    const cardHtml = `
+                        <div class="purchase-card p-4 p-md-5 mb-4 bg-white border border-light shadow-sm">
+                            <div class="row align-items-center g-4 g-lg-5">
+                                <!-- Col 1: Course Info & Thumbnail (merged side-by-side) -->
+                                <div class="col-lg-5 col-md-12 col-12">
+                                    <div class="d-flex align-items-center gap-4">
+                                        <!-- Course Image Thumbnail -->
+                                        <div class="position-relative overflow-hidden rounded-3 border d-none d-sm-block shadow-sm" style="width: 140px; height: 90px; flex-shrink: 0; background-color: #f1f5f9;">
+                                            <img src="${item.courseImage}" class="w-100 h-100" style="object-fit: cover;" alt="${item.courseTitle}">
+                                        </div>
+                                        <!-- Course Text Details -->
+                                        <div class="min-w-0">
+                                            <h4 class="fw-bold text-dark mb-1.5 tracking-tight" style="font-size: 1.15rem; line-height: 1.1;">${item.courseTitle}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Col 2: Ledger Data (Invoice ID, Trans Date) - Spacious, no ugly wraps -->
+                                <div class="col-lg-3 col-md-6 col-12 ps-lg-4">
+                                    <div class="d-flex flex-column gap-1.5 py-1">
+                                        <div class="d-flex align-items-center justify-content-between justify-content-lg-start gap-3">
+                                            <span class="text-muted text-uppercase fw-semibold" style="font-size: 0.65rem; min-width: 70px; letter-spacing: 0.05em;">Invoice:</span>
+                                            <span class="font-mono fw-bold text-dark small">#${item.id}</span>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-between justify-content-lg-start gap-3">
+                                            <span class="text-muted text-uppercase fw-semibold" style="font-size: 0.65rem; min-width: 70px; letter-spacing: 0.05em;">Date:</span>
+                                            <span class="text-dark small fw-medium">${item.date}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Col 3: Pricing and Payment Status -->
+                                <div class="col-lg-2 col-md-3 col-12">
+                                    <div class="d-flex flex-column align-items-start align-items-lg-center gap-1.5">
+                                        <div class="text-lg-center text-nowrap">
+                                            <span class="text-dark fw-bold fs-5 text-nowrap">RM ${item.amount.toFixed(2)}</span>
+                                        </div>
+                                        <span class="badge ${statusClass} rounded-pill px-3.5 py-2 fw-semibold d-inline-flex align-items-center" style="font-size: 0.725rem; letter-spacing: 0.02em;">
+                                            <i class="${statusIcon} me-2" style="font-size: 0.75rem;"></i>${item.statusLabel}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Col 4: Operations/Interactions (Proper gaps between icon and text) -->
+                                <div class="col-lg-2 col-md-3 col-12 text-lg-end">
+                                    <div class="d-flex flex-row flex-lg-column gap-2 justify-content-start justify-content-lg-end mt-2 mt-lg-0">
+                                        <button class="btn btn-primary btn-premium-action py-2.5 download-bill-trigger flex-grow-1 flex-lg-grow-0 d-flex align-items-center justify-content-center gap-2 shadow-sm" data-inv="${item.id}">
+                                            <i class="fa-solid fa-download"></i> <span class="ms-1.5">Invoice</span>
+                                        </button>
+                                        <button class="btn btn-light border py-2.5 text-secondary fw-semibold btn-premium-action view-receipt-trigger flex-grow-1 flex-lg-grow-0 d-flex align-items-center justify-content-center gap-2" data-inv="${item.id}">
+                                            <i class="fa-solid fa-receipt"></i> <span class="ms-1.5">Receipt</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $container.append(cardHtml);
+                });
+            }
+
+            // Interactive Event Listeners for Filters
+            $('#searchInput').on('input', renderInvoices);
+            $('#statusFilter, #sortFilter').on('change', renderInvoices);
+
+            $('#resetFiltersBtn').on('click', function() {
+                $('#searchInput').val('');
+                $('#statusFilter').val('all');
+                $('#sortFilter').val('latest');
+                renderInvoices();
+            });
+
+            // Initial Draw
+            renderInvoices();
+
+            // Downloader click handling
+            $(document).on('click', '.download-bill-trigger', function(e) {
+                e.stopPropagation();
                 const invoiceId = $(this).data('inv');
                 const btnOriginalText = $(this).html();
-                $(this).prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Fetching Invoice PDF...');
                 
                 const $btn = $(this);
+                $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>Saving...');
+                
                 setTimeout(function() {
-                    $btn.html('<i class="fa-solid fa-check me-1"></i>Downloaded!');
+                    $btn.html('<i class="fa-solid fa-check me-1"></i>Done!');
                     
                     const dummyLink = document.createElement("a");
-                    dummyLink.href = "data:text/plain;charset=utf-8," + encodeURIComponent("Official verified tax purchase invoice for purchase " + invoiceId);
+                    dummyLink.href = "data:text/plain;charset=utf-8," + encodeURIComponent("Official invoice document for transaction " + invoiceId + "\nProcessed via Secure Gateway.");
                     dummyLink.download = "ELEVATE-ACADEMY-INVOICE-" + invoiceId + ".txt";
                     document.body.appendChild(dummyLink);
                     dummyLink.click();
@@ -204,7 +532,44 @@
                     setTimeout(function() {
                         $btn.prop('disabled', false).html(btnOriginalText);
                     }, 2000);
-                }, 1200);
+                }, 1000);
+            });
+
+            // Receipt modal populator
+            $(document).on('click', '.view-receipt-trigger', function() {
+                const invId = $(this).data('inv');
+                const invoice = purchaseHistoryData.find(item => item.id === invId);
+                
+                if (invoice) {
+                    $('#mAmount').text('RM ' + invoice.amount.toFixed(2));
+                    $('#mInvoiceId').text('#' + invoice.id);
+                    $('#mDate').text(invoice.date);
+                    $('#mCourse').text(invoice.courseTitle);
+                    $('#mSubtitle').text(invoice.courseSubtitle);
+                    $('#mMethod').text(invoice.methodRef);
+                    $('#mToken').text(invoice.token);
+                    $('#mSubtotal').text('RM ' + invoice.amount.toFixed(2));
+                    $('#mTotal').text('RM ' + invoice.amount.toFixed(2));
+
+                    // Status Pill Mapping
+                    const $mStatusBadge = $('#mStatus');
+                    let mStatusIcon = 'fa-solid fa-circle-check';
+                    if (invoice.status === 'pending') mStatusIcon = 'fa-solid fa-clock';
+                    else if (invoice.status === 'refunded') mStatusIcon = 'fa-solid fa-circle-xmark';
+                    
+                    $mStatusBadge.html(`<i class="${mStatusIcon} me-2"></i>${invoice.statusLabel}`);
+                    $mStatusBadge.removeClass('status-pill-paid status-pill-pending status-pill-refunded');
+                    if (invoice.status === 'paid') $mStatusBadge.addClass('status-pill-paid');
+                    else if (invoice.status === 'pending') $mStatusBadge.addClass('status-pill-pending');
+                    else if (invoice.status === 'refunded') $mStatusBadge.addClass('status-pill-refunded');
+
+                    // Set Invoice ID to download button inside modal
+                    $('.modal-download-btn').attr('data-inv', invoice.id);
+
+                    // Show Modal
+                    const receiptModal = new bootstrap.Modal(document.getElementById('receiptDetailsModal'));
+                    receiptModal.show();
+                }
             });
         });
     </script>
