@@ -18,15 +18,15 @@
     
     <style>
         :root {
-            --primary: #10b981;
-            --primary-hover: #059669;
-            --primary-light: rgba(16, 185, 129, 0.08);
-            --primary-border: rgba(16, 185, 129, 0.15);
-            --primary-glow: rgba(16, 185, 129, 0.12);
+            --primary: #7c3aed;
+            --primary-hover: #6d28d9;
+            --primary-light: rgba(124, 58, 237, 0.08);
+            --primary-border: rgba(124, 58, 237, 0.15);
+            --primary-glow: rgba(124, 58, 237, 0.12);
             --radius-premium: 16px;
             --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.015), 0 1px 2px rgba(0, 0, 0, 0.03);
             --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.03), 0 1px 2px rgba(15, 23, 42, 0.01);
-            --shadow-hover: 0 16px 36px rgba(16, 185, 129, 0.06), 0 4px 12px rgba(16, 185, 129, 0.02);
+            --shadow-hover: 0 16px 36px rgba(124, 58, 237, 0.06), 0 4px 12px rgba(124, 58, 237, 0.02);
         }
 
         /* Base Reset & Custom Canvas */
@@ -45,7 +45,7 @@
             overflow: hidden;
         }
         .saas-card:hover {
-            border-color: rgba(16, 185, 129, 0.15);
+            border-color: rgba(124, 58, 237, 0.15);
         }
 
         /* Interactive Info Grid Cards */
@@ -65,7 +65,7 @@
             transform: translateY(-3px);
             border-color: var(--primary-border);
             box-shadow: var(--shadow-hover);
-            background: linear-gradient(135deg, #ffffff 0%, rgba(16, 185, 129, 0.01) 100%);
+            background: linear-gradient(135deg, #ffffff 0%, rgba(124, 58, 237, 0.01) 100%);
         }
         .card-icon-wrap {
             width: 44px;
@@ -115,8 +115,8 @@
             display: inline-block;
             border-radius: 50%;
             padding: 4px;
-            background: linear-gradient(135deg, var(--primary) 0%, #34d399 100%);
-            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.2);
+            background: linear-gradient(135deg, var(--primary) 0%, #a78bfa 100%);
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.2);
             transition: transform 0.25s ease;
         }
         .avatar-preview-container-saas:hover {
@@ -155,7 +155,7 @@
         .status-pulse-dot {
             width: 8px;
             height: 8px;
-            background-color: #10b981;
+            background-color: var(--primary);
             border-radius: 50%;
             display: inline-block;
             position: relative;
@@ -167,7 +167,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #10b981;
+            background-color: var(--primary);
             border-radius: 50%;
             transform: scale(1);
             opacity: 0.8;
@@ -303,8 +303,8 @@
             color: #64748b;
         }
 
-        /* General Emerald Custom Badges */
-        .badge-saas-emerald {
+        /* General Primary Custom Badges */
+        .badge-saas-primary {
             background-color: var(--primary-light);
             color: var(--primary);
             border: 1px solid var(--primary-border);
@@ -385,8 +385,8 @@
         <div id="locked-state" class="row justify-content-center d-none" style="margin-top: 5vh; margin-bottom: 5vh;">
             <div class="col-lg-6 col-md-8 text-center">
                 <div class="card p-5 border-0 shadow-sm rounded-4 bg-white">
-                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light text-success mb-4 shadow-sm" style="width: 80px; height: 80px; border: 1px solid rgba(16,185,129,0.1) !important;">
-                        <i class="fa-solid fa-lock fs-1 text-success"></i>
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light text-primary mb-4 shadow-sm" style="width: 80px; height: 80px; border: 1px solid rgba(124,58,237,0.1) !important;">
+                        <i class="fa-solid fa-lock fs-1 text-primary"></i>
                     </div>
                     <h3 class="fw-bold text-dark tracking-tight mb-2">Profile Locked</h3>
                     <p class="text-muted small mx-auto mb-4" style="max-width: 380px;">
@@ -430,7 +430,7 @@
                         <div class="mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
                             <div class="d-flex align-items-center gap-2">
                                 <span class="status-pulse-dot"></span>
-                                <span class="badge-saas-emerald" id="badgeStatus">Active Student</span>
+                                <span class="badge-saas-primary" id="badgeStatus">Active Student</span>
                                 <span class="badge-saas-neutral" id="badgeRole">Premium Learner</span>
                             </div>
                         </div>
@@ -453,7 +453,7 @@
                                 
                                 <div class="d-flex align-items-center gap-3">
                                     <span class="text-muted x-small d-inline-flex align-items-center gap-1">
-                                        <i class="fa-regular fa-calendar-check text-success"></i> Registered: <strong class="text-dark font-mono ms-1" id="joinedDateSpan">2026-01-15</strong>
+                                        <i class="fa-regular fa-calendar-check text-primary"></i> Registered: <strong class="text-dark font-mono ms-1" id="joinedDateSpan">2026-01-15</strong>
                                     </span>
                                 </div>
                             </div>
@@ -483,7 +483,7 @@
                                 <h5 class="fw-bold tracking-tight text-dark mb-1">Identity Specifications</h5>
                                 <p class="text-muted x-small mb-0">General verified address, mobile contact, and goal tracks.</p>
                             </div>
-                            <button class="btn btn-sm text-success fw-bold p-1 border-0" data-bs-toggle="modal" data-bs-target="#editProfileModal" style="font-size: 0.8rem; background: transparent;">
+                            <button class="btn btn-sm text-primary fw-bold p-1 border-0" data-bs-toggle="modal" data-bs-target="#editProfileModal" style="font-size: 0.8rem; background: transparent;">
                                 <i class="fa-solid fa-pen-to-square me-1"></i> Quick Edit
                             </button>
                         </div>
@@ -558,7 +558,7 @@
                             <!-- Password Strength Indicator status -->
                             <div class="col-sm-6 text-start">
                                 <div class="p-3 bg-light rounded-3 border border-light d-flex align-items-center gap-3">
-                                    <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
                                         <i class="fa-solid fa-shield-halved"></i>
                                     </div>
                                     <div>
@@ -570,7 +570,7 @@
                             <!-- Updated time -->
                             <div class="col-sm-6 text-start">
                                 <div class="p-3 bg-light rounded-3 border border-light d-flex align-items-center gap-3">
-                                    <div class="bg-primary bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
                                         <i class="fa-regular fa-clock"></i>
                                     </div>
                                     <div>
@@ -583,7 +583,7 @@
 
                         <!-- LinkedIn / Google account link configurations -->
                         <div class="p-3 bg-light bg-opacity-40 rounded-3 border border-light mb-4 text-start">
-                            <h6 class="fw-bold text-dark mb-3" style="font-size: 0.85rem;"><i class="fa-solid fa-address-card text-success align-middle me-2"></i>Linked External Profiles</h6>
+                            <h6 class="fw-bold text-dark mb-3" style="font-size: 0.85rem;"><i class="fa-solid fa-address-card text-primary align-middle me-2"></i>Linked External Profiles</h6>
                             
                             <!-- Google Linking row -->
                             <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom border-light">
@@ -642,7 +642,7 @@
                             <!-- Completed -->
                             <div class="col-6">
                                 <div class="stat-card-saas text-start">
-                                    <div class="card-icon-wrap mb-2 text-success" style="width:36px; height:36px; font-size: 0.95rem;">
+                                    <div class="card-icon-wrap mb-2" style="width:36px; height:36px; font-size: 0.95rem;">
                                         <i class="fa-solid fa-circle-check"></i>
                                     </div>
                                     <span class="text-muted d-block font-sans fw-semibold" style="font-size: 10px; letter-spacing:0.04em; text-transform:uppercase;">Completed</span>
@@ -684,11 +684,11 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <form id="profileForm" class="w-100">
                 <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
-                    <!-- Elegant Green Top Bar -->
-                    <div class="py-1" style="background: linear-gradient(90deg, var(--primary) 0%, #34d399 100%);"></div>
+                    <!-- Elegant Premium Top Bar -->
+                    <div class="py-1" style="background: linear-gradient(90deg, var(--primary) 0%, #a78bfa 100%);"></div>
                     <div class="modal-header border-bottom py-3 px-4">
                         <h5 class="modal-title fw-bold text-dark tracking-tight" id="editProfileModalLabel">
-                            <i class="fa-solid fa-user-gear text-success me-2"></i>Edit Student Profile Specs
+                            <i class="fa-solid fa-user-gear text-primary me-2"></i>Edit Student Profile Specs
                         </h5>
                         <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -772,7 +772,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-4" style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08) !important;">
                 <div class="modal-header border-bottom border-white border-opacity-10 py-3">
-                    <h5 class="modal-title fw-bold text-white tracking-tight" id="avatarModalLabel"><i class="fa-solid fa-user-astronaut text-success me-2"></i>Select Avatar Profile Portrait</h5>
+                    <h5 class="modal-title fw-bold text-white tracking-tight" id="avatarModalLabel"><i class="fa-solid fa-user-astronaut text-primary me-2"></i>Select Avatar Profile Portrait</h5>
                     <button type="button" class="btn-close btn-close-white shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4 text-center">
