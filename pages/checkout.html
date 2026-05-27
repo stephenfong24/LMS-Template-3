@@ -3,32 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | Elevate Academy</title>
+    <title>Confirm Enrollment | Elevate Academy</title>
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
         .checkout-container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 40px auto;
         }
         .order-summary-card {
             position: sticky;
             top: 100px;
         }
-        .form-control:focus {
-            border-color: var(--p-500);
-            box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.1);
+        .text-emerald {
+            color: #047857 !important;
         }
-        .payment-method-card {
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
+        .bg-emerald-subtle {
+            background-color: rgba(16, 185, 129, 0.08) !important;
         }
-        .payment-method-card.active {
-            border-color: var(--p-500);
-            background-color: rgba(16, 185, 129, 0.05);
+        .border-emerald-subtle {
+            border-color: rgba(16, 185, 129, 0.15) !important;
+        }
+        .btn-enroll-confirm {
+            background-color: #10b981 !important;
+            border-color: #10b981 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2) !important;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            font-size: var(--fs-base);
+            height: 48px;
+        }
+        .btn-enroll-confirm:hover {
+            background-color: #059669 !important;
+            border-color: #059669 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3) !important;
+        }
+        .btn-enroll-confirm:active {
+            transform: translateY(0);
+        }
+        .font-mono {
+            font-family: var(--font-mono), monospace !important;
         }
         .processing-overlay {
             position: fixed;
@@ -36,162 +56,277 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             display: none;
             z-index: 2000;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
+        .custom-profile-card {
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .custom-profile-card:hover {
+            border-color: var(--p-200) !important;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.05) !important;
+        }
     </style>
 </head>
-<body class="bg-light">
+<body class="bg-light-alt text-dark" style="background-color: var(--s-50);">
     <!-- Navbar placeholder - will be injected by components.js -->
     <div id="navbar-placeholder"></div>
 
-    <div class="container checkout-container">
-        <div class="row g-4">
-            <!-- Left Side: Billing & Payment -->
-            <div class="col-lg-7">
-                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold mb-4">Billing Information</h5>
-                        <form id="checkout-form">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label small fw-medium text-muted">Full Name</label>
-                                    <input type="text" class="form-control" name="name" placeholder="John Doe" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label small fw-medium text-muted">Email Address</label>
-                                    <input type="email" class="form-control" name="email" placeholder="john@example.com" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label small fw-medium text-muted">Phone Number</label>
-                                    <input type="tel" class="form-control" name="phone" placeholder="+60 12-345 6789" required>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label small fw-medium text-muted">Billing Address</label>
-                                    <textarea class="form-control" name="address" rows="2" placeholder="Street, Suite, City, State" required></textarea>
-                                </div>
-                            </div>
-                        </form>
+    <main class="container checkout-container px-3 px-sm-4">
+        <!-- Breadcrumb / Header Row -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-2" style="font-size: 0.75rem;">
+                        <li class="breadcrumb-item"><a href="/index.html" class="text-decoration-none text-muted">Home</a></li>
+                        <li class="breadcrumb-item"><a href="courses.html" class="text-decoration-none text-muted">Courses</a></li>
+                        <li class="breadcrumb-item active fw-bold text-primary" aria-current="page">Course Booking</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Top alert: Sign in verification status -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="alert alert-success border border-emerald-subtle rounded-4 p-3 d-flex align-items-md-center gap-3 bg-white shadow-sm" style="border-left: 5px solid #10b981 !important;">
+                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-emerald-subtle text-emerald flex-shrink-0" style="width: 44px; height: 44px; font-size: 1.25rem;">
+                        <i class="fa-solid fa-circle-user"></i>
                     </div>
-                </div>
-
-                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold mb-4">Payment Method</h5>
-                        <div class="row g-3 mb-4">
-                            <div class="col-6">
-                                <div class="payment-method-card active p-3 rounded-3 text-center border">
-                                    <i class="bi bi-credit-card fs-4 mb-2 d-block"></i>
-                                    <span class="small fw-bold">Credit/Debit Card</span>
-                                </div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start align-items-md-center gap-2">
+                            <div>
+                                <span class="fw-bold text-dark d-block mb-0.5" style="font-size: var(--fs-base);">Active Student Session Verified</span>
+                                <span class="text-muted small">You must be registered and signed in to complete a purchase. You are currently logged in.</span>
                             </div>
-                            <div class="col-6">
-                                <div class="payment-method-card p-3 rounded-3 text-center border">
-                                    <i class="bi bi-bank fs-4 mb-2 d-block"></i>
-                                    <span class="small fw-bold">FPX / Online Banking</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="card-details">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <label class="form-label small fw-medium text-muted">Card Number</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-credit-card"></i></span>
-                                        <input type="text" class="form-control border-start-0" placeholder="4242 4242 4242 4242" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label small fw-medium text-muted">Expiry Date</label>
-                                    <input type="text" class="form-control" placeholder="MM/YY" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label small fw-medium text-muted">CVV</label>
-                                    <input type="text" class="form-control" placeholder="123" required>
-                                </div>
-                                <div class="col-12">
-                                    <div class="alert alert-info py-2 px-3 border-0 rounded-3 mb-0" style="background-color: rgba(16, 185, 129, 0.1); color: var(--p-600);">
-                                        <i class="bi bi-info-circle me-2"></i>
-                                        <span class="x-small">Demo payment only. No real payment will be charged.</span>
-                                    </div>
-                                </div>
+                            <div>
+                                <span class="badge px-2.5 py-1.5 fw-semibold rounded-2 border" style="background-color: rgba(16, 185, 129, 0.1) !important; color: #047857 !important; border-color: rgba(16, 185, 129, 0.2) !important; font-size: 0.7rem;">
+                                    <i class="fa-solid fa-cloud-arrow-up me-1"></i> Authenticated
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Right Side: Order Summary -->
-            <div class="col-lg-5">
-                <div class="card border-0 shadow-sm rounded-4 overflow-hidden order-summary-card">
-                    <div class="card-header bg-white border-bottom p-4">
-                        <h5 class="fw-bold mb-0">Order Summary</h5>
+        <div class="row g-4 mb-5">
+            <!-- Left Side: Student Account Details & Promo Coupons -->
+            <div class="col-lg-7">
+                <!-- Section 1: Account Details (Read-Only) -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 bg-white">
+                    <div class="card-header bg-white border-0 pt-4 px-4 pb-1">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="d-flex align-items-center justify-content-center rounded-2 bg-primary bg-opacity-10 text-primary" style="width: 32px; height: 32px;">
+                                <i class="fa-solid fa-user-gear"></i>
+                            </span>
+                            <h5 class="fw-bold mb-0 tracking-tight" style="color: var(--s-900);">LMS Student Account Profile</h5>
+                        </div>
+                        <p class="text-muted x-small mt-2 mb-0">These credentials will be issued upon compilation to authorize verified curriculum certification.</p>
                     </div>
                     <div class="card-body p-4">
-                        <div id="course-summary" class="d-flex gap-3 mb-4">
-                            <img id="course-img" src="" class="rounded-3 shadow-sm" style="width: 100px; height: 70px; object-fit: cover;">
-                            <div>
-                                <h6 id="course-title" class="fw-bold mb-1 small">Course Title Loading...</h6>
-                                <p id="course-instructor" class="text-muted mb-1 x-small">Instructor</p>
-                                <div class="d-flex align-items-center gap-1 x-small">
-                                    <i class="bi bi-star-fill text-warning"></i>
-                                    <span id="course-rating" class="fw-bold">0.0</span>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="p-3 bg-light bg-opacity-50 border rounded-4 d-flex align-items-center gap-3 custom-profile-card">
+                                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-white shadow-sm border border-black border-opacity-5 text-center flex-shrink-0 text-primary" style="width: 44px; height: 44px;">
+                                        <i class="fa-solid fa-circle-user fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-muted x-small d-block text-uppercase fw-bold tracking-wider" style="font-size: 0.65rem;">Full Name (Registered)</span>
+                                        <span class="fw-bold d-block text-dark small" id="user-full-name">John Doe</span>
+                                    </div>
+                                    <span class="badge bg-light text-muted border border-black border-opacity-5 px-2.5 py-1.5 ms-auto x-small rounded-2 align-self-center">
+                                        <i class="fa-solid fa-lock text-muted x-small me-1"></i> Read Only
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="p-3 bg-light bg-opacity-50 border rounded-4 d-flex align-items-center gap-3 custom-profile-card">
+                                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-white shadow-sm border border-black border-opacity-5 text-center flex-shrink-0 text-primary" style="width: 44px; height: 44px;">
+                                        <i class="fa-solid fa-envelope fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-muted x-small d-block text-uppercase fw-bold tracking-wider" style="font-size: 0.65rem;">Email Address</span>
+                                        <span class="fw-bold d-block text-dark small" id="user-email">john@example.com</span>
+                                    </div>
+                                    <span class="badge bg-light text-muted border border-black border-opacity-5 px-2.5 py-1.5 ms-auto x-small rounded-2 align-self-center">
+                                        <i class="fa-solid fa-lock text-muted x-small me-1"></i> Read Only
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="p-3 bg-light bg-opacity-50 border rounded-4 d-flex align-items-center gap-3 custom-profile-card">
+                                    <div class="d-flex align-items-center justify-content-center rounded-3 bg-white shadow-sm border border-black border-opacity-5 text-center flex-shrink-0 text-primary" style="width: 44px; height: 44px;">
+                                        <i class="fa-solid fa-phone fs-5"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-muted x-small d-block text-uppercase fw-bold tracking-wider" style="font-size: 0.65rem;">Phone Number</span>
+                                        <span class="fw-bold d-block text-dark small" id="user-phone">+60 12-345 6789</span>
+                                    </div>
+                                    <span class="badge bg-light text-muted border border-black border-opacity-5 px-2.5 py-1.5 ms-auto x-small rounded-2 align-self-center">
+                                        <i class="fa-solid fa-lock text-muted x-small me-1"></i> Read Only
+                                    </span>
                                 </div>
                             </div>
                         </div>
-
-                        <hr class="opacity-10">
-
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted small">Course Price</span>
-                            <span class="fw-medium small" id="course-price-raw">RM 0.00</span>
+                        <div class="mt-3 p-3 rounded-4 d-flex align-items-center gap-2" style="background-color: var(--p-50); border: 1px solid rgba(124, 58, 237, 0.1); color: var(--p-700);">
+                            <i class="fa-solid fa-circle-info x-small flex-shrink-0"></i>
+                            <span class="x-small fw-medium">These details are from your registered account and cannot be changed here.</span>
                         </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span class="text-muted small">Service Fee</span>
-                            <span class="fw-medium small">RM 0.00</span>
+                    </div>
+                </div>
+
+                <!-- Section 2: Promo / Coupon Code -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 bg-white">
+                    <div class="card-header bg-white border-0 pt-4 px-4 pb-1">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="d-flex align-items-center justify-content-center rounded-2 bg-primary bg-opacity-10 text-primary" style="width: 32px; height: 32px;">
+                                <i class="fa-solid fa-tag"></i>
+                            </span>
+                            <h5 class="fw-bold mb-0 tracking-tight" style="color: var(--s-900);">Coupon Code</h5>
+                        </div>
+                        <p class="text-muted x-small mt-2 mb-0">Reduce your program fees by applying an authorized organization coupon.</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="d-flex flex-column flex-sm-row gap-2">
+                            <div class="input-group flex-grow-1">
+                                <span class="input-group-text bg-white text-muted border-end-0"><i class="fa-solid fa-ticket"></i></span>
+                                <input type="text" id="coupon-code" class="form-control border-start-0 font-mono text-dark fw-bold tracking-wider" placeholder="e.g. 50% or 100%" style="text-transform: uppercase;">
+                            </div>
+                            <button class="btn btn-primary px-4 fw-bold" type="button" id="apply-coupon-btn" style="height: 48px; border-radius: var(--radius-md);">Apply</button>
+                        </div>
+                        
+                        <!-- Coupon Alert / Success Box -->
+                        <div id="coupon-alert" class="alert d-none border-0 rounded-4 p-3 mt-3 align-items-center justify-content-between">
+                            <!-- Injected dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Action Buttons & Agreement -->
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+                    <div class="card-body p-4">
+                        <div class="text-center p-3 mb-4 rounded-4" style="background: var(--s-50); border: 1px dashed var(--s-100);">
+                            <span class="x-small text-muted d-block mb-1">Registration Term Acceptance</span>
+                            <p class="x-small text-muted mb-0 fw-medium">
+                                By confirming, you agree to our 
+                                <a href="#" class="text-primary text-decoration-none fw-bold hover-underline">Terms of Service</a> and 
+                                <a href="#" class="text-primary text-decoration-none fw-bold hover-underline">Privacy Policy</a>.
+                            </p>
+                        </div>
+
+                        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-between">
+                            <a href="courses.html" class="btn btn-outline-secondary w-full w-sm-auto px-4 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2">
+                                <i class="fa-solid fa-arrow-left"></i> Back to Courses
+                            </a>
+                            <button id="confirm-enrollment-btn" class="btn btn-enroll-confirm w-full w-sm-auto px-5 py-3 fw-bold rounded-4 d-flex align-items-center justify-content-center gap-2 text-white">
+                                <i class="fa-solid fa-lock"></i> Confirm Enrollment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Order Summary & Placement Details -->
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden order-summary-card bg-white">
+                    <div class="card-header bg-white border-bottom p-4">
+                        <h5 class="fw-bold mb-0 text-dark tracking-tight"><i class="fa-solid fa-receipt text-muted me-2"></i> Enrollment Details</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <!-- Course image & essential details -->
+                        <div id="course-summary-box" class="d-flex gap-3 align-items-start mb-4">
+                            <img id="course-img" src="" class="rounded-3 shadow-sm border" style="width: 110px; height: 75px; object-fit: cover; flex-shrink: 0;">
+                            <div>
+                                <span id="course-category" class="badge px-2.5 py-1 mb-1.5 fw-bold text-uppercase" style="background-color: rgba(124, 58, 237, 0.1) !important; color: #6d28d9 !important; border: 1px solid rgba(124, 58, 237, 0.2) !important; font-size: 0.65rem;">DESIGN</span>
+                                <h6 id="course-title" class="fw-bold mb-1 small text-dark" style="line-height: var(--s-5);">Course Title Loading...</h6>
+                                <p id="course-duration" class="text-muted mb-0 x-small fw-medium"><i class="fa-solid fa-hourglass-half me-1 text-primary"></i> Duration Loading...</p>
+                            </div>
+                        </div>
+
+                        <!-- Course syllabus description tag -->
+                        <div class="p-3 bg-light bg-opacity-50 rounded-4 mb-4">
+                            <span class="x-small text-muted d-block fw-bold text-uppercase tracking-wider mb-1" style="font-size: 0.6rem;">Included Cohort Syllabus</span>
+                            <p id="course-desc" class="text-muted mb-0 x-small" style="line-height: var(--s-5);">Professional career-track syllabus designed to accelerate production competency.</p>
                         </div>
 
                         <hr class="opacity-10 my-3">
 
-                        <div class="d-flex justify-content-between mb-4">
-                            <span class="fw-bold">Total Amount</span>
-                            <span class="fw-bold text-primary fs-5" id="total-price">RM 0.00</span>
+                        <!-- Breakdown Metrics -->
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted small">Course Standard Price</span>
+                            <span class="fw-semibold text-dark small" id="course-price-raw">RM 0.00</span>
+                        </div>
+                        
+                        <!-- Discount row, hidden/shown upon coupon success -->
+                        <div class="d-flex justify-content-between mb-2 align-items-center d-none" id="discount-row">
+                            <span class="text-muted small d-flex align-items-center gap-1.5">
+                                Subsidized Discount 
+                                <span class="badge bg-emerald-subtle text-emerald border border-emerald-subtle py-0.5 px-2 font-mono fw-bold" id="applied-coupon-label" style="font-size: 0.65rem;">CODE</span>
+                            </span>
+                            <span class="fw-bold text-emerald small animate-pulse" id="discount-amount">-RM 0.00</span>
                         </div>
 
-                        <button id="pay-now-btn" class="btn btn-primary w-full py-3 fw-bold rounded-3">Pay Now</button>
-                        
-                        <div class="text-center mt-4">
-                            <p class="text-muted x-small mb-0"><i class="bi bi-shield-lock me-1"></i> Secure 256-bit SSL Encrypted Payment</p>
+                        <hr class="opacity-10 my-3">
+
+                        <!-- Total pricing indicator -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="fw-bold text-dark fs-6">Enrollment Total</span>
+                            <div class="text-end">
+                                <span class="fw-extrabold fs-4 d-block" id="total-price" style="color: #10b981; font-weight: 800;">RM 0.00</span>
+                                <span class="x-small text-muted d-block" style="font-size: 10px;">No additional hidden card fees</span>
+                            </div>
+                        </div>
+
+                        <!-- Trusted badges embedded directly -->
+                        <div class="mt-4 pt-3 border-top">
+                            <p class="text-muted x-small mb-2 fw-semibold text-uppercase tracking-wider">Course Inclusions</p>
+                            <ul class="list-unstyled d-flex flex-column gap-2.5 mb-0">
+                                <li class="d-flex align-items-start gap-2 x-small text-muted">
+                                    <i class="fa-solid fa-certificate text-emerald mt-0.5"></i>
+                                    <span>Accredited certificate sent automatically upon completion</span>
+                                </li>
+                                <li class="d-flex align-items-start gap-2 x-small text-muted">
+                                    <i class="fa-solid fa-users text-emerald mt-0.5"></i>
+                                    <span>Access to peer community chat and code mentor forum</span>
+                                </li>
+                                <li class="d-flex align-items-start gap-2 x-small text-muted">
+                                    <i class="fa-solid fa-cloud-arrow-down text-emerald mt-0.5"></i>
+                                    <span>Downloadable slides, notes, resources, and offline sandboxes</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Processing Overlay -->
+    <!-- Processing Fullscreen Overlay -->
     <div class="processing-overlay">
-        <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
-            <span class="visually-hidden">Loading...</span>
+        <div class="text-center">
+            <div class="spinner-border text-success mb-3" role="status" style="width: 3rem; height: 3rem; color: #10b981 !important;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h5 class="fw-bold text-dark">Confirming Your Enrollment...</h5>
+            <p class="text-muted small px-3">We are provisioning your virtual learning syllabus and sandbox logs. Please do not close this window.</p>
         </div>
-        <h5 class="fw-bold">Processing Payment...</h5>
-        <p class="text-muted small">Please do not refresh the page.</p>
     </div>
 
     <!-- Footer placeholder - will be injected by components.js -->
     <div id="footer-placeholder"></div>
 
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/components.js"></script>
     <script src="/js/main.js"></script>
     <script>
         $(document).ready(function() {
-            // Load course data from localStorage
+            // Load selected course from localStorage
             const courseData = JSON.parse(localStorage.getItem('selectedCourse'));
             
             if (!courseData) {
@@ -200,45 +335,178 @@
                 return;
             }
 
-            // Populate UI
-            $('#course-img').attr('src', courseData.img);
+            // Detailed course content encyclopedia dictionary for accurate lookups
+            const coursesEncyclopedia = {
+                'ux-strat-1': {
+                    category: 'Design',
+                    duration: '10 Weeks • 40 Hours lectures',
+                    description: 'Master the intersection of business goals and user needs in a production environment with seasoned team leads.'
+                },
+                'data-1': {
+                    category: 'Data Science',
+                    duration: '8 Weeks • 32 Hours learning',
+                    description: 'From advanced SQL engines to clean PowerBI storytelling and retention dashboards. Learn to build metrics that matter.'
+                },
+                'growth-3': {
+                    category: 'Marketing',
+                    duration: '6 Weeks • 24 Hours tutorials',
+                    description: 'Learn premium acquisition loops, organic referral metrics, rapid ad orchestration, and pipeline engineering.'
+                },
+                'pm-4': {
+                    category: 'Business',
+                    duration: '8 Weeks • 30 Hours syllabus',
+                    description: 'Define robust product strategies, backlogs, user scenarios, and alignment meetings in standard development teams.'
+                },
+                'fe-5': {
+                    category: 'Development',
+                    duration: '12 Weeks • 48 Hours bootcamp',
+                    description: 'Construct extreme pixel-perfect layout systems, fast React state, and micro-interactions with Tailwind.'
+                },
+                'cloud-6': {
+                    category: 'Infrastructure',
+                    duration: '10 Weeks • 36 Hours curriculum',
+                    description: 'Architect verified cloud environments, load balancers, and multi-region Kubernetes deployments.'
+                },
+                'sec-7': {
+                    category: 'Security',
+                    duration: '6 Weeks • 22 Hours labs',
+                    description: 'Master compliance checklists, perimeter penetration testing, threat monitoring, and corporate policies.'
+                },
+                'ai-8': {
+                    category: 'AI / ML',
+                    duration: '12 Weeks • 50 Hours coding',
+                    description: 'Refine neural networks, clean prediction datasets, deploy API proxies, and optimize real-time machine learning models.'
+                },
+                'bc-9': {
+                    category: 'Development',
+                    duration: '8 Weeks • 30 Hours syllabus',
+                    description: 'Program robust, gas-optimized Solidity smart contracts, smart audits, and interactive Web3 front-ends.'
+                },
+                'agile-10': {
+                    category: 'Management',
+                    duration: '4 Weeks • 16 Hours lectures',
+                    description: 'Deploy clean scrum loops, velocity charts, sprint review setups, and cross-functional leadership frameworks.'
+                },
+                'motion-11': {
+                    category: 'Design',
+                    duration: '6 Weeks • 24 Hours practice',
+                    description: 'Master timing curves, responsive entry animations, spring parameters, and interactive keyframes.'
+                },
+                'biz-12': {
+                    category: 'Business',
+                    duration: '8 Weeks • 32 Hours sandbox',
+                    description: 'Master standard outreach metrics, B2B pipeline conversion patterns, and reliable closing scripts.'
+                }
+            };
+
+            // Read variables or fallback
+            const dbId = courseData.id;
+            const meta = coursesEncyclopedia[dbId] || {
+                category: 'LMS Academy',
+                duration: 'Self-Paced Program',
+                description: 'Professional industry-grade learning syllabus including verified mentor credits and certificate.'
+            };
+
+            // Populate Course UI Summary
+            $('#course-img').attr('src', courseData.img || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=800');
             $('#course-title').text(courseData.title);
-            $('#course-instructor').text('with ' + courseData.instructor);
-            $('#course-rating').text(courseData.rating);
-            $('#course-price-raw').text('RM ' + courseData.price);
-            $('#total-price').text('RM ' + courseData.price);
+            $('#course-category').text(meta.category);
+            $('#course-duration').html('<i class="fa-solid fa-hourglass-half me-1 text-emerald"></i>' + meta.duration);
+            $('#course-desc').text(meta.description);
 
-            // Handle payment method toggle
-            $('.payment-method-card').click(function() {
-                $('.payment-method-card').removeClass('active');
-                $(this).addClass('active');
-            });
+            // Populate Student credentials read-only mode values
+            const verifiedAccountName = "John Doe";
+            const verifiedAccountEmail = "john@example.com";
+            const verifiedAccountPhone = "+60 12-345 6789";
 
-            // Handle Pay Now
-            $('#pay-now-btn').click(function() {
-                // Basic validation
-                const name = $('input[name="name"]').val();
-                const email = $('input[name="email"]').val();
-                const phone = $('input[name="phone"]').val();
-                const address = $('textarea[name="address"]').val();
+            $('#user-full-name').text(verifiedAccountName);
+            $('#user-email').text(verifiedAccountEmail);
+            $('#user-phone').text(verifiedAccountPhone);
 
-                if (!name || !email || !phone || !address) {
-                    alert('Please fill in all billing information.');
+            // Currency parsing
+            let rawCostString = String(courseData.price || '499.00').replace(/[^0-9.]/g, '');
+            const standardTuitionNum = parseFloat(rawCostString) || 499.00;
+
+            // Render prices with consistent formatting
+            function calculateAndRender(discountPct, codeText) {
+                const discountAmtNum = standardTuitionNum * (discountPct / 100);
+                const finalPriceNum = standardTuitionNum - discountAmtNum;
+
+                // Format values nice
+                $('#course-price-raw').text('RM ' + standardTuitionNum.toFixed(2));
+                
+                if (discountPct > 0) {
+                    $('#discount-row').removeClass('d-none');
+                    $('#applied-coupon-label').text(codeText);
+                    $('#discount-amount').text('-RM ' + discountAmtNum.toFixed(2));
+                    $('#total-price').text('RM ' + finalPriceNum.toFixed(2)).addClass('text-emerald');
+                } else {
+                    $('#discount-row').addClass('d-none');
+                    $('#total-price').text('RM ' + standardTuitionNum.toFixed(2)).removeClass('text-emerald');
+                }
+
+                return finalPriceNum;
+            }
+
+            // Initial calculation
+            let sessionFinalPrice = calculateAndRender(0, '');
+
+            // Coupon applying state handlers
+            $('#apply-coupon-btn').click(function() {
+                const enteredCode = $.trim($('#coupon-code').val()).toUpperCase();
+                const $alertBox = $('#coupon-alert');
+
+                if (!enteredCode) {
+                    $alertBox.removeClass('d-none alert-success alert-danger').addClass('alert-danger d-flex align-items-center justify-content-between')
+                        .html('<div><i class="fa-solid fa-circle-xmark me-2"></i>Please enter a coupon code! Try "50%" or "100%"</div>');
                     return;
                 }
 
-                // Show processing
+                if (enteredCode === '100%') {
+                    sessionFinalPrice = calculateAndRender(100, '100% DISCOUNT');
+                    $alertBox.removeClass('d-none alert-danger').addClass('alert-success d-flex align-items-center justify-content-between')
+                        .html('<div><i class="fa-solid fa-circle-check text-emerald me-2"></i><strong>100% discount applied!</strong> Fully tuition-exempt enrollment secured successfully.</div>' +
+                              '<button type="button" class="btn btn-sm btn-link text-emerald font-mono fw-bold p-0 text-decoration-none" id="remove-coupon-action"><i class="fa-solid fa-trash me-1"></i>Remove</button>');
+                } else if (enteredCode === '50%') {
+                    sessionFinalPrice = calculateAndRender(50, '50% DISCOUNT');
+                    $alertBox.removeClass('d-none alert-danger').addClass('alert-success d-flex align-items-center justify-content-between')
+                        .html('<div><i class="fa-solid fa-circle-check text-emerald me-2"></i><strong>50% discount applied!</strong> Standard half-price tuition discount assigned.</div>' +
+                              '<button type="button" class="btn btn-sm btn-link text-emerald font-mono fw-bold p-0 text-decoration-none" id="remove-coupon-action"><i class="fa-solid fa-trash me-1"></i>Remove</button>');
+                } else {
+                    $alertBox.removeClass('d-none alert-success').addClass('alert-danger d-flex align-items-center justify-content-between')
+                        .html('<div><i class="fa-solid fa-triangle-exclamation me-2"></i>Invalid coupon code. Try entering <strong>"50%"</strong> or <strong>"100%"</strong></div>');
+                }
+            });
+
+            // Delegate removal link trigger within status box
+            $(document).on('click', '#remove-coupon-action', function() {
+                $('#coupon-code').val('');
+                $('#coupon-alert').addClass('d-none').removeClass('d-flex');
+                sessionFinalPrice = calculateAndRender(0, '');
+            });
+
+            // Handle Enrollment Confirm Click
+            $('#confirm-enrollment-btn').click(function() {
+                // Ensure profile information check as requested
+                if (!verifiedAccountName || !verifiedAccountEmail || !verifiedAccountPhone) {
+                    alert('LMS authentication profile details are corrupted. Verify that your login is complete.');
+                    return;
+                }
+
+                // Smoothly trigger overlay processing
                 $('.processing-overlay').css('display', 'flex');
 
-                // Simulate processing delay
+                // Provisioning mock sync
                 setTimeout(function() {
-                    // Generate random transaction ID
-                    const txId = 'TXN-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-                    courseData.txId = txId;
-                    localStorage.setItem('lastPurchase', JSON.stringify(courseData));
+                    const txId = 'LMS-' + Math.random().toString(36).substr(2, 9).toUpperCase();
                     
+                    // We sync back information to localStorage as payment-success demands
+                    courseData.price = sessionFinalPrice.toFixed(2);
+                    courseData.txId = txId;
+                    
+                    localStorage.setItem('lastPurchase', JSON.stringify(courseData));
                     window.location.href = 'payment-success.html';
-                }, 2000);
+                }, 1800);
             });
         });
     </script>
