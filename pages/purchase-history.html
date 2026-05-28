@@ -267,7 +267,7 @@
                     <div class="row g-3">
                         <div class="col-6">
                             <span class="detail-badge-title d-block">Invoice Number</span>
-                            <span class="font-mono text-dark fw-bold small" id="mInvoiceId">#INV-9284102</span>
+                            <span class="font-mono text-dark fw-bold small" id="mInvoiceId">INV-9284102</span>
                         </div>
                         <div class="col-6">
                             <span class="detail-badge-title d-block">Transaction Date</span>
@@ -471,7 +471,7 @@
                                     <div class="d-flex flex-column gap-1.5 py-1">
                                         <div class="d-flex align-items-center justify-content-between justify-content-lg-start gap-3">
                                             <span class="text-muted fw-semibold small" style="min-width: 70px; letter-spacing: 0.02em;">Invoice:</span>
-                                            <span class="font-mono fw-bold text-dark small">#${item.id}</span>
+                                            <span class="font-mono fw-bold text-dark small">${item.id}</span>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between justify-content-lg-start gap-3">
                                             <span class="text-muted fw-semibold small" style="min-width: 70px; letter-spacing: 0.02em;">Date:</span>
@@ -553,7 +553,7 @@
                 
                 if (invoice) {
                     $('#mAmount').text('RM ' + invoice.amount.toFixed(2));
-                    $('#mInvoiceId').text('#' + invoice.id);
+                    $('#mInvoiceId').text(invoice.id);
                     $('#mDate').text(invoice.date);
                     $('#mCourse').text(invoice.courseTitle);
                     $('#mSubtitle').text(invoice.courseSubtitle);
