@@ -36,6 +36,35 @@
             position: relative;
             box-shadow: inset 0 0 40px rgba(192,160,96,0.05);
             font-family: 'Playfair Display', serif;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cert-mockup-frame:hover {
+            transform: scale(1.02);
+            box-shadow: inset 0 0 40px rgba(192,160,96,0.1), 0 8px 24px rgba(15, 23, 42, 0.1) !important;
+        }
+        .cert-mockup-frame::after {
+            content: '\f002';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--primary, #7c3aed);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+        .cert-mockup-frame:hover::after {
+            opacity: 1;
         }
         .cert-badge-gold {
             width: 50px;
@@ -179,7 +208,7 @@
                                     <!-- Main Actions button -->
                                     <div class="d-flex flex-wrap gap-2 mt-3">
                                         <button class="btn btn-success px-3 py-2.5 fw-bold rounded-3 d-flex align-items-center gap-2 text-white border-0 download-trigger-btn flex-grow-1 flex-md-grow-0 justify-content-center" style="background-color: #10b981 !important; box-shadow: 0 4px 14px rgba(16,185,129,0.15); font-size: 0.825rem;" data-cert-id="CERT-AI-827493" data-cert-title="Generative AI & LLM Finetuning Workshop">
-                                            <i class="fa-solid fa-cloud-arrow-down"></i> Download PDF
+                                            <i class="fa-solid fa-cloud-arrow-down"></i> Download
                                         </button>
                                     </div>
                                 </div>
@@ -243,7 +272,7 @@
                                     <!-- Main Actions button -->
                                     <div class="d-flex flex-wrap gap-2 mt-3">
                                         <button class="btn btn-success px-3 py-2.5 fw-bold rounded-3 d-flex align-items-center gap-2 text-white border-0 download-trigger-btn flex-grow-1 flex-md-grow-0 justify-content-center" style="background-color: #10b981 !important; box-shadow: 0 4px 14px rgba(16,185,129,0.15); font-size: 0.825rem;" data-cert-id="CERT-UX-719304" data-cert-title="UX Strategy Immersive specialization">
-                                            <i class="fa-solid fa-cloud-arrow-down"></i> Download PDF
+                                            <i class="fa-solid fa-cloud-arrow-down"></i> Download
                                         </button>
                                     </div>
                                 </div>
@@ -307,7 +336,7 @@
                                     <!-- Main Actions button -->
                                     <div class="d-flex flex-wrap gap-2 mt-3">
                                         <button class="btn btn-success px-3 py-2.5 fw-bold rounded-3 d-flex align-items-center gap-2 text-white border-0 download-trigger-btn flex-grow-1 flex-md-grow-0 justify-content-center" style="background-color: #10b981 !important; box-shadow: 0 4px 14px rgba(16,185,129,0.15); font-size: 0.825rem;" data-cert-id="CERT-CL-492716" data-cert-title="Cloud Architecture & DevOps Infrastructure specialization">
-                                            <i class="fa-solid fa-cloud-arrow-down"></i> Download PDF
+                                            <i class="fa-solid fa-cloud-arrow-down"></i> Download
                                         </button>
                                     </div>
                                 </div>
@@ -318,6 +347,36 @@
             </div>
         </div>
     </main>
+
+    <!-- Certificate Preview Modal -->
+    <div class="modal fade" id="certPreviewModal" tabindex="-1" aria-labelledby="certPreviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden" style="box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15) !important;">
+                <div class="modal-header border-bottom py-3 px-4 bg-white d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5 class="modal-title fw-extrabold text-dark mb-0.5" id="certPreviewModalLabel" style="font-size: 1.1rem; letter-spacing: -0.02em;">Verify Certificate</h5>
+                        <span class="text-muted font-mono" id="certPreviewModalId" style="font-size: 0.725rem; letter-spacing: 0.05em;">CERT-AI-827493</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="font-size: 0.85rem;"></button>
+                </div>
+                <div class="modal-body p-4 text-center d-flex justify-content-center align-items-center" style="background-color: #fafbfe;">
+                    <!-- Magnified version of Certificate inside the modal -->
+                    <div id="modalCertContent" class="w-100" style="max-width: 680px; margin: 10px auto;">
+                        <!-- Will be dynamically populated or cloned -->
+                    </div>
+                </div>
+                <div class="modal-footer border-top bg-white py-3 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <span class="text-muted d-flex align-items-center gap-1.5" style="font-size: 0.725rem;"><i class="fa-solid fa-shield-halved text-success"></i> Authentic Vault Credentials</span>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-sm btn-light border px-4 py-2 fw-semibold rounded-3 text-dark" data-bs-dismiss="modal" style="font-size: 0.825rem;">Close</button>
+                        <button type="button" class="btn btn-sm btn-success px-4 py-2 fw-extrabold text-white border-0 rounded-3 d-flex align-items-center gap-2" id="modalDownloadBtn" style="background-color: #10b981 !important; box-shadow: 0 4px 12px rgba(16,185,129,0.15); font-size: 0.825rem;">
+                                    <i class="fa-solid fa-cloud-arrow-down"></i> Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer placeholder -->
     <div id="footer-placeholder"></div>
@@ -340,8 +399,82 @@
                 $('#authorized-certs-workspace').addClass('d-none');
             }
 
+            // Click thumbnail to preview inside modal
+            $('.cert-mockup-frame').click(function() {
+                const $card = $(this).closest('.certificate-card');
+                const $downloadBtn = $card.find('.download-trigger-btn');
+                const certId = $downloadBtn.data('cert-id') || 'CERT-AI-827493';
+                const certTitle = $downloadBtn.data('cert-title') || 'Generative AI & LLM Finetuning';
+
+                $('#certPreviewModalId').text(certId);
+                $('#certPreviewModalLabel').text(certTitle);
+
+                // Clone mockup frame
+                const $clonedFrame = $(this).clone();
+
+                // Reset interactive CSS for display purposes inside the modal
+                $clonedFrame.css({
+                    'transform': 'none',
+                    'transition': 'none',
+                    'cursor': 'default',
+                    'box-shadow': 'none',
+                    'border': '20px double #c0a060',
+                    'padding': '44px',
+                    'width': '100%'
+                });
+
+                // Maintain specific borders for Silver/Bronze
+                if ($(this).attr('style') && $(this).attr('style').includes('border-color')) {
+                    const styleAttr = $(this).attr('style');
+                    $clonedFrame.attr('style', styleAttr);
+                    $clonedFrame.css({
+                        'transform': 'none',
+                        'transition': 'none',
+                        'cursor': 'default',
+                        'box-shadow': 'none',
+                        'border-width': '20px',
+                        'padding': '44px',
+                        'width': '100%'
+                    });
+                }
+
+                // Scale font styles inside the modal certificate beautifully
+                $clonedFrame.find('.text-uppercase').css({
+                    'font-size': '0.75rem',
+                    'letter-spacing': '0.25em'
+                });
+                
+                $clonedFrame.find('h6.font-serif').css('font-size', '1.45rem');
+                $clonedFrame.find('.font-serif.fw-semibold.italic').css('font-size', '1.3rem');
+                $clonedFrame.find('.fw-bold.text-dark.font-serif').css('font-size', '1.15rem');
+                $clonedFrame.find('.x-small').css('font-size', '0.8rem');
+                $clonedFrame.find('.cert-badge-gold, .cert-badge-silver, .cert-badge-bronze').css({
+                    'width': '80px',
+                    'height': '80px',
+                    'font-size': '1.85rem'
+                });
+                $clonedFrame.find('.cert-badge-gold i, .cert-badge-silver i, .cert-badge-bronze i').css({
+                    'font-size': '1.5rem'
+                });
+                $clonedFrame.find('.text-start').css('font-size', '13px');
+
+                // Populate modal body
+                $('#modalCertContent').html($clonedFrame);
+
+                // Setup dynamic download binder for the preview button
+                $('#modalDownloadBtn').off('click').on('click', function() {
+                    $('#certPreviewModal').modal('hide');
+                    $downloadBtn.trigger('click');
+                });
+
+                // Fire modal display
+                const previewModal = new bootstrap.Modal(document.getElementById('certPreviewModal'));
+                previewModal.show();
+            });
+
             // Standard mock interactive flow notifications
-            $('.download-trigger-btn').click(function() {
+            $('.download-trigger-btn').click(function(e) {
+                e.stopPropagation(); // Avoid triggering any unwanted outer clicks
                 const certId = $(this).data('cert-id') || 'CERT-AI-827493';
                 const certTitle = $(this).data('cert-title') || 'Generative AI & LLM Finetuning';
                 const btnOriginalText = $(this).html();
