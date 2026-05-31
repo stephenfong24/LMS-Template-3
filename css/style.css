@@ -332,6 +332,28 @@ textarea::placeholder,
     box-shadow: 0 0 0 4px var(--p-50);
 }
 
+/* Unified focus matching for input groups with prefix/suffix icons */
+.input-group-text {
+    border: 1.5px solid #cbd5e1;
+    transition: var(--transition);
+}
+
+.input-group:focus-within {
+    box-shadow: 0 0 0 4px var(--p-50) !important;
+    border-radius: var(--radius-md) !important;
+}
+
+.input-group:focus-within .form-control,
+.input-group:focus-within .form-select,
+.input-group:focus-within .input-group-text {
+    border-color: var(--p-600) !important;
+}
+
+.input-group .form-control:focus,
+.input-group .form-select:focus {
+    box-shadow: none !important;
+}
+
 /* Sidebar & Nav Styles */
 .sidebar {
     background-color: var(--s-900) !important;
