@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commission Payment History | Elevate Academy</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-hover: #6d28d9;
+            --primary-light: rgba(124, 58, 237, 0.08);
+            --primary-border: rgba(124, 58, 237, 0.15);
+            --radius-premium: 16px;
+            --shadow-soft-lg: 0 10px 30px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.01);
+            --shadow-soft-sm: 0 4px 20px rgba(15, 23, 42, 0.02), 0 1px 2px rgba(15, 23, 42, 0.01);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--s-50);
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace !important;
+        }
+        
+        .premium-dashboard-card {
+            background: #ffffff;
+            border-radius: var(--radius-premium);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: var(--shadow-soft-sm) !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .payment-record-card {
+            background: #ffffff;
+            border-radius: var(--radius-premium);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.015);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .payment-record-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.15);
+            box-shadow: var(--shadow-soft-lg) !important;
+        }
+
+        .compact-chip {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.725rem;
+            font-weight: 500;
+            padding: 4px 10px;
+        }
+
+        .filter-input-group {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .filter-input-group:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+        }
+
+        .filter-select {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-weight: 500;
+            color: #475569;
+            transition: all 0.2s ease;
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+            outline: none;
+        }
+
+        .btn-premium-action {
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: 0.8125rem;
+            transition: all 0.2s ease;
+        }
+
+        .detail-badge-title {
+            font-size: 0.65rem;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .record-icon-bg {
+            width: 46px; 
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Semantic matching badge pills */
+        .status-pill-paid {
+            background-color: #ecfdf5 !important;
+            color: #047857 !important;
+            border: 1px solid #a7f3d0 !important;
+        }
+
+        .status-pill-processing {
+            background-color: #eff6ff !important;
+            color: #1d4ed8 !important;
+            border: 1px solid #bfdbfe !important;
+        }
+
+        .status-pill-pending {
+            background-color: #fffbeb !important;
+            color: #b45309 !important;
+            border: 1px solid #fde68a !important;
+        }
+
+        .status-pill-failed {
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+            border: 1px solid #fecaca !important;
+        }
+    </style>
+</head>
+<body class="bg-light-alt" style="background-color: var(--s-50); min-height: 100vh; display: flex; flex-direction: column;">
+
+    <!-- Header placeholder -->
+    <div id="navbar-placeholder"></div>
+
+    <main class="container px-4 px-md-3 py-5 flex-grow-1">
+        <!-- Locked State Placeholder (Shown if logged out) -->
+        <div id="locked-state" class="row justify-content-center d-none" style="margin-top: 5vh; margin-bottom: 5vh;">
+            <div class="col-lg-6 col-md-8 text-center">
+                <div class="card p-5 border-0 shadow-sm rounded-4 bg-white">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light text-primary mb-4 shadow-sm" style="width: 80px; height: 80px; border: 1px solid rgba(124,58,237,0.1) !important;">
+                        <i class="fa-solid fa-lock fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark tracking-tight mb-2">Payment Logs Secured</h3>
+                    <p class="text-muted small mx-auto mb-4" style="max-width: 380px;">
+                        These records are private and require authorization. Please sign in to verify your commission payout logs.
+                    </p>
+                    <div class="d-grid gap-2 col-8 mx-auto">
+                        <a href="login.html" class="btn btn-primary py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2 rounded-3">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Account
+                        </a>
+                        <a href="courses.html" class="btn btn-outline-secondary py-2.5 fw-medium rounded-3 text-muted">
+                            Explore Curriculum
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Authorized Payout History Workspace -->
+        <div id="authorized-commission-workspace" class="d-none animate-fade-in">
+            
+            <!-- Breadcrumb Navigation -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 py-2">
+                            <li class="breadcrumb-item"><a href="/index.html" class="text-decoration-none text-muted small">Home</a></li>
+                            <li class="breadcrumb-item"><a href="profile.html" class="text-decoration-none text-muted small">My Profile</a></li>
+                            <li class="breadcrumb-item active text-dark fw-semibold small" aria-current="page">Commission History</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Page Header -->
+            <div class="row align-items-center mb-5 g-4 text-start">
+                <div class="col-12">
+                    <span class="badge px-3 py-1.5 rounded-pill fw-semibold mb-3 d-inline-flex align-items-center" style="font-size: 0.725rem; border: 1px solid rgba(124,58,237,0.15) !important; background-color: rgba(124, 58, 237, 0.08) !important; color: #7c3aed !important;">
+                        <span class="status-pulse-dot me-2 bg-success"></span>
+                        <i class="fa-solid fa-wallet me-2 text-primaryColor"></i> Affiliate Payout ledger
+                    </span>
+                    <h1 class="fw-extrabold text-dark tracking-tight mb-1" style="font-size: 2rem;">Commission Payment History</h1>
+                    <p class="text-muted small mb-0">Track introducer fees, check pending clearances, and inspect past direct bank-in references.</p>
+                </div>
+            </div>
+
+            <!-- Referral Code Snippet Banner & Statistics -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="premium-dashboard-card p-4 d-flex flex-column h-100 justify-content-between text-start" style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.02) 0%, rgba(124, 58, 237, 0.05) 100%);">
+                        <div>
+                            <span class="detail-badge-title mb-2 d-block">Your Referrer Code</span>
+                            <div class="d-flex align-items-center gap-2 mb-3">
+                                <span class="font-mono fw-extrabold text-primary fs-5" id="referralCodeBanner" style="color: var(--p-600) !important;">ELEV-GUEST-779</span>
+                                <button class="btn btn-sm btn-link p-1 text-muted text-decoration-none" id="copyReferralBtn" title="Copy Referrar Code">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-muted x-small mb-0"><i class="fa-solid fa-info-circle text-primary me-1" style="color: var(--p-600) !important;"></i> Share to earn introducer fees on all successful subscriptions.</p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="premium-dashboard-card p-4 h-100">
+                        <div class="row g-3">
+                            <div class="col-6 text-start">
+                                <span class="detail-badge-title mb-1 d-block">Total Referrals</span>
+                                <h3 class="fw-extrabold text-dark tracking-tight mb-1">12</h3>
+                                <span class="x-small text-success"><i class="fa-solid fa-arrow-trend-up"></i> +2 this mon</span>
+                            </div>
+                            <div class="col-6 text-start">
+                                <span class="detail-badge-title mb-1 d-block">Pending Payout</span>
+                                <h3 class="fw-extrabold text-dark tracking-tight mb-1" style="font-size: 1.4rem;">RM 350.00</h3>
+                                <span class="x-small text-muted">1 Clearance</span>
+                            </div>
+                            <div class="col-6 text-start">
+                                <span class="detail-badge-title mb-1 d-block">Paid Payouts</span>
+                                <h3 class="fw-extrabold text-dark tracking-tight mb-1" style="font-size: 1.4rem;">RM 1,200.00</h3>
+                                <span class="x-small text-muted">2 Payments</span>
+                            </div>
+                            <div class="col-6 text-start">
+                                <span class="detail-badge-title mb-1 d-block">Lifetime Earned</span>
+                                <h3 class="fw-extrabold text-dark tracking-tight mb-1" style="font-size: 1.4rem;">RM 1,550.00</h3>
+                                <span class="x-small text-muted">Accumulated</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Panel -->
+            <div class="premium-dashboard-card p-3 mb-4">
+                <div class="row g-3 align-items-center text-start">
+                    <!-- Status Filter -->
+                    <div class="col-lg-3 col-md-6">
+                        <label class="x-small fw-bold text-muted text-uppercase mb-2 d-block">Filter Status</label>
+                        <select id="statusFilter" class="form-select filter-select py-2 font-sans" style="font-size: 0.85rem;">
+                            <option value="all">All statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="processing">Processing</option>
+                            <option value="paid">Paid</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                    </div>
+                    <!-- Date Filter -->
+                    <div class="col-lg-3 col-md-6">
+                        <label class="x-small fw-bold text-muted text-uppercase mb-2 d-block">Time Interval</label>
+                        <select id="dateFilter" class="form-select filter-select py-2 font-sans" style="font-size: 0.85rem;">
+                            <option value="all">All Dates</option>
+                            <option value="current-month">This Month (May 2026)</option>
+                            <option value="last-month">Last Month (April 2026)</option>
+                            <option value="older">Older Records</option>
+                        </select>
+                    </div>
+                    <!-- Sort Selection -->
+                    <div class="col-lg-3 col-md-6">
+                        <label class="x-small fw-bold text-muted text-uppercase mb-2 d-block">Sort Order</label>
+                        <select id="sortOrder" class="form-select filter-select py-2 font-sans" style="font-size: 0.85rem;">
+                            <option value="latest">Latest first</option>
+                            <option value="oldest">Oldest first</option>
+                            <option value="valuation-desc">Highest Amount</option>
+                            <option value="valuation-asc">Lowest Amount</option>
+                        </select>
+                    </div>
+                    <!-- Combined Search Field -->
+                    <div class="col-lg-3 col-md-6">
+                        <label class="x-small fw-bold text-muted text-uppercase mb-2 d-block">Search Remark/ID</label>
+                        <div class="filter-input-group d-flex align-items-center px-3 py-1">
+                            <i class="fa-solid fa-magnifying-glass text-muted me-2" style="font-size: 0.8rem;"></i>
+                            <input type="text" id="recordQuery" class="form-control border-0 bg-transparent py-1 shadow-none font-sans" placeholder="Search reference..." style="font-size: 0.85rem;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Records List Rendering Area -->
+            <div id="paymentRecordsContainer" class="d-flex flex-column gap-3">
+                <!-- Records will be populated dynamically by jQuery script -->
+            </div>
+
+            <!-- Empty Payout Records Message -->
+            <div id="emptyRecordsNotice" class="text-center py-5 px-4 bg-white rounded-4 border border-light shadow-sm d-none">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light text-muted mb-4 shadow-sm" style="width: 70px; height: 70px;">
+                    <i class="fa-solid fa-receipt fs-2"></i>
+                </div>
+                <h4 class="fw-bold text-dark mb-2">No Records Found</h4>
+                <p class="text-muted small mx-auto mb-0" style="max-width: 400px;">
+                    No payment references matched your exact filter configurations. Try choosing different status settings.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder" class="mt-auto"></div>
+
+    <!-- Toast Component for notifications feedback -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+        <div id="successToast" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true" style="border-radius: 12px; font-size: 0.825rem; background:#1e293b; color: white;">
+            <div class="d-flex p-2.5">
+                <div class="toast-body d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-success"></i>
+                    <div>
+                        <strong class="d-block text-white" id="toastTitle">Copied</strong>
+                        <span class="text-white-50" id="toastDesc">Referrer Code copied to clipboard.</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close" id="closeToastBtn"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/components.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Check logged in state to trigger workspace display
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (isLoggedIn) {
+                $('#locked-state').addClass('d-none');
+                $('#authorized-commission-workspace').removeClass('d-none');
+                
+                // Read from local storage to keep user referral code up to date
+                const profile = JSON.parse(localStorage.getItem('userProfile')) || {};
+                const currentRefCode = profile.referrerCode || "ELEV-GUEST-779";
+                $('#referralCodeBanner').text(currentRefCode);
+                
+                initComponentLogic();
+            } else {
+                $('#locked-state').removeClass('d-none');
+                $('#authorized-commission-workspace').addClass('d-none');
+            }
+
+            function initComponentLogic() {
+                // Sample payment records covering all four requested status scenarios
+                const paymentRecordsHistory = [
+                    {
+                        refNumber: "PAY-REF-2026-95028",
+                        date: "May 29, 2026",
+                        isoDate: "2026-05-29",
+                        amount: 350.00,
+                        method: "Interbank GIRO (Public Bank)",
+                        status: "pending",
+                        statusLabel: "Pending",
+                        badgeClass: "status-pill-pending",
+                        remarks: "Waiting for standard automated end-of-month review validation."
+                    },
+                    {
+                        refNumber: "PAY-REF-2026-90422",
+                        date: "May 20, 2026",
+                        isoDate: "2026-05-20",
+                        amount: 400.00,
+                        method: "Interbank GIRO (Maybank)",
+                        status: "processing",
+                        statusLabel: "Processing",
+                        badgeClass: "status-pill-processing",
+                        remarks: "Review validation success. Forwarded to finance routing processor for transaction batching."
+                    },
+                    {
+                        refNumber: "PAY-REF-2026-89731",
+                        date: "May 15, 2026",
+                        isoDate: "2026-05-15",
+                        amount: 600.00,
+                        method: "FPX Express Transfer (CIMB)",
+                        status: "paid",
+                        statusLabel: "Paid",
+                        badgeClass: "status-pill-paid",
+                        remarks: "Payout transaction completed. Funds hit account successfully."
+                    },
+                    {
+                        refNumber: "PAY-REF-2026-78453",
+                        date: "April 10, 2026",
+                        isoDate: "2026-04-10",
+                        amount: 200.00,
+                        method: "FPX Express Transfer (RHB)",
+                        status: "failed",
+                        statusLabel: "Failed",
+                        badgeClass: "status-pill-failed",
+                        remarks: "Routing gateway failure due to invalid branch details provided: recalculated with updated ledger parameters."
+                    }
+                ];
+
+                // Render matching cards lists dynamically
+                renderRecords(paymentRecordsHistory);
+
+                // Listeners for filters
+                $('#statusFilter, #dateFilter, #sortOrder').on('change', function() {
+                    applyFiltersAndSort();
+                });
+
+                $('#recordQuery').on('keyup input', function() {
+                    applyFiltersAndSort();
+                });
+
+                function applyFiltersAndSort() {
+                    const statusVal = $('#statusFilter').val();
+                    const dateVal = $('#dateFilter').val();
+                    const sortVal = $('#sortOrder').val();
+                    const queryVal = $.trim($('#recordQuery').val()).toLowerCase();
+
+                    let filtered = paymentRecordsHistory.filter(function(record) {
+                        // Status filters
+                        if (statusVal !== "all" && record.status !== statusVal) {
+                            return false;
+                        }
+
+                        // Query filters (ref value or method or remarks)
+                        if (queryVal !== "") {
+                            const matchRef = record.refNumber.toLowerCase().includes(queryVal);
+                            const matchMethod = record.method.toLowerCase().includes(queryVal);
+                            const matchRemarks = record.remarks.toLowerCase().includes(queryVal);
+                            if (!matchRef && !matchMethod && !matchRemarks) {
+                                return false;
+                            }
+                        }
+
+                        // Date filters
+                        if (dateVal === "current-month") {
+                            // May 2026
+                            return record.isoDate.startsWith("2026-05");
+                        } else if (dateVal === "last-month") {
+                            // Apr 2026
+                            return record.isoDate.startsWith("2026-04");
+                        } else if (dateVal === "older") {
+                            // Before Apr 2026
+                            return new Date(record.isoDate) < new Date("2026-04-01");
+                        }
+
+                        return true;
+                    });
+
+                    // Sorting algorithm variables
+                    if (sortVal === "latest") {
+                        filtered.sort((a, b) => new Date(b.isoDate) - new Date(a.isoDate));
+                    } else if (sortVal === "oldest") {
+                        filtered.sort((a, b) => new Date(a.isoDate) - new Date(b.isoDate));
+                    } else if (sortVal === "valuation-desc") {
+                        filtered.sort((a, b) => b.amount - a.amount);
+                    } else if (sortVal === "valuation-asc") {
+                        filtered.sort((a, b) => a.amount - b.amount);
+                    }
+
+                    renderRecords(filtered);
+                }
+
+                function renderRecords(records) {
+                    const $container = $('#paymentRecordsContainer');
+                    const $emptyNotice = $('#emptyRecordsNotice');
+                    $container.empty();
+
+                    if (records.length === 0) {
+                        $emptyNotice.removeClass('d-none');
+                        return;
+                    }
+
+                    $emptyNotice.addClass('d-none');
+
+                    records.forEach(function(item) {
+                        // Build clean card item (Using customized modern card item for perfect look)
+                        const cardHtml = `
+                            <div class="payment-record-card p-4 text-start">
+                                <div class="row align-items-center g-3">
+                                    
+                                    <!-- Amount & Method Info -->
+                                    <div class="col-md-3 border-end">
+                                        <div class="pe-3">
+                                            <span class="detail-badge-title d-block mb-1">Transfer Amount</span>
+                                            <h3 class="fw-extrabold text-dark mb-1 font-mono">RM ${item.amount.toFixed(2)}</h3>
+                                            <span class="compact-chip mt-2 d-inline-block">
+                                                <i class="fa-solid fa-bank text-primary me-1" style="color: var(--p-600) !important;"></i> ${item.method}
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Ref, Dates, and Payout Stats -->
+                                    <div class="col-md-5 border-end">
+                                        <div class="px-md-3">
+                                            <div class="row g-2">
+                                                <div class="col-sm-6">
+                                                    <span class="detail-badge-title d-block mb-1">Reference Number</span>
+                                                    <span class="fw-bold font-mono text-dark d-block" style="font-size: 0.85rem;">${item.refNumber}</span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <span class="detail-badge-title d-block mb-1">Payment Date</span>
+                                                    <span class="fw-medium text-dark d-block" style="font-size: 0.85rem;">${item.date}</span>
+                                                </div>
+                                            </div>
+                                            <div class="mt-2 text-start">
+                                                <span class="detail-badge-title d-block mb-1">Remarks</span>
+                                                <span class="text-muted d-block" style="font-size: 0.775rem; line-height: 1.4;">${item.remarks}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Status Badges Action Status -->
+                                    <div class="col-md-4">
+                                        <div class="ps-md-3 d-flex flex-row flex-md-column justify-content-between align-items-start align-items-md-end gap-3">
+                                            <div class="text-start text-md-end">
+                                                <span class="detail-badge-title d-block mb-1 text-md-end">Clearance Status</span>
+                                                <span class="badge rounded-pill px-3 py-1.5 fw-bold ${item.badgeClass}" style="font-size: 0.75rem;">
+                                                    ● ${item.statusLabel}
+                                                </span>
+                                            </div>
+                                            
+                                            <button class="btn btn-sm btn-outline-secondary px-3 py-1.5 rounded-3 border d-inline-flex align-items-center gap-1.5" style="font-size: 0.75rem;" onclick="showAuditTrace('${item.refNumber}')">
+                                                <i class="fa-solid fa-circle-nodes"></i> Audit Trace
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        `;
+                        $container.append(cardHtml);
+                    });
+                }
+
+                // Copy referral action on banner
+                $('#copyReferralBtn').on('click', function() {
+                    const text = $('#referralCodeBanner').text();
+                    navigator.clipboard.writeText(text).then(() => {
+                        showToast("Code Copied", "The referral code is ready for sharing.");
+                    }).catch(() => {
+                        const $temp = $("<textarea>");
+                        $("body").append($temp);
+                        $temp.val(text).select();
+                        document.execCommand("copy");
+                        $temp.remove();
+                        showToast("Code Copied", "The referral code is ready for sharing.");
+                    });
+                });
+
+                // Toast management
+                let toastTimer;
+                function showToast(title, description) {
+                    clearTimeout(toastTimer);
+                    $('#toastTitle').text(title);
+                    $('#toastDesc').text(description);
+                    $('#successToast').addClass('show');
+
+                    toastTimer = setTimeout(function() {
+                        $('#successToast').removeClass('show');
+                    }, 4000);
+                }
+
+                $('#closeToastBtn').on('click', function() {
+                    $('#successToast').removeClass('show');
+                });
+
+                // Audit trace mock tooltips
+                window.showAuditTrace = function(ref) {
+                    showToast("Audit Trail Pulled", `Trace route logs for ${ref} downloaded successfully.`);
+                };
+            }
+        });
+    </script>
+</body>
+</html>

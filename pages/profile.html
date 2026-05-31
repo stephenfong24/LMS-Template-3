@@ -547,6 +547,82 @@
                         </div>
                     </div>
 
+                    <!-- Commission Statistic Section -->
+                    <div class="saas-card p-4 mb-4">
+                        <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-3 flex-wrap gap-2">
+                            <div>
+                                <h5 class="fw-bold tracking-tight text-dark mb-1">Commission & Referrals</h5>
+                                <p class="text-muted x-small mb-0">Track your referral activity, pending and paid commission fees.</p>
+                            </div>
+                            <!-- Copy Referrer Code Section -->
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-light px-3 py-1.5 rounded-3 border d-flex align-items-center gap-2">
+                                    <span class="x-small fw-bold text-muted text-uppercase" style="font-size: 10px; letter-spacing: 0.04em;">My Code:</span>
+                                    <span class="font-mono fw-bold text-primary small" id="userReferrerCode" style="color: var(--p-600) !important;">ELEV-GUEST-779</span>
+                                    <button class="btn btn-sm p-1 border-0 text-muted hover:text-primary transition-all d-flex align-items-center" id="copyReferrarCodeBtn" title="Copy code" style="background: transparent;">
+                                        <i class="fa-regular fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Helper Tip Text -->
+                        <div class="mb-4 text-start">
+                            <span class="x-small text-muted"><i class="fa-solid fa-circle-info text-primary me-1" style="color: var(--p-600) !important;"></i> Share this code to earn introducer fees when friends sign up and join.</span>
+                        </div>
+
+                        <!-- 4 Summary cards -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <div class="p-3 bg-light rounded-3 border border-light d-flex flex-column text-start h-100 justify-content-between">
+                                    <div>
+                                        <span class="d-block text-muted x-small text-uppercase fw-bold mb-1" style="font-size: 10px; letter-spacing: 0.04em;">Total Referrals</span>
+                                        <h4 class="fw-extrabold text-dark mb-0" id="totalReferralsVal">12 <span class="fs-7 fw-normal text-muted" style="font-size: 0.75rem;">users</span></h4>
+                                    </div>
+                                    <span class="x-small text-success mt-2 d-block" style="font-size: 11px;"><i class="fa-solid fa-arrow-up-right-dots me-1"></i> +2 this month</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 bg-light rounded-3 border border-light d-flex flex-column text-start h-100 justify-content-between">
+                                    <div>
+                                        <span class="d-block text-muted x-small text-uppercase fw-bold mb-1" style="font-size: 10px; letter-spacing: 0.04em;">Pending Comm</span>
+                                        <h4 class="fw-extrabold text-dark mb-0" id="pendingCommVal">RM 350.00</h4>
+                                    </div>
+                                    <span class="x-small text-muted mt-2 d-block" style="font-size: 11px;"><i class="fa-solid fa-clock-rotate-left me-1"></i> Processing</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 bg-light rounded-3 border border-light d-flex flex-column text-start h-100 justify-content-between">
+                                    <div>
+                                        <span class="d-block text-muted x-small text-uppercase fw-bold mb-1" style="font-size: 10px; letter-spacing: 0.04em;">Paid Comm</span>
+                                        <h4 class="fw-extrabold text-dark mb-0" id="paidCommVal">RM 1,200.00</h4>
+                                    </div>
+                                    <span class="x-small text-muted mt-2 d-block" style="font-size: 11px;"><i class="fa-solid fa-circle-check text-success me-1"></i> Transferred</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 bg-light rounded-3 border border-light d-flex flex-column text-start h-100 justify-content-between">
+                                    <div>
+                                        <span class="d-block text-muted x-small text-uppercase fw-bold mb-1" style="font-size: 10px; letter-spacing: 0.04em;">Total Earned</span>
+                                        <h4 class="fw-extrabold text-dark mb-0" id="totalCommVal">RM 1,550.00</h4>
+                                    </div>
+                                    <span class="x-small text-muted mt-2 d-block" style="font-size: 11px;"><i class="fa-solid fa-award me-1"></i> Earnings</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Actions bottom -->
+                        <div class="d-flex justify-content-between align-items-center p-3 bg-light bg-opacity-40 rounded-3 border border-light flex-wrap gap-2">
+                            <div class="text-start">
+                                <span class="d-block fw-semibold text-dark small">Payout History Logs</span>
+                                <span class="x-small text-muted">Check tracking, transfer dates, and processing status references.</span>
+                            </div>
+                            <a href="commission-payment-history.html" class="btn btn-sm text-decoration-none py-2 px-4 d-inline-flex align-items-center gap-2 btn-saas-primary">
+                                <i class="fa-solid fa-list-check"></i> View Payment History
+                            </a>
+                        </div>
+                    </div>
+
                     <!-- 3. Security Section Card -->
                     <div class="saas-card p-4 mb-4">
                         <div class="border-bottom pb-3 mb-4">
@@ -847,9 +923,13 @@
                 if (!profile.dob) profile.dob = "1998-04-12";
                 if (!profile.country) profile.country = "Malaysia";
                 if (!profile.address) profile.address = "Kuala Lumpur, Federal Territory";
+                if (!profile.referrerCode) profile.referrerCode = "ELEV-GUEST-779";
                 // Default some missing fields safely
                 if (!profile.fullName) profile.fullName = "Guest Student";
                 if (!profile.email) profile.email = "guest@example.com";
+
+                // Set referral/introducer code on UI
+                $('#userReferrerCode').text(profile.referrerCode);
 
                 // Form values in modal
                 $('#fullNameInput').val(profile.fullName);
@@ -912,6 +992,43 @@
                     showToast("Portrait Saved", "Your student profile avatar is updated and synchronized instantly.");
                 }
             });
+
+            // Clipboard Copy mechanism for Referrer Code
+            $('#copyReferrarCodeBtn').on('click', function() {
+                const textToCopy = $('#userReferrerCode').text();
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const $icon = $(this).find('i');
+                        $icon.removeClass('fa-regular fa-copy').addClass('fa-solid fa-check text-success');
+                        showToast("Code Copied", "Your introducer referrer code style ELEV-GUEST-779 was successfully copied to clipboard.");
+                        setTimeout(() => {
+                            $icon.removeClass('fa-solid fa-check text-success').addClass('fa-regular fa-copy');
+                        }, 2000);
+                    }).catch(() => {
+                        fallbackCopyText(textToCopy, $(this));
+                    });
+                } else {
+                    fallbackCopyText(textToCopy, $(this));
+                }
+            });
+
+            function fallbackCopyText(text, $btn) {
+                const $temp = $("<textarea>");
+                $("body").append($temp);
+                $temp.val(text).select();
+                try {
+                    document.execCommand("copy");
+                    const $icon = $btn.find('i');
+                    $icon.removeClass('fa-regular fa-copy').addClass('fa-solid fa-check text-success');
+                    showToast("Code Copied", "Your introducer referrer code style ELEV-GUEST-779 was successfully copied to clipboard.");
+                    setTimeout(() => {
+                        $icon.removeClass('fa-solid fa-check text-success').addClass('fa-regular fa-copy');
+                    }, 2000);
+                } catch (err) {
+                    showToast("Failed to Copy", "Please copy the code manually.");
+                }
+                $temp.remove();
+            }
 
             // Pre-populate actual textbox modal values whenever it opens
             $('#editProfileModal').on('show.bs.modal', function() {
