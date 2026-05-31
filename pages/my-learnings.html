@@ -47,11 +47,7 @@
             transition: width 0.8s ease;
         }
         .learning-cohort-item .card-title {
-            min-height: 2.85rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            min-height: auto;
             line-height: 1.35;
         }
         .btn-ux-continue {
@@ -63,6 +59,312 @@
         .btn-ux-continue:hover {
             background-color: #7c3aed !important;
             color: #ffffff !important;
+        }
+
+        /* Timeline and multi-enrollment premium styles */
+        .enrollment-summary-box {
+            background-color: #f8fafc;
+            border: 1px solid rgba(124, 58, 237, 0.08);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
+        }
+        .toggle-timeline-btn {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .toggle-timeline-btn:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+            border-color: #cbd5e1;
+        }
+        .toggle-timeline-btn.expanded .chevron-icon {
+            transform: rotate(180deg);
+        }
+        .chevron-icon {
+            transition: transform 0.2s ease;
+        }
+        .timeline-wrapper {
+            display: none;
+            margin-top: 16px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 16px;
+        }
+        .vertical-timeline {
+            position: relative;
+            padding-left: 24px;
+            border-left: 2px dashed #cbd5e1;
+            margin-left: 10px;
+        }
+        .timeline-node {
+            position: relative;
+            padding-bottom: 16px;
+        }
+        .timeline-node:last-child {
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        .timeline-indicator {
+            position: absolute;
+            left: -31px;
+            top: 4px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #94a3b8;
+            border: 3px solid #ffffff;
+            box-shadow: 0 0 0 2px #cbd5e1;
+            z-index: 2;
+        }
+        .timeline-node.active .timeline-indicator {
+            background-color: #10b981;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+            animation: pulse-node 2s infinite;
+        }
+        @keyframes pulse-node {
+            0% {
+                box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0px rgba(16, 185, 129, 0);
+            }
+        }
+        .timeline-node.completed .timeline-indicator {
+            background-color: #7c3aed;
+            box-shadow: 0 0 0 2px #ddd6fe;
+        }
+        .timeline-node.expired .timeline-indicator {
+            background-color: #cbd5e1;
+            box-shadow: 0 0 0 2px #e2e8f0;
+        }
+        .timeline-node.locked .timeline-indicator {
+            background-color: #94a3b8;
+            box-shadow: 0 0 0 2px #e2e8f0;
+        }
+        .enrollment-compact-card {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 12px;
+            transition: all 0.2s ease-in-out;
+        }
+        .enrollment-compact-card.active-enrollment {
+            background-color: rgba(240, 253, 244, 0.8) !important;
+            border-color: #bbf7d0 !important;
+            box-shadow: 0 4px 6px -1px rgba(240, 253, 244, 0.5);
+        }
+        .enrollment-compact-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+        }
+        .status-badge {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            display: inline-block;
+            text-align: center;
+            line-height: 1.2;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+        .badge-active {
+            background-color: #dcfce7 !important;
+            color: #14532d !important;
+            border: 1px solid rgba(20, 83, 45, 0.15) !important;
+        }
+        .badge-completed {
+            background-color: #f3e8ff !important;
+            color: #581c87 !important;
+            border: 1px solid rgba(88, 28, 135, 0.15) !important;
+        }
+        .badge-expired {
+            background-color: #fee2e2 !important;
+            color: #7f1d1d !important;
+            border: 1px solid rgba(127, 29, 29, 0.15) !important;
+        }
+        .badge-locked {
+            background-color: #f1f5f9 !important;
+            color: #475569 !important;
+            border: 1px solid rgba(71, 85, 105, 0.15) !important;
+        }
+        .badge-upcoming {
+            background-color: #e0f2fe !important;
+            color: #0369a1 !important;
+            border: 1px solid rgba(3, 105, 161, 0.15) !important;
+        }
+
+        /* High contrast active and completed summary box themes */
+        .enrollment-summary-box {
+            color: #334155 !important;
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+        }
+        .enrollment-summary-box i {
+            color: #7c3aed; /* Default primary purple for icons inside light box */
+        }
+        .enrollment-summary-box strong {
+            color: #0f172a;
+        }
+        .enrollment-summary-box .progress-pct {
+            color: #7c3aed;
+        }
+
+        .enrollment-summary-box.active-box {
+            background-color: #0d9488 !important; /* Premium teal/green */
+            border-color: #0f766e !important;
+            color: #ffffff !important;
+        }
+        .enrollment-summary-box.active-box .fw-bold,
+        .enrollment-summary-box.active-box .text-muted,
+        .enrollment-summary-box.active-box .x-small,
+        .enrollment-summary-box.active-box strong,
+        .enrollment-summary-box.active-box i {
+            color: #ffffff !important;
+        }
+        .enrollment-summary-box.active-box .progress-pct {
+            color: #ffffff !important;
+        }
+        .enrollment-summary-box.active-box .progress-bar-custom {
+            background-color: rgba(255, 255, 255, 0.25) !important;
+        }
+        .enrollment-summary-box.active-box .progress-bar-fill {
+            background-color: #ffffff !important;
+        }
+
+        .enrollment-summary-box.completed-box {
+            background-color: #6d28d9 !important; /* Premium royalty purple */
+            border-color: #5b21b6 !important;
+            color: #ffffff !important;
+        }
+        .enrollment-summary-box.completed-box .fw-bold,
+        .enrollment-summary-box.completed-box .text-muted,
+        .enrollment-summary-box.completed-box .x-small,
+        .enrollment-summary-box.completed-box strong,
+        .enrollment-summary-box.completed-box i {
+            color: #ffffff !important;
+        }
+        .enrollment-summary-box.completed-box .progress-pct {
+            color: #ffffff !important;
+        }
+        .enrollment-summary-box.completed-box .progress-bar-custom {
+            background-color: rgba(255, 255, 255, 0.25) !important;
+        }
+        .enrollment-summary-box.completed-box .progress-bar-fill {
+            background-color: #ffffff !important;
+        }
+
+        /* Final Result Badges for Syllabus Completed/Previous bookings */
+        .final-result-badge-success {
+            background-color: #dcfce7 !important;
+            color: #14532d !important;
+            border: 1px solid rgba(20, 83, 45, 0.2) !important;
+            padding: 3px 8px !important;
+            border-radius: 6px !important;
+            font-size: 0.68rem !important;
+            font-weight: 700 !important;
+            display: inline-block !important;
+        }
+        .final-result-badge-danger {
+            background-color: #fee2e2 !important;
+            color: #7f1d1d !important;
+            border: 1px solid rgba(127, 29, 29, 0.2) !important;
+            padding: 3px 8px !important;
+            border-radius: 6px !important;
+            font-size: 0.68rem !important;
+            font-weight: 700 !important;
+            display: inline-block !important;
+        }
+
+        /* Certificate Timeline Action Element */
+        .btn-timeline-cert {
+            background-color: #7c3aed !important;
+            border-color: #7c3aed !important;
+            color: #ffffff !important;
+            font-size: 0.72rem !important;
+            font-weight: 700 !important;
+            padding: 6px 12px !important;
+            border-radius: 8px !important;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-timeline-cert:hover {
+            background-color: #6d28d9 !important;
+            border-color: #6d28d9 !important;
+        }
+
+        /* Small labels inside timeline cards readability override */
+        .scrollable-timeline-container .text-muted {
+            color: #475569 !important; /* Slate 600 - highly readable on light backgrounds */
+        }
+        .scrollable-timeline-container .text-dark {
+            color: #0f172a !important; /* Dark Slate 900 - extremely rich contrast */
+        }
+        .scrollable-timeline-container .enrollment-compact-card .text-muted {
+            color: #334155 !important;
+        }
+        .scrollable-timeline-container {
+            max-height: 240px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+            padding-right: 4px;
+        }
+        .scrollable-timeline-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .scrollable-timeline-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .scrollable-timeline-container::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+
+        /* Fixed height current lesson container to avoid shifting; max 2 lines with ellipsis */
+        .current-lesson-wrapper {
+            display: flex !important;
+            align-items: baseline !important;
+            margin-bottom: 0.5rem !important;
+            height: 2.1rem !important;
+            min-height: 2.1rem !important;
+            overflow: hidden !important;
+        }
+        .current-lesson-content {
+            display: -webkit-box !important;
+            -webkit-line-clamp: 2 !important;
+            -webkit-box-orient: vertical !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            height: 100% !important;
+            line-height: 1.4 !important;
+            font-size: 0.75rem !important;
+        }
+        .current-lesson-content strong {
+            display: inline !important;
+        }
+
+        /* Ensure all summary icons take exactly the same width and have identical spacing to the text */
+        .summary-icon {
+            width: 1.15rem !important;
+            text-align: center !important;
+            margin-right: 0.5rem !important; /* perfectly matches me-2 exactly */
+            flex-shrink: 0 !important;
+            display: inline-block !important;
         }
     </style>
 </head>
@@ -110,11 +412,11 @@
                         </div>
                         <div class="d-flex gap-3">
                             <div class="p-3 bg-white bg-opacity-5 rounded-4 border border-white border-opacity-10 text-center" style="min-width: 110px; background-color: rgba(255,255,255,0.03) !important;">
-                                <span class="d-block fw-extrabold text-white fs-4 mb-0 font-mono">3</span>
+                                <span class="d-block fw-extrabold text-white fs-4 mb-0 font-mono">4</span>
                                 <span class="x-small text-white-50 text-uppercase fw-bold tracking-wider" style="font-size: 9px;">COURSES</span>
                             </div>
                             <div class="p-3 bg-white bg-opacity-5 rounded-4 border border-white border-opacity-10 text-center" style="min-width: 110px; background-color: rgba(255,255,255,0.03) !important;">
-                                <span class="d-block fw-extrabold text-white fs-4 mb-0 font-mono" style="color: #10b981;">1</span>
+                                <span class="d-block fw-extrabold text-white fs-4 mb-0 font-mono" style="color: #10b981;">2</span>
                                 <span class="x-small text-white-50 text-uppercase fw-bold tracking-wider" style="font-size: 9px;">COMPLETED</span>
                             </div>
                         </div>
@@ -133,108 +435,15 @@
                         <button class="btn btn-sm btn-light border px-3 py-2 fw-bold text-dark rounded-3 active" id="filter-all">All Cohorts</button>
                         <button class="btn btn-sm btn-light border px-3 py-2 fw-medium text-muted rounded-3" id="filter-active">In Progress</button>
                         <button class="btn btn-sm btn-light border px-3 py-2 fw-medium text-muted rounded-3" id="filter-complete">Completed</button>
+                        <button class="btn btn-sm btn-light border px-3 py-2 fw-medium text-muted rounded-3" id="filter-expired">Expired</button>
                     </div>
                 </div>
             </div>
 
             <!-- Cards Grid -->
             <div class="row g-4 mb-5" id="courses-grid-learnings">
-                <!-- Course 1 -->
-                <div class="col-lg-4 col-md-6 learning-cohort-item" data-status="active">
-                    <div class="card h-100 border-0 shadow-sm rounded-4 saas-card bg-white overflow-hidden">
-                        <div class="position-relative">
-                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" class="card-img-top" style="height: 180px; object-fit: cover;">
-                        </div>
-                        <div class="card-body p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <span class="badge bg-primary text-white px-2.5 py-1.5 fw-bold text-uppercase rounded-2 mb-2 d-inline-block" style="font-size: 0.65rem;">
-                                    Data Science
-                                </span>
-                                <h5 class="card-title fw-bold text-dark mb-1 small" style="font-size: 1.05rem;">Data Analytics Pro</h5>
-                                <p class="text-muted x-small mb-3"><i class="fa-solid fa-clock me-1 text-primary"></i> Last activity: Yesterday</p>
-                                
-                                <div class="mb-4">
-                                    <div class="d-flex justify-content-between mb-2 align-items-center">
-                                        <span class="x-small text-muted fw-semibold">Syllabus Completion</span>
-                                        <span class="x-small fw-bold text-primary font-mono">75%</span>
-                                    </div>
-                                    <div class="progress-bar-custom">
-                                        <div class="progress-bar-fill bg-primary" style="width: 75%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <a href="#" class="btn btn-outline-primary w-100 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2" style="font-size: 0.85rem;">
-                                <span>Continue Learning</span> <i class="fa-solid fa-play ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Course 2 -->
-                <div class="col-lg-4 col-md-6 learning-cohort-item" data-status="active">
-                    <div class="card h-100 border-0 shadow-sm rounded-4 saas-card bg-white overflow-hidden">
-                        <div class="position-relative">
-                            <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=800" class="card-img-top" style="height: 180px; object-fit: cover;">
-                        </div>
-                        <div class="card-body p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <span class="badge bg-primary text-white px-2.5 py-1.5 fw-bold text-uppercase rounded-2 mb-2 d-inline-block" style="font-size: 0.65rem; background-color: #7c3aed !important;">
-                                    Design
-                                </span>
-                                <h5 class="card-title fw-bold text-dark mb-1 small" style="font-size: 1.05rem;">UX Strategy & Design Masterclass</h5>
-                                <p class="text-muted x-small mb-3"><i class="fa-solid fa-clock me-1 text-primary"></i> Last activity: 3 days ago</p>
-                                
-                                <div class="mb-4">
-                                    <div class="d-flex justify-content-between mb-2 align-items-center">
-                                        <span class="x-small text-muted fw-semibold">Syllabus Completion</span>
-                                        <span class="x-small fw-bold text-primary font-mono">20%</span>
-                                    </div>
-                                    <div class="progress-bar-custom">
-                                        <div class="progress-bar-fill bg-primary" style="width: 20%; background-color: #7c3aed !important;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <a href="#" class="btn btn-outline-primary btn-ux-continue w-100 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2" style="font-size: 0.85rem;">
-                                <span>Continue Learning</span> <i class="fa-solid fa-play ms-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Course 3 -->
-                <div class="col-lg-4 col-md-6 learning-cohort-item" data-status="complete">
-                    <div class="card h-100 border-0 shadow-sm rounded-4 saas-card bg-white overflow-hidden border border-success border-opacity-10" style="background-color: rgba(16, 185, 129, 0.02) !important;">
-                        <div class="position-relative">
-                            <img src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800" class="card-img-top" style="height: 180px; object-fit: cover;">
-                        </div>
-                        <div class="card-body p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <span class="badge bg-success text-white px-2.5 py-1.5 fw-bold text-uppercase rounded-2 mb-2 d-inline-block" style="font-size: 0.65rem; background-color: #10b981 !important;">
-                                    Artificial Intelligence
-                                </span>
-                                <h5 class="card-title fw-bold text-dark mb-1 small" style="font-size: 1.05rem;">Generative AI & LLM Finetuning Sandbox</h5>
-                                <p class="text-muted x-small mb-3"><i class="fa-solid fa-circle-check me-1 text-success"></i> Completed on: 2026-05-15</p>
-                                
-                                <div class="mb-4">
-                                    <div class="d-flex justify-content-between mb-2 align-items-center">
-                                        <span class="x-small text-muted fw-semibold">Syllabus Completion</span>
-                                        <span class="x-small fw-bold text-success font-mono">100%</span>
-                                    </div>
-                                    <div class="progress-bar-custom">
-                                        <div class="progress-bar-fill" style="width: 100%; background-color: #10b981 !important;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <a href="my-certificates.html" class="btn btn-success w-100 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2 text-white" style="background-color: #10b981 !important; border-color: #10b981 !important; font-size: 0.85rem;">
-                                <i class="fa-solid fa-award me-2"></i> <span>View Certificate</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
+        </div>
         </div>
     </main>
 
@@ -248,6 +457,675 @@
     <script src="/js/main.js"></script>
     
     <script>
+        // Date Formatter Helper
+        function formatDates(startStr, endStr) {
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            
+            function parseDate(dStr) {
+                const parts = dStr.split('-');
+                if (parts.length === 3) {
+                    const day = parseInt(parts[2], 10);
+                    const month = months[parseInt(parts[1], 10) - 1];
+                    const year = parts[0];
+                    return `${day} ${month} ${year}`;
+                }
+                return dStr;
+            }
+            return `${parseDate(startStr)} - ${parseDate(endStr)}`;
+        }
+
+        // Programmatically select primary/current active enrollment to show on load
+        function getCurrentEnrollment(course) {
+            // Priority 1: Current active enrollment
+            let found = course.enrollments.find(e => e.status === 'active');
+            if (found) return found;
+            
+            // Priority 2: Completed enrollment
+            found = course.enrollments.find(e => e.status === 'completed');
+            if (found) return found;
+            
+            // Priority 3: Expired enrollment
+            found = course.enrollments.find(e => e.status === 'expired');
+            if (found) return found;
+            
+            // Priority 4: Default to first
+            return course.enrollments[0];
+        }
+
+        // Render single enrollment row inside timeline logs
+        function renderFinalResultBadge(result) {
+            if (!result) return '';
+            const isCompleted = result.includes('Grade') || result.includes('Distinction') || result.includes('Issued') || result.includes('Pass') || result.includes('A+');
+            const badgeClass = isCompleted ? 'final-result-badge-success' : 'final-result-badge-danger';
+            return `<span class="${badgeClass} ms-1 fw-bold">${result}</span>`;
+        }
+
+        function renderEnrollmentRow(enrol, courseId) {
+            let statusClass = '';
+            let statusLabel = '';
+            let iconHTML = '';
+            
+            switch (enrol.status) {
+                case 'active':
+                    statusClass = 'badge-active';
+                    statusLabel = 'Active';
+                    iconHTML = '<i class="fa-solid fa-play text-success"></i>';
+                    break;
+                case 'completed':
+                    statusClass = 'badge-completed';
+                    statusLabel = 'Completed';
+                    iconHTML = '<i class="fa-solid fa-circle-check text-purple"></i>';
+                    break;
+                case 'expired':
+                    statusClass = 'badge-expired';
+                    statusLabel = 'Expired';
+                    iconHTML = '<i class="fa-solid fa-hourglass-end text-danger"></i>';
+                    break;
+                case 'locked':
+                    statusClass = 'badge-locked';
+                    statusLabel = 'Locked';
+                    iconHTML = '<i class="fa-solid fa-lock text-muted"></i>';
+                    break;
+                case 'upcoming':
+                    statusClass = 'badge-upcoming';
+                    statusLabel = 'Upcoming';
+                    iconHTML = '<i class="fa-solid fa-calendar text-info"></i>';
+                    break;
+            }
+
+            let progressColor = '#7c3aed';
+            if (enrol.status === 'active') progressColor = '#10b981';
+            if (enrol.status === 'completed') progressColor = '#7c3aed';
+            if (enrol.status === 'expired') progressColor = enrol.progress === 100 ? '#10b981' : '#cbd5e1';
+            if (enrol.status === 'locked') progressColor = '#cbd5e1';
+
+            let cardExtra = '';
+            if (enrol.status === 'active') cardExtra = 'active-enrollment';
+            else if (enrol.status === 'completed') cardExtra = 'completed-card';
+            else if (enrol.status === 'expired') cardExtra = 'expired-card';
+            else if (enrol.status === 'locked') cardExtra = 'locked';
+
+            const dateFormatted = formatDates(enrol.startDate, enrol.endDate);
+
+            let progressSection = '';
+            if (enrol.status !== 'locked') {
+                progressSection = `
+                    <div class="mt-2 text-start">
+                        <div class="d-flex justify-content-between mb-1 align-items-center">
+                            <span class="x-small text-muted" style="font-size: 0.68rem;">Syllabus progress</span>
+                            <span class="x-small fw-bold text-dark font-mono" style="font-size: 0.68rem;">${enrol.progress}%</span>
+                        </div>
+                        <div class="progress" style="height: 4px; background-color: #f1f5f9;">
+                            <div class="progress-bar" role="progressbar" style="width: ${enrol.progress}%; background-color: ${progressColor};"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            let lessonSection = '';
+            if (enrol.currentLesson) {
+                let lessonIcon = '<i class="fa-regular fa-folder-open me-2 text-muted"></i>';
+                if (enrol.status === 'completed' || enrol.progress === 100) {
+                    lessonIcon = '<i class="fa-solid fa-circle-check text-success me-2"></i>';
+                }
+                let labelText = (enrol.status === 'completed' || enrol.progress === 100) ? 'Result' : 'Lesson';
+                
+                lessonSection = `
+                    <div class="mt-2 bg-white bg-opacity-75 p-2 rounded-2 border d-flex align-items-center justify-content-between" style="font-size: 0.7rem;">
+                        <div class="text-truncate text-muted" style="max-width: 75%;">
+                            ${lessonIcon} <strong>${labelText}:</strong> ${enrol.currentLesson}
+                        </div>
+                        ${enrol.finalResult ? renderFinalResultBadge(enrol.finalResult) : ''}
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="timeline-node ${enrol.status}">
+                    <div class="timeline-indicator"></div>
+                    <div class="enrollment-compact-card ${cardExtra}">
+                        <div class="row align-items-center g-2 text-start">
+                            <div class="col-12">
+                                <div class="d-flex align-items-center justify-content-between gap-2 flex-wrap mb-1">
+                                    <span class="x-small font-mono fw-bold text-dark" style="font-size: 0.7rem; opacity: 0.85;">
+                                        ${dateFormatted}
+                                    </span>
+                                    <span class="status-badge ${statusClass}">
+                                        ${statusLabel}
+                                    </span>
+                                </div>
+                                ${progressSection}
+                                ${lessonSection}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render full master Course Card
+        function renderCourseCard(course) {
+            const curEnrol = getCurrentEnrollment(course);
+            
+            // Build dynamic tags for filters searching
+            const statusTagsSet = new Set();
+            course.enrollments.forEach(e => {
+                if (e.status === 'active') statusTagsSet.add('active');
+                if (e.status === 'completed') statusTagsSet.add('complete');
+                if (e.status === 'expired') statusTagsSet.add('expired');
+            });
+            const statusTagsString = Array.from(statusTagsSet).join(' ');
+
+            const timelineHTML = course.enrollments.map(enrol => renderEnrollmentRow(enrol, course.id)).join('');
+
+            let curStatusLabel = '';
+            let curStatusClass = '';
+            let curAlertBoxClass = '';
+            let curTitleNote = 'Current active enrolment';
+            let progressColor = '#7c3aed';
+
+            if (curEnrol.status === 'active') {
+                curStatusLabel = 'Active Enrolment';
+                curStatusClass = 'badge-active';
+                curAlertBoxClass = 'active-box';
+                progressColor = '#10b981';
+            } else if (curEnrol.status === 'completed') {
+                curStatusLabel = 'Completed';
+                curStatusClass = 'badge-completed';
+                curAlertBoxClass = 'completed-box';
+                curTitleNote = 'Previous enrolment';
+            } else if (curEnrol.status === 'expired') {
+                curStatusLabel = 'Expired';
+                curStatusClass = 'badge-expired';
+                curAlertBoxClass = 'border-secondary border-opacity-10 bg-light';
+                curTitleNote = 'Period over';
+            } else {
+                curStatusLabel = 'Upcoming Locked';
+                curStatusClass = 'badge-locked';
+                curAlertBoxClass = 'border-secondary border-opacity-10 bg-light';
+                curTitleNote = 'Locked';
+            }
+
+            // High-fidelity Multi-booking Next-Class Notice
+            let multiBookingNotice = '';
+            if (course.enrollments.length > 1) {
+                const nextUpcoming = course.enrollments.find(e => e.startDate > curEnrol.endDate);
+                if (nextUpcoming) {
+                    const nextFormattedDate = formatDates(nextUpcoming.startDate, nextUpcoming.endDate).split(' - ')[0];
+                    multiBookingNotice = `
+                        <div class="alert alert-info py-2.5 px-3 rounded-3 border-0 mb-3 d-flex align-items-center gap-2" style="font-size: 0.72rem; background-color: #f0f9ff !important; color: #0369a1 !important;">
+                            <i class="fa-solid fa-calendar-check fs-6" style="color: #0284c7;"></i>
+                            <div>
+                                <strong>Multi-booking Active:</strong> Your next enrolment period starts on <strong>${nextFormattedDate}</strong>. Focus on completing your active tasks now.
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            // Build dynamic Master Action Button
+            let masterActionBtn = '';
+            const hasFutureActiveOrLocked = course.enrollments.some(e => e.status === 'active' || e.status === 'locked' || e.startDate > curEnrol.endDate);
+
+            if (curEnrol.status === 'active') {
+                masterActionBtn = `
+                    <button onclick="handleActiveAction('${course.id}', '${curEnrol.currentLesson}')" class="btn btn-outline-primary btn-ux-continue w-100 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2" style="font-size: 0.85rem;">
+                        <span>Continue learning</span> <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                `;
+            } else if (curEnrol.status === 'completed' || (curEnrol.status === 'expired' && curEnrol.progress === 100)) {
+                if (curEnrol.status === 'expired' && !hasFutureActiveOrLocked) {
+                    masterActionBtn = `
+                        <button onclick="handleRenewAction('${course.id}')" class="btn w-100 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2 text-white" style="background-color: #4f46e5 !important; border-color: #4f46e5 !important; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.22);">
+                            <i class="fa-solid fa-arrows-rotate"></i> <span>Renew enrolment</span>
+                        </button>
+                    `;
+                } else {
+                    masterActionBtn = `
+                        <a href="my-certificates.html" class="btn w-100 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2 text-white" style="background-color: #0d9488 !important; border-color: #0d9488 !important; font-size: 0.85rem;">
+                            <i class="fa-solid fa-award"></i> <span>View certificate</span>
+                        </a>
+                    `;
+                }
+            } else if (curEnrol.status === 'expired') {
+                masterActionBtn = `
+                    <button class="btn btn-outline-secondary w-100 py-2.5 fw-bold rounded-3 disabled d-flex align-items-center justify-content-center gap-2" style="font-size: 0.85rem;" disabled>
+                        <i class="fa-solid fa-hourglass-end"></i> Previous booking has expired
+                    </button>
+                `;
+            } else {
+                masterActionBtn = `
+                    <button class="btn btn-secondary w-100 py-2.5 fw-bold rounded-3 disabled d-flex align-items-center justify-content-center gap-2" style="font-size: 0.85rem;" disabled>
+                        <i class="fa-solid fa-lock"></i> Locked until start date
+                    </button>
+                `;
+            }
+
+            const totalBookings = course.enrollments.length;
+            const historyToggleText = totalBookings > 1 ? `Show Enrolment History (${totalBookings} times purchased)` : `View Enrolment Timeline (1 booking)`;
+
+            let brandStyle = '';
+            if (course.categoryBg) {
+                brandStyle = `style="background-color: ${course.categoryBg} !important;"`;
+            }
+
+            return `
+                <div class="col-lg-6 col-md-12 learning-cohort-item" data-status="${statusTagsString}">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 saas-card bg-white overflow-hidden" style="border: 1px solid #f1f5f9 !important;">
+                        <div class="position-relative">
+                            <img src="${course.bgImage}" class="card-img-top" style="height: 190px; object-fit: cover;">
+                        </div>
+                        <div class="card-body p-4 d-flex flex-column justify-content-between">
+                            <div>
+                                <!-- Category badge above course title removed as requested -->
+                                <div class="d-flex align-items-center justify-content-end mb-2">
+                                    <span class="badge rounded-pill bg-light border text-muted px-2 py-1 x-small fw-semibold" style="font-size: 0.65rem;">
+                                        <i class="fa-solid fa-layer-group me-2 text-primary"></i> Multiple Enrolments
+                                    </span>
+                                </div>
+                                
+                                <h5 class="card-title fw-bold text-secondary-alt mb-3 tracking-tight" style="font-size: 1.15rem;">
+                                    ${course.title}
+                                </h5>
+                                
+                                <!-- Core selected summary view -->
+                                <div class="enrollment-summary-box text-start shadow-sm border ${curAlertBoxClass}">
+                                    <div class="d-flex justify-content-end align-items-center mb-2 flex-wrap gap-2">
+                                        <span class="status-badge ${curStatusClass}">
+                                            ${curStatusLabel}
+                                        </span>
+                                    </div>
+                                    
+                                    <div class="fw-bold font-mono mt-1 mb-2 d-flex align-items-center" style="font-size: 0.8rem;">
+                                        <i class="fa-regular fa-calendar-alt summary-icon"></i> <span>${formatDates(curEnrol.startDate, curEnrol.endDate)}</span>
+                                    </div>
+                                    
+                                    <div class="current-lesson-wrapper">
+                                        <i class="fa-solid fa-graduation-cap summary-icon" style="font-size: 0.75rem; align-self: flex-start; margin-top: 3px;"></i>
+                                        <div class="current-lesson-content">
+                                            <strong>Current lesson:</strong> ${curEnrol.currentLesson ? curEnrol.currentLesson : 'Not started'} ${renderFinalResultBadge(curEnrol.finalResult)}
+                                        </div>
+                                    </div>
+                                    
+                                    ${curEnrol.status !== 'locked' ? `
+                                        <div class="mb-1">
+                                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                                <span class="x-small fw-semibold" style="font-size: 0.72rem;">Syllabus completion</span>
+                                                <strong class="x-small font-mono progress-pct" style="font-size: 0.72rem;">${curEnrol.progress}%</strong>
+                                            </div>
+                                            <div class="progress-bar-custom" style="height: 6px;">
+                                                <div class="progress-bar-fill" style="width: ${curEnrol.progress}%; background-color: ${progressColor} !important;"></div>
+                                            </div>
+                                        </div>
+                                    ` : ''}
+                                </div>
+
+                                <!-- Upcoming bookings banner helper -->
+                                ${multiBookingNotice}
+                            </div>
+                            
+                            <div>
+                                <!-- Collapsible Accordion Timeline -->
+                                <div class="mb-3">
+                                    <button class="btn toggle-timeline-btn" data-course-toggle="${course.id}">
+                                        <span><i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i> ${historyToggleText}</span>
+                                        <i class="fa-solid fa-chevron-down chevron-icon"></i>
+                                    </button>
+                                    
+                                    <div class="timeline-wrapper" id="timeline-${course.id}">
+                                        <div class="scrollable-timeline-container text-start">
+                                            <div class="vertical-timeline">
+                                                ${timelineHTML}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Primary Master Button -->
+                                <div class="mt-2 text-center">
+                                    ${masterActionBtn}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Active learning trigger simulation launcher module
+        function handleActiveAction(courseId, lesson) {
+            const modalHTML = `
+                <div class="modal fade" id="classroomModal" tabindex="-1" aria-hidden="true" style="z-index: 1055;">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow rounded-4">
+                            <div class="modal-header border-0 bg-light p-3 px-4 rounded-top-4">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="fa-solid fa-circle-play text-primary fs-4"></i>
+                                    <h5 class="modal-title fw-bold text-dark">Course Player Player</h5>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-4 text-center">
+                                <div class="mb-3">
+                                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill fw-bold" style="font-size: 0.7rem;">
+                                        <i class="fa-solid fa-tv me-1"></i> Interactive Multimedia Sandbox
+                                    </span>
+                                </div>
+                                <h4 class="fw-bold mb-2">Resuming Learning Session...</h4>
+                                <p class="text-muted small">You are returning to: <br><strong class="text-dark">${lesson}</strong></p>
+                                
+                                <div class="p-3 bg-light rounded-3 text-start small mb-4">
+                                    <div class="d-flex gap-2">
+                                        <i class="fa-solid fa-circle-info text-info mt-1 fs-6"></i>
+                                        <div>
+                                            All progress records are automatically synced with your active student profile metrics in local storage. Refer to the dashboard header for streak counts.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light rounded-3 fw-bold border" data-bs-dismiss="modal">Cancel</button>
+                                    <button onclick="simulateStudySuccess()" type="button" class="btn btn-primary rounded-3 fw-bold px-4" style="background-color: #7c3aed !important; border-color: #7c3aed !important;">
+                                        <i class="fa-solid fa-laptop-code me-1.5"></i> Launch Sandbox
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            $('#classroomModal').remove();
+            $('body').append(modalHTML);
+            
+            const modal = new bootstrap.Modal(document.getElementById('classroomModal'));
+            modal.show();
+        }
+
+        // Locked learning alert launcher module
+        function handleLockedAction(dateStr) {
+            const modalHTML = `
+                <div class="modal fade" id="lockedModal" tabindex="-1" aria-hidden="true" style="z-index: 1055;">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow rounded-4">
+                            <div class="modal-header border-0 bg-light p-3 px-4 rounded-top-4">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="fa-solid fa-lock text-muted fs-4"></i>
+                                    <h5 class="modal-title fw-bold text-dark">Enrolment Cohort Locked</h5>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-4 text-center">
+                                <div class="d-inline-flex bg-light text-muted p-3 rounded-circle mb-3 border">
+                                    <i class="fa-solid fa-lock fs-4"></i>
+                                </div>
+                                <h4 class="fw-bold mb-2">Upcoming Class Enrolment</h4>
+                                <p class="text-muted small">This purchase pathway is slated for the upcoming semester and starts on: <br><strong>${dateStr.split(' - ')[0]}</strong></p>
+                                
+                                <div class="p-3 bg-light text-start rounded-3 small text-muted mb-4">
+                                    <i class="fa-solid fa-clock me-1.5"></i> <strong>Prerequisite Rule:</strong> Earlier bookings for this course must either be marked completed or their academic periods must expire natively before this semester cohort releases.
+                                </div>
+
+                                <button type="button" class="btn btn-secondary w-100 py-2 fw-bold rounded-3" data-bs-dismiss="modal">Acknowledge</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            $('#lockedModal').remove();
+            $('body').append(modalHTML);
+            
+            const modal = new bootstrap.Modal(document.getElementById('lockedModal'));
+            modal.show();
+        }
+
+        function simulateStudySuccess() {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('classroomModal'));
+            if (modal) modal.hide();
+            
+            const toastHTML = `
+                <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100; margin-bottom: 2rem; margin-right: 2rem;">
+                    <div class="toast show border-0 bg-dark text-white rounded-4 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-body p-3">
+                            <div class="d-flex align-items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                                <div>
+                                    <span class="d-block fw-bold" style="font-size: 0.8rem;">VDI Sandbox Launched!</span>
+                                    <span class="x-small text-white-50" style="font-size: 0.7rem;">Your interactive classroom environment is boot-ready.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            const $toast = $(toastHTML);
+            $('body').append($toast);
+            setTimeout(() => {
+                $toast.fadeOut(600, () => $toast.remove());
+            }, 4000);
+        }
+
+        // Real Enrolment Database List (highly scalable configuration in global scope)
+        const myCoursesData = [
+            {
+                id: "data-analytics",
+                title: "Data Analytics Pro",
+                bgImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
+                category: "Data Science",
+                categoryBg: "",
+                enrollments: [
+                    {
+                        startDate: "2026-01-10",
+                        endDate: "2027-01-10",
+                        progress: 75,
+                        status: "active",
+                        currentLesson: "Video 4.2: SQL Window Functions & Aggregations",
+                        finalResult: null
+                    }
+                ]
+            },
+            {
+                id: "ux-strategy",
+                title: "UX Strategy Immersive",
+                bgImage: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=800",
+                category: "Design",
+                categoryBg: "#7c3aed",
+                enrollments: [
+                    {
+                        startDate: "2026-03-10",
+                        endDate: "2027-03-10",
+                        progress: 100,
+                        status: "completed",
+                        currentLesson: "Graded with Distinction",
+                        finalResult: null
+                    },
+                    {
+                        startDate: "2027-03-11",
+                        endDate: "2028-03-11",
+                        progress: 0,
+                        status: "locked",
+                        currentLesson: "Locked until start date",
+                        finalResult: null
+                    }
+                ]
+            },
+            {
+                id: "generative-ai",
+                title: "Generative AI & LLM Finetuning Sandbox",
+                bgImage: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800",
+                category: "Artificial Intelligence",
+                categoryBg: "#10b981",
+                enrollments: [
+                    {
+                        startDate: "2025-05-15",
+                        endDate: "2026-05-15",
+                        progress: 100,
+                        status: "expired",
+                        currentLesson: "Syllabus 100% Complete & Approved",
+                        finalResult: null
+                    }
+                ]
+            },
+            {
+                id: "product-mgmt",
+                title: "Product Management Masterclass",
+                bgImage: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800",
+                category: "Management",
+                categoryBg: "#06b6d4",
+                enrollments: [
+                    {
+                        startDate: "2023-01-10",
+                        endDate: "2024-01-10",
+                        progress: 42,
+                        status: "expired",
+                        currentLesson: "Period Ended (Syllabus unfinished)",
+                        finalResult: "Incomplete"
+                    },
+                    {
+                        startDate: "2025-06-01",
+                        endDate: "2026-06-01",
+                        progress: 92,
+                        status: "active",
+                        currentLesson: "Module 12: Go-To-Market Execution",
+                        finalResult: null
+                    },
+                    {
+                        startDate: "2026-07-15",
+                        endDate: "2027-07-15",
+                        progress: 0,
+                        status: "locked",
+                        currentLesson: "Locked until start date",
+                        finalResult: null
+                    }
+                ]
+            }
+        ];
+
+        // Global functions for Renewal
+        function handleRenewAction(courseId) {
+            const course = myCoursesData.find(c => c.id === courseId);
+            if (!course) return;
+
+            const modalHTML = `
+                <div class="modal fade" id="renewModal" tabindex="-1" aria-hidden="true" style="z-index: 1055;">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow rounded-4">
+                            <div class="modal-header border-0 bg-light p-3 px-4 rounded-top-4">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="fa-solid fa-arrows-rotate text-primary fs-4"></i>
+                                    <h5 class="modal-title fw-bold text-dark">Renew Enrolment</h5>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-4 text-center">
+                                <div class="d-inline-flex p-3 rounded-circle mb-3 border" style="color: #4f46e5 !important; background-color: rgba(79, 70, 229, 0.1) !important; border-color: rgba(79, 70, 229, 0.15) !important;">
+                                    <i class="fa-solid fa-arrows-rotate fs-4"></i>
+                                </div>
+                                <h4 class="fw-bold mb-2">Renew Academic Cohort</h4>
+                                <p class="text-muted small">You are renewing your registration pathway for:<br><strong class="text-dark">${course.title}</strong></p>
+                                
+                                <div class="p-3 bg-light text-start rounded-3 small mb-4">
+                                    <div class="d-flex gap-2">
+                                        <i class="fa-solid fa-circle-info text-info mt-1 fs-6"></i>
+                                        <div>
+                                            Renewing will provision a new 1-year active academic period. Your historic achievements and past digital certificates will remain fully accessible in the enrolment history timeline below.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light rounded-3 fw-bold border" data-bs-dismiss="modal">Cancel</button>
+                                    <button onclick="confirmRenewal('${courseId}')" type="button" class="btn text-white rounded-3 fw-bold px-4" style="background-color: #4f46e5 !important; border-color: #4f46e5 !important;">
+                                        Confirm Renewal
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            $('#renewModal').remove();
+            $('body').append(modalHTML);
+            
+            const modal = new bootstrap.Modal(document.getElementById('renewModal'));
+            modal.show();
+        }
+
+        function confirmRenewal(courseId) {
+            const course = myCoursesData.find(c => c.id === courseId);
+            if (!course) return;
+
+            // Calculate dates
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const startDateStr = `${yyyy}-${mm}-${dd}`;
+
+            const nextYear = new Date();
+            nextYear.setFullYear(today.getFullYear() + 1);
+            const nyyyy = nextYear.getFullYear();
+            const nmm = String(nextYear.getMonth() + 1).padStart(2, '0');
+            const ndd = String(nextYear.getDate()).padStart(2, '0');
+            const endDateStr = `${nyyyy}-${nmm}-${ndd}`;
+
+            // Add new active enrollment
+            course.enrollments.unshift({
+                startDate: startDateStr,
+                endDate: endDateStr,
+                progress: 0,
+                status: "active",
+                currentLesson: "Welcome Orientation & Curriculum Plan",
+                finalResult: null
+            });
+
+            // Hide modal
+            const modalEl = document.getElementById('renewModal');
+            if (modalEl) {
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            }
+
+            // Clean up backdrop & classes
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open').css('overflow', '');
+
+            // Show toast success action
+            showRenewalToast(course.title);
+
+            // Recheck/Re-render via the init function
+            if (window.initCoursesGrid) {
+                window.initCoursesGrid();
+            }
+        }
+
+        function showRenewalToast(courseTitle) {
+            const toastHTML = `
+                <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100; margin-bottom: 2rem; margin-right: 2rem;">
+                    <div class="toast show border-0 bg-dark text-white rounded-4 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-body p-3">
+                            <div class="d-flex align-items-center gap-2.5">
+                                <i class="fa-solid fa-circle-check text-success fs-5"></i>
+                                <div>
+                                    <span class="d-block fw-bold" style="font-size: 0.8rem;">Enrolment Renewed!</span>
+                                    <span class="x-small text-white-50" style="font-size: 0.7rem;">Your new academic period for ${courseTitle} is active.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            const $toast = $(toastHTML);
+            $('body').append($toast);
+            setTimeout(() => {
+                $toast.fadeOut(600, () => $toast.remove());
+            }, 4000);
+        }
+
         $(document).ready(function() {
             // Check logged in state on dynamic module loading
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -259,6 +1137,38 @@
                 $('#enrolled-workspace').addClass('d-none');
             }
 
+            // Render courses grid
+            function initCoursesGrid() {
+                const $grid = $('#courses-grid-learnings');
+                $grid.empty();
+                
+                myCoursesData.forEach(course => {
+                    $grid.append(renderCourseCard(course));
+                });
+                
+                // Bind accordion slide toggle action with chevron icon rotation
+                $(document).off('click', '[data-course-toggle]').on('click', '[data-course-toggle]', function(e) {
+                    e.preventDefault();
+                    const courseId = $(this).attr('data-course-toggle');
+                    const $target = $(`#timeline-${courseId}`);
+                    const $btn = $(this);
+                    
+                    $target.slideToggle(200, function() {
+                        if ($target.is(':visible')) {
+                            $btn.addClass('expanded');
+                        } else {
+                            $btn.removeClass('expanded');
+                        }
+                    });
+                });
+            }
+
+            // Expose globally so that handlers can refresh
+            window.initCoursesGrid = initCoursesGrid;
+
+            // Run rendering initially
+            initCoursesGrid();
+
             // Filtering Action Loops
             $('#filter-all').click(function() {
                 $('.learning-cohort-item').fadeIn(200);
@@ -267,13 +1177,25 @@
 
             $('#filter-active').click(function() {
                 $('.learning-cohort-item').hide();
-                $('.learning-cohort-item[data-status="active"]').fadeIn(200);
+                $('.learning-cohort-item').filter(function() {
+                    return $(this).attr('data-status').includes('active');
+                }).fadeIn(200);
                 toggleFilterBtn($(this));
             });
 
             $('#filter-complete').click(function() {
                 $('.learning-cohort-item').hide();
-                $('.learning-cohort-item[data-status="complete"]').fadeIn(200);
+                $('.learning-cohort-item').filter(function() {
+                    return $(this).attr('data-status').includes('complete');
+                }).fadeIn(200);
+                toggleFilterBtn($(this));
+            });
+
+            $('#filter-expired').click(function() {
+                $('.learning-cohort-item').hide();
+                $('.learning-cohort-item').filter(function() {
+                    return $(this).attr('data-status').includes('expired');
+                }).fadeIn(200);
                 toggleFilterBtn($(this));
             });
 
