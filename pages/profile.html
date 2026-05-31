@@ -794,8 +794,21 @@
                             <div class="col-md-6">
                                 <label for="phoneInput" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Phone Number</label>
                                 <div class="input-group">
-                                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-phone" style="font-size: 0.85rem;"></i></span>
-                                    <input type="tel" class="form-control border-start-0 bg-white" id="phoneInput" placeholder="e.g. +60 12-345 6789">
+                                    <span class="input-group-text bg-white border-end-0 text-muted" style="height: 38px;"><i class="fa-solid fa-phone" style="font-size: 0.85rem;"></i></span>
+                                    <select id="countryCodeInput" class="form-select border-start-0 bg-white text-dark fw-medium" style="max-width: 70px; padding-left: 6px; padding-right: 20px; height: 38px; font-size: 13px; border-radius: 0; outline: none; box-shadow: none;">
+                                        <option value="+60" data-full="🇲🇾 Malaysia (+60)" selected>🇲🇾 Malaysia (+60)</option>
+                                        <option value="+65" data-full="🇸🇬 Singapore (+65)">🇸🇬 Singapore (+65)</option>
+                                        <option value="+66" data-full="🇹🇭 Thailand (+66)">🇹🇭 Thailand (+66)</option>
+                                        <option value="+62" data-full="🇮🇩 Indonesia (+62)">🇮🇩 Indonesia (+62)</option>
+                                        <option value="+63" data-full="🇵🇭 Philippines (+63)">🇵🇭 Philippines (+63)</option>
+                                        <option value="+84" data-full="🇻🇳 Vietnam (+84)">🇻🇳 Vietnam (+84)</option>
+                                        <option value="+86" data-full="🇨🇳 China (+86)">🇨🇳 China (+86)</option>
+                                        <option value="+91" data-full="🇮🇳 India (+91)">🇮🇳 India (+91)</option>
+                                        <option value="+61" data-full="🇦🇺 Australia (+61)">🇦🇺 Australia (+61)</option>
+                                        <option value="+44" data-full="🇬🇧 United Kingdom (+44)">🇬🇧 United Kingdom (+44)</option>
+                                        <option value="+1" data-full="🇺🇸 United States (+1)">🇺🇸 United States (+1)</option>
+                                    </select>
+                                    <input type="tel" class="form-control border-start-0 bg-white" id="phoneInput" placeholder="e.g. 123456789" style="height: 38px; border-top-left-radius: 0; border-bottom-left-radius: 0;">
                                 </div>
                             </div>
 
@@ -885,6 +898,54 @@
     
     <script>
         $(document).ready(function() {
+            // Setup interactive country code compacting
+            function initCompactCountryCode(selectId) {
+                const $select = $(selectId);
+                
+                $select.find('option').each(function() {
+                    const $opt = $(this);
+                    if (!$opt.attr('data-full')) {
+                        $opt.attr('data-full', $opt.text());
+                    }
+                });
+
+                function makeShort() {
+                    $select.find('option').each(function() {
+                        const $opt = $(this);
+                        if ($opt.is(':selected')) {
+                            $opt.text($opt.val());
+                        } else {
+                            $opt.text($opt.attr('data-full'));
+                        }
+                    });
+                }
+
+                function makeFull() {
+                    $select.find('option').each(function() {
+                        const $opt = $(this);
+                        $opt.text($opt.attr('data-full'));
+                    });
+                }
+
+                $select.on('focus mousedown touchstart', function() {
+                    makeFull();
+                });
+
+                $select.on('change blur', function() {
+                    makeShort();
+                });
+
+                // Run initially
+                makeShort();
+                
+                // Allow dynamic programmatic update triggers
+                $select.on('update-compact', function() {
+                    makeShort();
+                });
+            }
+
+            initCompactCountryCode('#countryCodeInput');
+
             // Check logged in state to trigger workspace display
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             if (isLoggedIn) {
@@ -934,7 +995,32 @@
                 // Form values in modal
                 $('#fullNameInput').val(profile.fullName);
                 $('#emailInput').val(profile.email);
-                $('#phoneInput').val(profile.phone || '');
+                
+                // Parse countryCode and mobile number from profile
+                let loadedCountryCode = profile.countryCode || '+60';
+                let loadedMobile = profile.mobileNumber || '';
+
+                if (!profile.mobileNumber && profile.phone) {
+                    const prefixes = ['+60', '+65', '+66', '+62', '+63', '+84', '+86', '+91', '+61', '+44', '+1'];
+                    let matchedPrefix = null;
+                    const sortedPrefixes = [...prefixes].sort((a, b) => b.length - a.length);
+                    for (const pref of sortedPrefixes) {
+                        if (profile.phone.startsWith(pref)) {
+                            matchedPrefix = pref;
+                            break;
+                        }
+                    }
+                    if (matchedPrefix) {
+                        loadedCountryCode = matchedPrefix;
+                        loadedMobile = profile.phone.substring(matchedPrefix.length).replace(/\s+/g, '');
+                    } else {
+                        loadedMobile = profile.phone.replace(/\D/g, '');
+                    }
+                }
+                
+                $('#countryCodeInput').val(loadedCountryCode).trigger('update-compact');
+                $('#phoneInput').val(loadedMobile);
+                
                 $('#genderInput').val(profile.gender || 'Female');
                 $('#dobInput').val(profile.dob || '1998-04-12');
                 $('#countryInput').val(profile.country || 'Malaysia');
@@ -1035,7 +1121,31 @@
                 const currentProfile = JSON.parse(localStorage.getItem('userProfile')) || {};
                 $('#fullNameInput').val(currentProfile.fullName || '');
                 $('#emailInput').val(currentProfile.email || '');
-                $('#phoneInput').val(currentProfile.phone || '');
+                
+                let loadedCountryCode = currentProfile.countryCode || '+60';
+                let loadedMobile = currentProfile.mobileNumber || '';
+
+                if (!currentProfile.mobileNumber && currentProfile.phone) {
+                    const prefixes = ['+60', '+65', '+66', '+62', '+63', '+84', '+86', '+91', '+61', '+44', '+1'];
+                    let matchedPrefix = null;
+                    const sortedPrefixes = [...prefixes].sort((a, b) => b.length - a.length);
+                    for (const pref of sortedPrefixes) {
+                        if (currentProfile.phone.startsWith(pref)) {
+                            matchedPrefix = pref;
+                            break;
+                        }
+                    }
+                    if (matchedPrefix) {
+                        loadedCountryCode = matchedPrefix;
+                        loadedMobile = currentProfile.phone.substring(matchedPrefix.length).replace(/\s+/g, '');
+                    } else {
+                        loadedMobile = currentProfile.phone.replace(/\D/g, '');
+                    }
+                }
+                
+                $('#countryCodeInput').val(loadedCountryCode).trigger('update-compact');
+                $('#phoneInput').val(loadedMobile);
+
                 $('#genderInput').val(currentProfile.gender || 'Female');
                 $('#dobInput').val(currentProfile.dob || '1998-04-12');
                 $('#countryInput').val(currentProfile.country || 'Malaysia');
@@ -1050,11 +1160,42 @@
                 const $btn = $('#saveBtn');
                 $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving details...');
 
+                const countryCodeVal = $('#countryCodeInput').val();
+                let mobileVal = $.trim($('#phoneInput').val());
+                
+                // Trim all spaces automatically (remove spaces)
+                mobileVal = mobileVal.replace(/\s+/g, '');
+
+                // Validation
+                if (!countryCodeVal) {
+                    showToast("Error", "Country code is required.");
+                    $btn.prop('disabled', false).html('<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes');
+                    return;
+                }
+                
+                if (mobileVal && !/^\d+$/.test(mobileVal)) {
+                    showToast("Error", "Mobile number must contain digits only.");
+                    $btn.prop('disabled', false).html('<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes');
+                    return;
+                }
+                
+                if (mobileVal && (mobileVal.length < 5 || mobileVal.length > 15)) {
+                    showToast("Error", "Please provide a valid mobile number length (5 to 15 digits).");
+                    $btn.prop('disabled', false).html('<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes');
+                    return;
+                }
+
+                const fullMobile = mobileVal ? (countryCodeVal + mobileVal) : '';
+                const currentProfile = JSON.parse(localStorage.getItem('userProfile')) || {};
+
                 // Form object structure
                 const updatedProfile = {
+                    ...currentProfile,
                     fullName: $.trim($('#fullNameInput').val()),
                     email: $.trim($('#emailInput').val()).toLowerCase(),
-                    phone: $.trim($('#phoneInput').val()),
+                    countryCode: countryCodeVal,
+                    mobileNumber: mobileVal,
+                    phone: fullMobile,
                     gender: $('#genderInput').val(),
                     dob: $('#dobInput').val(),
                     country: $.trim($('#countryInput').val()),

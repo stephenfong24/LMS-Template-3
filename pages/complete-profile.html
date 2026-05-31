@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Profile | Elevate Academy</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        .form-control:focus, .form-select:focus {
+            border-color: var(--p-600);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-light-alt" style="background-color: var(--s-50);">
+
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 py-5">
+        <div class="row w-100 justify-content-center">
+            <div class="col-lg-5 col-md-8">
+                <div class="text-center mb-4">
+                    <a href="/index.html" class="d-inline-flex align-items-center text-dark text-decoration-none">
+                        <div class="bg-primary text-white rounded-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: var(--p-600) !important;">
+                            <i class="bi bi-mortarboard-fill fs-4"></i>
+                        </div>
+                        <span class="fw-bold fs-3 ms-2 tracking-tight" style="color: var(--s-900);">Elevate</span>
+                    </a>
+                </div>
+                
+                <div class="card p-4 border-0 shadow-sm rounded-4 card-no-hover bg-white mb-3" style="border-radius: 16px !important;">
+                    <h4 class="fw-bold mb-1" style="color: var(--s-900);">Complete Your Profile</h4>
+                    <p class="text-muted small mb-4">Profile completion is required before accessing courses.</p>
+                    
+                    <!-- Connected Account Notice -->
+                    <div id="social-provider-badge" class="p-3 mb-4 rounded-4 d-flex align-items-center gap-3" style="background-color: rgba(241, 245, 249, 0.8); border: 1px solid rgba(226, 232, 240, 0.8); color: var(--s-700);">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center bg-white border" style="width: 40px; height: 40px;" id="provider-icon-wrapper">
+                            <!-- Injected icon -->
+                        </div>
+                        <div class="text-start" style="font-size: 0.8rem; line-height: 1.4;">
+                            <span class="fw-bold d-block text-dark">Linked via <span id="social-provider-name">Google</span></span>
+                            <span class="text-muted" id="social-provider-email">scholar.google@example.com</span>
+                        </div>
+                    </div>
+
+                    <!-- Invalid elements alerts -->
+                    <div id="validation-error-alert" class="alert alert-danger border-0 rounded-4 px-3 py-2.5 d-none x-small mb-3" style="font-size: 0.75rem;">
+                        <!-- error holder -->
+                    </div>
+
+                    <form id="completeProfileForm">
+                        <!-- Full Name -->
+                        <div class="mb-3 text-start">
+                            <label for="fullName" class="form-label x-small fw-bold text-muted">Full Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-signature"></i></span>
+                                <input type="text" class="form-control border-start-0" id="fullName" placeholder="e.g. John Doe" required style="height: 44px; font-size: var(--fs-sm);">
+                            </div>
+                        </div>
+
+                        <!-- Mobile Number -->
+                        <div class="mb-3 text-start">
+                            <label for="mobile" class="form-label x-small fw-bold text-muted">Mobile Number</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0" style="height: 44px;"><i class="fa-solid fa-phone"></i></span>
+                                <select id="countryCode" class="form-select border-start-0 bg-light text-dark fw-medium" style="max-width: 70px; padding-left: 6px; padding-right: 20px; height: 44px; font-size: 13px; border-radius: 0; outline: none; box-shadow: none;">
+                                    <option value="+60" data-full="🇲🇾 Malaysia (+60)" selected>🇲🇾 Malaysia (+60)</option>
+                                    <option value="+65" data-full="🇸🇬 Singapore (+65)">🇸🇬 Singapore (+65)</option>
+                                    <option value="+66" data-full="🇹🇭 Thailand (+66)">🇹🇭 Thailand (+66)</option>
+                                    <option value="+62" data-full="🇮🇩 Indonesia (+62)">🇮🇩 Indonesia (+62)</option>
+                                    <option value="+63" data-full="🇵🇭 Philippines (+63)">🇵🇭 Philippines (+63)</option>
+                                    <option value="+84" data-full="🇻🇳 Vietnam (+84)">🇻🇳 Vietnam (+84)</option>
+                                    <option value="+86" data-full="🇨🇳 China (+86)">🇨🇳 China (+86)</option>
+                                    <option value="+91" data-full="🇮🇳 India (+91)">🇮🇳 India (+91)</option>
+                                    <option value="+61" data-full="🇦🇺 Australia (+61)">🇦🇺 Australia (+61)</option>
+                                    <option value="+44" data-full="🇬🇧 United Kingdom (+44)">🇬🇧 United Kingdom (+44)</option>
+                                    <option value="+1" data-full="🇺🇸 United States (+1)">🇺🇸 United States (+1)</option>
+                                </select>
+                                <input type="tel" class="form-control border-start-0" id="mobile" placeholder="e.g. 123456789" required style="height: 44px; font-size: var(--fs-sm); border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                            </div>
+                            <span class="x-small text-muted mt-1 d-block" style="font-size: 11px;">Input phone digits only without country prefix, spaces, or symbols (e.g., 123456789)</span>
+                        </div>
+
+                        <!-- Company Name -->
+                        <div class="mb-3 text-start">
+                            <label for="companyName" class="form-label x-small fw-bold text-muted">Company Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-building"></i></span>
+                                <input type="text" class="form-control border-start-0" id="companyName" placeholder="e.g. Google Malaysia" required style="height: 44px; font-size: var(--fs-sm);">
+                            </div>
+                        </div>
+
+                        <!-- Occupation -->
+                        <div class="mb-4 text-start">
+                            <label for="occupation" class="form-label x-small fw-bold text-muted">Occupation</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-briefcase"></i></span>
+                                <input type="text" class="form-control border-start-0" id="occupation" placeholder="e.g. Senior Software Engineer" required style="height: 44px; font-size: var(--fs-sm);">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" id="submit-profile-btn" class="btn btn-primary w-100 mb-2 py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2" style="height: 48px; border-radius: 12px; background-color: var(--p-600) !important;">
+                            <span>Submit Profile</span> <i class="fa-solid fa-circle-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="login.html" class="text-muted small text-decoration-none hover-text-primary" id="cancel-btn">
+                        <i class="bi bi-x-circle me-1"></i> Cancel & Log Out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Setup interactive country code compacting
+            function initCompactCountryCode(selectId) {
+                const $select = $(selectId);
+                
+                $select.find('option').each(function() {
+                    const $opt = $(this);
+                    if (!$opt.attr('data-full')) {
+                        $opt.attr('data-full', $opt.text());
+                    }
+                });
+
+                function makeShort() {
+                    $select.find('option').each(function() {
+                        const $opt = $(this);
+                        if ($opt.is(':selected')) {
+                            $opt.text($opt.val());
+                        } else {
+                            $opt.text($opt.attr('data-full'));
+                        }
+                    });
+                }
+
+                function makeFull() {
+                    $select.find('option').each(function() {
+                        const $opt = $(this);
+                        $opt.text($opt.attr('data-full'));
+                    });
+                }
+
+                $select.on('focus mousedown touchstart', function() {
+                    makeFull();
+                });
+
+                $select.on('change blur', function() {
+                    makeShort();
+                });
+
+                // Run initially
+                makeShort();
+                
+                // Allow dynamic programmatic update triggers
+                $select.on('update-compact', function() {
+                    makeShort();
+                });
+            }
+
+            initCompactCountryCode('#countryCode');
+
+            // Guard clause: make sure the user holds an active session
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const profile = JSON.parse(localStorage.getItem('userProfile'));
+            
+            if (!isLoggedIn || !profile) {
+                // If not logged in, boot to login page
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Fill social parameters
+            const provider = localStorage.getItem('socialLoginProvider') || 'Google';
+            $('#social-provider-name').text(provider);
+            // Pre-populate or construct a plausible default email
+            $('#social-provider-email').text(profile.email || `scholar.${provider.toLowerCase()}@example.com`);
+            
+            // Set provider icon
+            const iconHtml = provider === 'Google' 
+                ? '<i class="fa-brands fa-google text-danger fs-5"></i>' 
+                : '<i class="fa-brands fa-linkedin text-primary fs-5" style="color: #0077b5 !important;"></i>';
+            $('#provider-icon-wrapper').html(iconHtml);
+
+            // Pre-populate name if available
+            if (profile.fullName && profile.fullName !== 'Google User' && profile.fullName !== 'LinkedIn Scholar') {
+                $('#fullName').val(profile.fullName);
+            } else {
+                // Pre-fill placeholder
+                $('#fullName').val(profile.fullName || '');
+            }
+
+            // Pre-populate countryCode and mobileNumber if already saved
+            if (profile.countryCode) {
+                $('#countryCode').val(profile.countryCode).trigger('update-compact');
+            }
+            if (profile.mobileNumber) {
+                $('#mobile').val(profile.mobileNumber);
+            }
+
+            // Handle cancel/logout button click
+            $('#cancel-btn').on('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userProfile');
+                localStorage.removeItem('socialLogin');
+                localStorage.removeItem('socialLoginProvider');
+                window.location.href = 'login.html';
+            });
+
+            // Form Submit validation
+            $('#completeProfileForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const fullNameVal = $.trim($('#fullName').val());
+                const countryCodeVal = $('#countryCode').val();
+                let mobileVal = $.trim($('#mobile').val());
+                
+                // Trim all spaces automatically (remove spaces)
+                mobileVal = mobileVal.replace(/\s+/g, '');
+                
+                const companyVal = $.trim($('#companyName').val());
+                const occupationVal = $.trim($('#occupation').val());
+                
+                const $alert = $('#validation-error-alert');
+                const $btn = $('#submit-profile-btn');
+                
+                // Reset alert
+                $alert.addClass('d-none');
+                
+                // Required fields validation
+                if (!fullNameVal || !mobileVal || !companyVal || !occupationVal) {
+                    $alert.removeClass('d-none').html('<i class="fa-solid fa-circle-exclamation me-2"></i>All fields are strictly required.');
+                    return;
+                }
+                
+                if (!countryCodeVal) {
+                    $alert.removeClass('d-none').html('<i class="fa-solid fa-circle-exclamation me-2"></i>Country code is required.');
+                    return;
+                }
+                
+                // Only digits allowed validation
+                if (!/^\d+$/.test(mobileVal)) {
+                    $alert.removeClass('d-none').html('<i class="fa-solid fa-circle-exclamation me-2"></i>Mobile number must contain digits only.');
+                    return;
+                }
+                
+                // Basic reasonable length range verification for active phone numbers
+                if (mobileVal.length < 5 || mobileVal.length > 15) {
+                    $alert.removeClass('d-none').html('<i class="fa-solid fa-circle-exclamation me-2"></i>Please provide a valid mobile number length (5 to 15 digits).');
+                    return;
+                }
+                
+                // Premium loader transition
+                $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving Profile Metrics...');
+                
+                setTimeout(function() {
+                    // Generate a full mobile number value when saving
+                    const fullMobile = countryCodeVal + mobileVal;
+                    
+                    // Update user profile representation with captured metrics
+                    const updatedProfile = {
+                        ...profile,
+                        fullName: fullNameVal,
+                        countryCode: countryCodeVal,
+                        mobileNumber: mobileVal,
+                        phone: fullMobile,
+                        companyName: companyVal,
+                        occupation: occupationVal
+                    };
+                    
+                    localStorage.setItem('userProfile', JSON.stringify(updatedProfile));
+                    
+                    $btn.removeClass('btn-primary').addClass('btn-success').css({
+                        'background-color': '#10b981',
+                        'border-color': '#10b981'
+                    }).html('<i class="fa-solid fa-circle-check me-2"></i>Account Completed!');
+                    
+                    // Create premium screen fade transition
+                    const $overlay = $('<div id="profile-transition-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; bg-color:#0f172a; background:rgba(15,23,42,0.96); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; opacity:0; transition:opacity 0.4s ease;"><div class="spinner-border text-primary speed-normal mb-3" role="status" style="width: 3.5rem; height: 3.5rem; color: var(--p-600) !important;"><span class="visually-hidden">Loading...</span></div><h4 class="text-white fw-bold">Synchronizing Classroom Credentials...</h4><p class="text-white-50 x-small">Securing sandbox enrollment keys.</p></div>');
+                    $('body').append($overlay);
+                    
+                    setTimeout(() => {
+                        $overlay.css('opacity', '1');
+                    }, 10);
+                    
+                    setTimeout(function() {
+                        window.location.href = 'courses.html';
+                    }, 1300);
+                    
+                }, 1400);
+            });
+        });
+    </script>
+</body>
+</html>

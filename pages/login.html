@@ -82,6 +82,25 @@
                             <span>Sign In</span> <i class="fa-solid fa-arrow-right-to-bracket"></i>
                         </button>
                     </form>
+
+                    <div class="d-flex align-items-center my-3">
+                        <hr class="flex-grow-1 text-muted" style="opacity: 0.15;">
+                        <span class="mx-3 text-muted x-small text-uppercase fw-semibold" style="letter-spacing: 0.05em; font-size: 10px;">Or continue with</span>
+                        <hr class="flex-grow-1 text-muted" style="opacity: 0.15;">
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <button type="button" id="google-login-btn" class="btn btn-outline-light border text-dark w-100 py-2 d-flex align-items-center justify-content-center gap-2 rounded-3 hover:bg-light transition-all" style="font-size: 13px; font-weight: 600; height: 44px; color: #334155 !important; background: #ffffff;">
+                                <i class="fa-brands fa-google text-danger"></i> Google
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" id="linkedin-login-btn" class="btn btn-outline-light border text-dark w-100 py-2 d-flex align-items-center justify-content-center gap-2 rounded-3 hover:bg-light transition-all" style="font-size: 13px; font-weight: 600; height: 44px; color: #334155 !important; background: #ffffff;">
+                                <i class="fa-brands fa-linkedin text-primary" style="color: #0077b5 !important;"></i> LinkedIn
+                            </button>
+                        </div>
+                    </div>
                     
                     <p class="text-center text-muted x-small mb-0 mt-2">
                         Don't have an account? <a href="/pages/register.html" class="text-primary fw-bold text-decoration-none">Join for free</a>
@@ -109,6 +128,45 @@
                 $('#logout-success-alert').removeClass('d-none');
             }
 
+            // Simulated Social logins of Google and LinkedIn
+            $('#google-login-btn, #linkedin-login-btn').on('click', function(e) {
+                e.preventDefault();
+                const provider = $(this).attr('id') === 'google-login-btn' ? 'Google' : 'LinkedIn';
+                const $btn = $(this);
+                const originalHtml = $btn.html();
+                
+                $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" style="width: 14px; height: 14px;"></span>Connecting...');
+                
+                setTimeout(function() {
+                    $btn.html('<i class="fa-solid fa-circle-check text-success"></i> ' + provider + ' Linked');
+                    
+                    // Save simulated account credentials locally
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
+                    const socialUser = {
+                        fullName: provider === 'Google' ? 'Google User' : 'LinkedIn Scholar',
+                        email: provider === 'Google' ? 'scholar.google@example.com' : 'scholar.linkedin@example.com',
+                        phone: '', // Need to be filled on complete profile
+                        companyName: '', // Need to be filled on complete profile
+                        occupation: '', // Need to be filled on complete profile
+                        avatar: '/images/default-avatar.svg',
+                        status: 'Active Student',
+                        joinedDate: new Date().toISOString().substring(0, 10),
+                        role: 'Premium Learner',
+                        bio: 'Connected via ' + provider + '.'
+                    };
+                    localStorage.setItem('userProfile', JSON.stringify(socialUser));
+                    localStorage.setItem('socialLogin', 'true');
+                    localStorage.setItem('socialLoginProvider', provider);
+                    
+                    setTimeout(function() {
+                        $('body').fadeOut(300, function() {
+                            window.location.href = 'complete-profile.html';
+                        });
+                    }, 500);
+                }, 1200);
+            });
+
             // Handle form simulation on submit
             $('#loginForm').on('submit', function(e) {
                 e.preventDefault();
@@ -132,6 +190,10 @@
                         
                         // Set credentials matching standard checkout page read-only section
                         localStorage.setItem('isLoggedIn', 'true');
+                        
+                        // Standard username/password login shouldn't flag as social
+                        localStorage.removeItem('socialLogin');
+                        localStorage.removeItem('socialLoginProvider');
                         
                         setTimeout(function() {
                             $('body').fadeOut(300, function() {
