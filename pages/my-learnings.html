@@ -702,7 +702,6 @@
             }
 
             const totalBookings = course.enrollments.length;
-            const historyToggleText = totalBookings > 1 ? `Show Enrolment History (${totalBookings} times purchased)` : `View Enrolment Timeline (1 booking)`;
 
             let brandStyle = '';
             if (course.categoryBg) {
@@ -717,14 +716,7 @@
                         </div>
                         <div class="card-body p-4 d-flex flex-column justify-content-between">
                             <div>
-                                <!-- Category badge above course title removed as requested -->
-                                <div class="d-flex align-items-center justify-content-end mb-2">
-                                    <span class="badge rounded-pill bg-light border text-muted px-2 py-1 x-small fw-semibold" style="font-size: 0.65rem;">
-                                        <i class="fa-solid fa-layer-group me-2 text-primary"></i> Multiple Enrolments
-                                    </span>
-                                </div>
-                                
-                                <h5 class="card-title fw-bold text-secondary-alt mb-3 tracking-tight" style="font-size: 1.15rem;">
+                                <h5 class="card-title fw-bold text-secondary-alt mb-3 tracking-tight" style="font-size: 1.15rem; height: 2.7em; line-height: 1.35em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">
                                     ${course.title}
                                 </h5>
                                 
@@ -768,7 +760,11 @@
                                 <!-- Collapsible Accordion Timeline -->
                                 <div class="mb-3">
                                     <button class="btn toggle-timeline-btn" data-course-toggle="${course.id}">
-                                        <span><i class="fa-solid fa-clock-rotate-left me-2 text-primary"></i> ${historyToggleText}</span>
+                                        <span class="d-flex align-items-center gap-2">
+                                            <i class="fa-solid fa-clock-rotate-left text-primary"></i>
+                                            <span>Enrolment Timeline</span>
+                                            <span class="badge rounded-pill font-mono" style="font-size: 0.72rem; font-weight: 700; line-height: 1; background-color: #f3e8ff !important; color: #6d28d9 !important; border: 1px solid rgba(109, 40, 217, 0.25) !important; padding: 4px 8px;">${totalBookings}</span>
+                                        </span>
                                         <i class="fa-solid fa-chevron-down chevron-icon"></i>
                                     </button>
                                     
