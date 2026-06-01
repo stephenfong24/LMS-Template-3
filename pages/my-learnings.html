@@ -680,7 +680,14 @@
                     </button>
                 `;
             } else if (curEnrol.status === 'completed' || (curEnrol.status === 'expired' && curEnrol.progress === 100)) {
-                if (curEnrol.status === 'expired' && !hasFutureActiveOrLocked) {
+                const nextLocked = course.enrollments.find(e => e.startDate > curEnrol.endDate && e.status === 'locked');
+                if (nextLocked) {
+                    masterActionBtn = `
+                        <button class="btn btn-outline-primary w-100 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2 disabled" style="font-size: 0.85rem; opacity: 0.55; cursor: not-allowed;" disabled>
+                            <span>Continue learning</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    `;
+                } else if (curEnrol.status === 'expired' && !hasFutureActiveOrLocked) {
                     masterActionBtn = `
                         <button onclick="handleRenewAction('${course.id}')" class="btn w-100 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2 text-white" style="background-color: #4f46e5 !important; border-color: #4f46e5 !important; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.22);">
                             <i class="fa-solid fa-arrows-rotate"></i> <span>Renew enrolment</span>
@@ -715,7 +722,7 @@
             }
 
             return `
-                <div class="col-lg-4 col-md-6 col-12 learning-cohort-item" data-status="${statusTagsString}">
+                <div class="col-xl-4 col-md-6 col-12 learning-cohort-item" data-status="${statusTagsString}">
                     <div class="card h-100 border-0 shadow-sm rounded-4 saas-card bg-white overflow-hidden" style="border: 1px solid #f1f5f9 !important;">
                         <div class="position-relative">
                             <img src="${course.bgImage}" class="card-img-top" style="height: 190px; object-fit: cover;">
