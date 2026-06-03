@@ -774,15 +774,15 @@
                     if (isCompleted) {
                         lessonClass = "completed";
                         iconHTML = '<i class="fa-solid fa-circle-check text-success"></i>';
-                        statusLabel = `<span class="badge badge-success-class x-small fw-bold px-2 py-0.5 rounded-1">Done</span>`;
+                        statusLabel = `<span class="text-success"><i class="fa-solid fa-check fs-5 fw-bold"></i></span>`;
                     } else if (isLocked) {
                         lessonClass = "locked";
                         iconHTML = '<i class="fa-solid fa-lock text-muted"></i>';
-                        statusLabel = `<span class="text-muted x-small font-mono"><i class="fa-solid fa-lock me-1"></i> Locked</span>`;
+                        statusLabel = `<span class="text-muted"><i class="fa-solid fa-lock"></i></span>`;
                     } else if (isActive) {
                         lessonClass = "active";
                         iconHTML = '<i class="fa-solid fa-play-circle text-primary"></i>';
-                        statusLabel = `<span class="badge badge-active-class x-small fw-bold px-2 py-0.5 rounded-1">Playing</span>`;
+                        statusLabel = `<span class="text-primary"><i class="fa-solid fa-play fs-6"></i></span>`;
                     } else {
                         lessonClass = "unlocked";
                         iconHTML = '<i class="fa-solid fa-circle-play text-secondary"></i>';
