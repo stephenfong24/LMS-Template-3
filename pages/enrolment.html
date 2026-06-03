@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Player | Elevate Academy</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- CSS Dependencies -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <style>
+        .video-container {
+            position: relative;
+            background-color: #000;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--s-6);
+        }
+        
+        .video-player {
+            width: 100%;
+            display: block;
+            background: #000;
+        }
+
+        /* Custom video overlay controls */
+        .video-overlay-play {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .video-overlay-play .play-button-circle {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #7c3aed;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .video-overlay-play:hover .play-button-circle {
+            transform: scale(1.1);
+        }
+
+        /* Tabs styling */
+        .premium-nav-tabs .nav-link {
+            border: none;
+            color: var(--s-500);
+            font-weight: 600;
+            font-size: var(--fs-base);
+            padding: 12px 20px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .premium-nav-tabs .nav-link:hover {
+            color: var(--s-900);
+            border-bottom-color: var(--s-100);
+        }
+
+        .premium-nav-tabs .nav-link.active {
+            color: #7c3aed !important;
+            border-bottom: 2px solid #7c3aed !important;
+            background: transparent !important;
+        }
+
+        /* Lesson Items styling */
+        .lesson-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--s-3) var(--s-4);
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(15, 23, 42, 0.04);
+            background: #ffffff;
+            margin-bottom: var(--s-2);
+            transition: all 0.23s ease;
+            cursor: pointer;
+        }
+
+        .lesson-item:hover:not(.locked) {
+            transform: translateY(-2px);
+            border-color: rgba(124, 58, 237, 0.15);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+            background: #fdfcff;
+        }
+
+        .lesson-item.active {
+            background-color: var(--p-50) !important;
+            border-color: rgba(124, 58, 237, 0.2) !important;
+        }
+
+        .lesson-item.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background-color: #f8fafc;
+        }
+
+        .lesson-icon-wrapper {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .lesson-item.active .lesson-icon-wrapper {
+            background-color: #eecffe;
+            color: #7c3aed;
+        }
+
+        .lesson-item.completed .lesson-icon-wrapper {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .lesson-item.locked .lesson-icon-wrapper {
+            background-color: #e2e8f0;
+            color: #94a3b8;
+        }
+
+        /* Smooth columns transition */
+        #left-column, #right-column {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Badge status colors */
+        .badge-active-class {
+            background-color: rgba(124, 58, 237, 0.1) !important;
+            color: #7c3aed !important;
+        }
+
+        .badge-success-class {
+            background-color: rgba(16, 185, 129, 0.1) !important;
+            color: #10b981 !important;
+        }
+
+        .lms-sidebar-card {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .syllabus-compact-progress {
+            height: 6px;
+            border-radius: 3px;
+            background-color: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .syllabus-compact-fill {
+            height: 100%;
+            background-color: #10b981;
+            transition: width 0.4s ease;
+        }
+
+        .learning-bullet-check {
+            color: #10b981;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .custom-player-controls {
+            height: 52px;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--s-4);
+            color: white;
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-container:hover .custom-player-controls {
+            opacity: 1;
+        }
+
+        .player-bar-progress {
+            height: 4px;
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            position: relative;
+            cursor: pointer;
+            flex-grow: 1;
+            margin: 0 var(--s-3);
+            overflow: hidden;
+        }
+
+        .player-bar-fill {
+            height: 100%;
+            background-color: #7c3aed;
+            width: 0%;
+        }
+
+        .lock-overlay {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background-color: rgba(15, 23, 42, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            z-index: 20;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #locked-state-banner {
+            margin-top: 6vh;
+            margin-bottom: 6vh;
+        }
+    </style>
+</head>
+<body class="bg-light-alt" style="min-height: 100vh; display: flex; flex-direction: column;">
+
+    <!-- Navbar dynamic placeholder -->
+    <div id="navbar-placeholder"></div>
+
+    <main class="container py-4 flex-grow-1">
+        <!-- Locked State Checklist (if logged out) -->
+        <div id="locked-state-banner" class="row justify-content-center d-none">
+            <div class="col-lg-6 col-md-8 text-center">
+                <div class="card p-5 border-0 shadow-sm rounded-4 bg-white">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-light text-primary mb-4 shadow-sm" style="width: 80px; height: 80px; border: 1px solid rgba(124,58,237,0.1) !important;">
+                        <i class="fa-solid fa-lock fs-1 text-primary"></i>
+                    </div>
+                    <h3 class="fw-bold text-dark tracking-tight mb-2">Curriculum Locked</h3>
+                    <p class="text-muted small mx-auto mb-4" style="max-width: 380px;">
+                        You must be signed in to access the premium student course player and classroom.
+                    </p>
+                    <div class="d-grid gap-2 col-8 mx-auto">
+                        <a href="login.html" class="btn btn-primary py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2 rounded-3">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Account
+                        </a>
+                        <a href="my-learnings.html" class="btn btn-outline-secondary py-2.5 fw-medium rounded-3 text-muted">
+                            My Enrolments Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Premium Player Workspace (If logged in) -->
+        <div id="player-workspace" class="d-none">
+            
+            <!-- Breadcrumbs Tracker & Actions Header -->
+            <div class="row mb-3 align-items-center justify-content-between g-3 animate-fade-in">
+                <div class="col-md-auto">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-1 x-small text-uppercase tracking-wider fw-bold">
+                            <li class="breadcrumb-item"><a href="my-learnings.html" class="text-muted text-decoration-none">My Learnings</a></li>
+                            <li class="breadcrumb-item active text-primary" aria-current="page">Course Player</li>
+                        </ol>
+                    </nav>
+                    <h3 class="fw-extrabold tracking-tight mb-1 text-dark" id="course-main-title">Data Analytics Pro</h3>
+                    <p class="text-muted small mb-0 d-flex align-items-center gap-2">
+                        <span class="badge badge-active-class px-2.5 py-1.5 rounded-2" id="course-category-badge">Data Science</span>
+                        <span class="text-muted">•</span>
+                        <span class="d-inline-flex align-items-center"><i class="fa-solid fa-circle-play text-primary me-1"></i> <span id="syllabus-count-label">6 Lectures</span></span>
+                    </p>
+                </div>
+                
+                <div class="col-md-auto">
+                    <div class="d-flex align-items-center gap-3">
+                        <button id="toggle-sidebar-btn" class="btn btn-sm btn-white border px-3 py-2 fw-bold text-dark rounded-3 shadow-sm d-inline-flex align-items-center gap-2">
+                            <i class="fa-solid fa-rectangle-list text-primary"></i> <span>Hide Lessons List</span>
+                        </button>
+                        <a href="my-learnings.html" class="btn btn-sm btn-light border px-2.5 py-2 rounded-3 text-muted" title="Exit Player">
+                            <i class="fa-solid fa-xmark fs-6"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Layout Grid -->
+            <div class="row g-4 d-flex">
+                <!-- Left Content Column (8/12 wide by default) -->
+                <div class="col-lg-8" id="left-column">
+                    
+                    <!-- Video Player Segment -->
+                    <div class="video-container" id="player-container">
+                        <!-- Play overlay mock -->
+                        <div class="video-overlay-play" id="videoPlayOverlay">
+                            <div class="play-button-circle">
+                                <i class="fa-solid fa-play ps-1"></i>
+                            </div>
+                        </div>
+
+                        <!-- Video Element -->
+                        <video id="mainCourseVideo" class="video-player ratio ratio-16x9" poster="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200">
+                            <source id="videoSource" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+                            Your browser does not support HTML5 video player.
+                        </video>
+
+                        <!-- Custom Controls Panel -->
+                        <div class="custom-player-controls d-flex align-items-center gap-2">
+                            <button class="btn btn-sm text-white border-0 bg-transparent p-0" id="controlsPlayBtn">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <span class="x-small font-mono text-white-50" id="videoTimeStatus">0:00 / 0:00</span>
+                            
+                            <div class="player-bar-progress" id="progressTrack">
+                                <div class="player-bar-fill" id="progressFill"></div>
+                            </div>
+                            
+                            <button class="btn btn-sm text-white border-0 bg-transparent p-0" id="controlsVolumeBtn">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Classroom Actions bar -->
+                    <div class="card p-3 mb-4 border shadow-sm rounded-4 bg-white">
+                        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+                            <div>
+                                <span class="x-small text-muted fw-bold text-uppercase d-block tracking-wider mb-0.5">CURRENT LESSON</span>
+                                <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2" id="current-active-lesson-title">
+                                    Module 1.1: Core SQL Fundamentals and Aggregations
+                                </h5>
+                            </div>
+                            <div>
+                                <button id="btn-mark-complete" class="btn btn-primary px-4 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2 style-btn" style="background-color: #7c3aed !important; border-color: #7c3aed !important; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.18);">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    <span>Mark Lesson Complete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Details Tabs Component (Overview & What you learn) -->
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 bg-white" style="border: 1px solid rgba(15, 23, 42, 0.06) !important;">
+                        <div class="bg-light border-bottom px-3">
+                            <ul class="nav nav-tabs premium-nav-tabs border-0 mt-2" id="courseTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview-content" type="button" role="tab" aria-selected="true">
+                                        <i class="fa-solid fa-compass me-1.5"></i> Course Overview
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="learn-tab" data-bs-toggle="tab" data-bs-target="#learn-content" type="button" role="tab" aria-selected="false">
+                                        <i class="fa-solid fa-graduation-cap me-1.5"></i> What You Will Learn
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card-body p-4">
+                            <div class="tab-content" id="courseTabsContent">
+                                <!-- Tab 1: Overview -->
+                                <div class="tab-pane fade show active" id="overview-content" role="tabpanel" aria-labelledby="overview-tab">
+                                    <h5 class="fw-bold text-dark mb-3">About this Course</h5>
+                                    <p class="text-secondary small leading-relaxed" id="course-overview-desc" style="font-size: 0.88rem; line-height: 1.6;">
+                                        Master industry-standard analytical frameworks, advanced SQL query design, database normalizations, and high-fidelity dashboard storytelling. This course focuses on practical applications to convert messy enterprise datasets into sharp business decisions.
+                                    </p>
+                                    
+                                    <div class="d-flex align-items-center gap-3 p-3 bg-light rounded-3 mt-4 border border-opacity-10 border-indigo">
+                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center p-2.5" style="width: 44px; height: 44px; background: rgba(124, 58, 237, 0.08);">
+                                            <i class="fa-solid fa-award text-purple fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold text-dark small mb-0.5">Accredited Study Pathway</h6>
+                                            <p class="text-muted mb-0 x-small">Fulfill all required curriculum modules to unlock your final digital certificate natively.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Tab 2: What you will learn -->
+                                <div class="tab-pane fade" id="learn-content" role="tabpanel" aria-labelledby="learn-tab">
+                                    <h5 class="fw-bold text-dark mb-3">Core Learning Objectives</h5>
+                                    <p class="text-secondary small mb-4" style="font-size: 0.88rem;">By the end of this certification track, you will confidently demonstrate proficiency in the following skills:</p>
+                                    
+                                    <div class="row g-3" id="course-learning-bullets">
+                                        <!-- Will load dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Lessons Column (4/12 wide by default) -->
+                <div class="col-lg-4 d-flex flex-column" id="right-column">
+                    
+                    <!-- Progress Card -->
+                    <div class="card lms-sidebar-card p-3 mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="x-small fw-extrabold text-muted text-uppercase tracking-wider">Syllabus Progress</span>
+                            <span class="badge badge-success-class rounded-pill fw-bold" id="progress-pct-badge" style="font-size: 0.72rem;">0%</span>
+                        </div>
+                        <div class="syllabus-compact-progress mb-2">
+                            <div class="syllabus-compact-fill" id="progress-fill-bar" style="width: 0%;"></div>
+                        </div>
+                        <p class="text-muted x-small mb-0" id="progress-text-label">0 of 6 lessons completed</p>
+                    </div>
+
+                    <!-- Lessons List Card -->
+                    <div class="card lms-sidebar-card flex-grow-1">
+                        <div class="card-header bg-white border-bottom py-3 px-3.5 d-flex align-items-center justify-content-between">
+                            <h6 class="fw-bold text-dark mb-0 tracking-tight">Syllabus Curriculum</h6>
+                            <span class="badge bg-light text-secondary border fw-bold rounded-1" id="curriculum-count-sub" style="font-size: 0.7rem;">6 Lectures</span>
+                        </div>
+                        <div class="card-body p-2" id="lessons-list-grid">
+                            <!-- Loaded dynamically with unlock/completed sequence state logic -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer dynamic placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Celebration Success Modal -->
+    <div class="modal fade" id="celebrationModal" tabindex="-1" aria-hidden="true" style="z-index: 1060;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-body text-center p-5 position-relative">
+                    <div style="position: absolute; top:0; left:0; right:0; height: 8px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);"></div>
+                    <div class="d-inline-flex bg-success bg-opacity-10 text-success rounded-circle p-4 mb-4" style="background-color: rgba(16, 185, 129, 0.1); width: 88px; height: 88px; align-items: center; justify-content: center;">
+                        <i class="fa-solid fa-trophy text-emerald fs-1"></i>
+                    </div>
+                    <h3 class="fw-extrabold text-dark tracking-tight mb-2">Cohort Syllabus Complete!</h3>
+                    <p class="text-muted small px-2 mb-4">
+                        Congratulations! You have completed all curriculum modules for this course segment. Your official academic record has been approved.
+                    </p>
+                    <div class="border rounded-4 p-3 bg-light d-flex align-items-center gap-3 mb-4 text-start">
+                        <div class="bg-white rounded-3 p-2.5 shadow-xs border">
+                            <i class="fa-solid fa-award text-purple fs-4"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold mb-0.5" style="font-size: 0.8rem;">Digital Credential Unlocked</h6>
+                            <p class="text-muted mb-0 x-small">Your verified student certificate is ready for download.</p>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="my-certificates.html" class="btn btn-primary py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2 rounded-3" style="background-color: #0d9488 !important; border-color: #0d9488 !important;">
+                            <i class="fa-solid fa-award"></i> View My Certificate
+                        </a>
+                        <button type="button" class="btn btn-light py-2 border fw-semibold rounded-3 text-secondary small" data-bs-dismiss="modal">Return to Class</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/components.js"></script>
+
+    <script>
+        // High fidelity curriculum datasets aligned with myCoursesData
+        const courseCurriculumData = {
+            "data-analytics": {
+                title: "Data Analytics Pro",
+                category: "Data Science",
+                description: "Master industry-standard analytical frameworks, advanced SQL query design, database normalizations, and high-fidelity dashboard storytelling. This course focuses on practical applications to convert messy enterprise datasets into sharp business decisions.",
+                learnBullets: [
+                    "Apply SQL Window functions for advanced cumulative reports and ranking computations",
+                    "Construct high-performance data warehousing tables & star schema architectures",
+                    "Design interactive dashboards with storytelling metrics that stakeholders love",
+                    "Clean, transform, and normalize data tables efficiently using Pandas and Python"
+                ],
+                lessons: [
+                    { id: "da-1", title: "Module 1.1: Core SQL Fundamentals and Aggregations", duration: "12:45", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" },
+                    { id: "da-2", title: "Module 1.2: SQL Window Functions & Aggregations", duration: "18:20", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" },
+                    { id: "da-3", title: "Module 2.1: Designing Star Schemas & Data Warehousing", duration: "15:10", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" },
+                    { id: "da-4", title: "Module 2.2: Advanced Cohort Analysis with Python", duration: "22:40", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" },
+                    { id: "da-5", title: "Module 3.1: Python Data Cleaning & Transformation Pipelines", duration: "14:55", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4" },
+                    { id: "da-6", title: "Module 3.2: Analytics Storytelling & Capstone Evaluation", duration: "25:30", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4" }
+                ]
+            },
+            "ux-strategy": {
+                title: "UX Strategy Immersive",
+                category: "Design",
+                description: "Bridge the gap between business objectives and user-centric experience design. Learn to formulate strategy frameworks, lead pattern-seeking user research, configure information architectures, and align design decisions with ROI-focused vanity and metric structures.",
+                learnBullets: [
+                    "Formulate robust product strategy frameworks and conduct competitive analysis",
+                    "Plan and moderate user-research interview sessions to uncover deep qualitative patterns",
+                    "Build logical, flat card-sorting structures and information architecture trees",
+                    "Drive product design frameworks matching Google HEART and business KPI metrics"
+                ],
+                lessons: [
+                    { id: "ux-1", title: "Module 1.1: Introduction to UX Strategy & Alignment", duration: "10:24", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" },
+                    { id: "ux-2", title: "Module 1.2: The Business Model Canvas in Practice", duration: "15:45", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" },
+                    { id: "ux-3", title: "Module 2.1: User Interview Techniques & Rapport", duration: "22:10", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" },
+                    { id: "ux-4", title: "Module 2.2: Identifying Patterns & Research Synthesis", duration: "12:30", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" },
+                    { id: "ux-5", title: "Module 3.1: Card Sorting Workshops & Scent Structures", duration: "18:15", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4" },
+                    { id: "ux-6", title: "Module 4.1: Metrics, ROI & The Google HEART Framework", duration: "14:20", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4" }
+                ]
+            },
+            "generative-ai": {
+                title: "Generative AI & LLM Finetuning Sandbox",
+                category: "Artificial Intelligence",
+                description: "A comprehensive deep dive into Large Language Models, prompt engineering architectures, custom model fine-tuning with LoRA/QLoRA, and orchestrating retrieval-augmented generation (RAG) pipelines inside containerized standard dev sandboxes.",
+                learnBullets: [
+                    "Configure modern prompt engineering stacks including few-shot prompting",
+                    "Perform low-rank adaptation fine-tuning on high-quality specialized datasets",
+                    "Coordinate vector store integrations and semantic search ranking filters for RAG",
+                    "Standardize model evaluation parameters, perplexity charts, and token budgets"
+                ],
+                lessons: [
+                    { id: "gai-1", title: "Module 1.1: Foundations of Generative AI & Tokenization", duration: "14:05", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" },
+                    { id: "gai-2", title: "Module 1.2: System Prompt Strategy & Guardrails", duration: "19:30", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" },
+                    { id: "gai-3", title: "Module 2.1: RAG Architecture & Vector DB Embeddings", duration: "25:15", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" },
+                    { id: "gai-4", title: "Module 2.2: LoRA Fine-Tuning Hyperparameters", duration: "30:00", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" },
+                    { id: "gai-5", title: "Module 3.1: Multi-Agent Choreography with Langgraph", duration: "22:10", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4" }
+                ]
+            },
+            "product-mgmt": {
+                title: "Product Management Masterclass",
+                category: "Management",
+                description: "Learn the end-to-end framework of starting and scaling software products. This class provides the exact blueprint to define product visions, conduct user interviews, prioritize backlogs using RICE/Kano, map user journeys, and write PRDs.",
+                learnBullets: [
+                    "Translate customer pain points into high-impact product requirement documents (PRD)",
+                    "Prioritize feature requests utilizing data-backed RICE and Kano score indices",
+                    "Formulate clear, narrative product roadmaps aligned with long-term company visions",
+                    "Host productive scrum standups, sprint reviews, and retrospective loops"
+                ],
+                lessons: [
+                    { id: "pm-1", title: "Module 1.1: Defining the Product Vision & North Star Metric", duration: "15:00", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" },
+                    { id: "pm-2", title: "Module 1.2: Creating Effective User Journey Maps", duration: "18:30", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" },
+                    { id: "pm-3", title: "Module 2.1: Backlog Prioritization: RICE vs Kano Frameworks", duration: "21:10", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" },
+                    { id: "pm-4", title: "Module 2.2: Writing Comprehensive PRDs with UX Wireframes", duration: "24:45", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4" },
+                    { id: "pm-5", title: "Module 3.1: Managing Sprints, OKRs, and Feature Releases", duration: "19:20", videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4" }
+                ]
+            }
+        };
+
+        $(document).ready(function() {
+            // Guard Session Login Check
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                $('#locked-state-banner').removeClass('d-none');
+                $('#player-workspace').addClass('d-none');
+                return;
+            } else {
+                $('#locked-state-banner').addClass('d-none');
+                $('#player-workspace').removeClass('d-none');
+            }
+
+            // Parse course ID from URL query parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            let activeCourseId = urlParams.get('courseId') || 'data-analytics';
+            
+            // Fallback to data-analytics if invalid course ID passed
+            if (!courseCurriculumData[activeCourseId]) {
+                activeCourseId = 'data-analytics';
+            }
+
+            const currentCourseData = courseCurriculumData[activeCourseId];
+            let activeLessonIndex = 0; // State indicating the currently playing lecture context
+
+            // DOM elements
+            const $video = $('#mainCourseVideo')[0];
+            const $playOverlay = $('#videoPlayOverlay');
+            const $controlsPlay = $('#controlsPlayBtn');
+            const $controlsVolume = $('#controlsVolumeBtn');
+            const $timeDisplay = $('#videoTimeStatus');
+            const $filler = $('#progressFill');
+            const $track = $('#progressTrack');
+
+            // Initialize Page Text Content
+            $('#course-main-title').text(currentCourseData.title);
+            $('#course-category-badge').text(currentCourseData.category);
+            $('#syllabus-count-label, #curriculum-count-sub').text(`${currentCourseData.lessons.length} Lectures`);
+            $('#course-overview-desc').text(currentCourseData.description);
+
+            // Render What You Will Learn
+            const $bulletGrid = $('#course-learning-bullets');
+            $bulletGrid.empty();
+            currentCourseData.learnBullets.forEach(bullet => {
+                $bulletGrid.append(`
+                    <div class="col-md-6 d-flex gap-2">
+                        <i class="fa-solid fa-circle-check learning-bullet-check mt-1"></i>
+                        <span class="small text-secondary fw-medium">${bullet}</span>
+                    </div>
+                `);
+            });
+
+            // State Storage: Load completed lessons arrays from sessionStorage
+            const sessionKey = `completed_lessons_${activeCourseId}`;
+            let completedLessonIds = [];
+            
+            try {
+                const storedVal = sessionStorage.getItem(sessionKey);
+                if (storedVal) {
+                    completedLessonIds = JSON.parse(storedVal);
+                }
+            } catch (e) {
+                console.error("Could not parse completed lessons storage", e);
+            }
+
+            // Sync master learnings record in localStorage (optional)
+            let masterLearnings = [];
+            try {
+                const storedLearnings = localStorage.getItem('myCourses');
+                if (storedLearnings) {
+                    masterLearnings = JSON.parse(storedLearnings);
+                }
+            } catch(e){}
+
+            // Update local storage and progress percentage functions
+            // Update learnings and triggers celebration modal if complete
+            function syncGlobalLearningsProgress() {
+                const totalLessons = currentCourseData.lessons.length;
+                const completedCount = completedLessonIds.length;
+                const progressPct = Math.round((completedCount / totalLessons) * 100);
+
+                // Update standard compact cards
+                $('#progress-pct-badge').text(`${progressPct}%`);
+                $('#progress-fill-bar').css('width', `${progressPct}%`);
+                $('#progress-text-label').text(`${completedCount} of ${totalLessons} lessons completed`);
+
+                // Update standard master local storage so my-learnings.html gets synced
+                let userCourses = null;
+                try {
+                    const storeData = localStorage.getItem('myCoursesData');
+                    if (storeData) {
+                        userCourses = JSON.parse(storeData);
+                    }
+                } catch(e){}
+                
+                if (userCourses) {
+                    const matchCourse = userCourses.find(c => c.id === activeCourseId);
+                    if (matchCourse && matchCourse.enrollments && matchCourse.enrollments.length > 0) {
+                        const activeEnrol = matchCourse.enrollments.find(e => e.status === 'active' || e.status === 'completed');
+                        if (activeEnrol) {
+                            activeEnrol.progress = progressPct;
+                            if (progressPct === 100) {
+                                activeEnrol.status = 'completed';
+                                activeEnrol.currentLesson = 'Syllabus 100% Completed';
+                            } else {
+                                // Sync current playing lecture details
+                                activeEnrol.currentLesson = currentCourseData.lessons[activeLessonIndex].title;
+                            }
+                        }
+                        localStorage.setItem('myCoursesData', JSON.stringify(userCourses));
+                    }
+                }
+            }
+
+            // Custom player controls event bindings
+            function playPauseVideo() {
+                if ($video.paused) {
+                    $video.play().catch(err => console.log('Video play interrupted.'));
+                } else {
+                    $video.pause();
+                }
+            }
+
+            $playOverlay.on('click', function() {
+                playPauseVideo();
+            });
+
+            $controlsPlay.on('click', function(e) {
+                e.stopPropagation();
+                playPauseVideo();
+            });
+
+            $($video).on('play', function() {
+                $playOverlay.fadeOut(200);
+                $controlsPlay.html('<i class="fa-solid fa-pause"></i>');
+            });
+
+            $($video).on('pause', function() {
+                $playOverlay.fadeIn(150);
+                $controlsPlay.html('<i class="fa-solid fa-play"></i>');
+            });
+
+            $($video).on('timeupdate', function() {
+                const current = $video.currentTime;
+                const duration = $video.duration || 0;
+                
+                // Set bar fill
+                if (duration > 0) {
+                    const ratio = (current / duration) * 100;
+                    $filler.css('width', `${ratio}%`);
+                }
+
+                // Format times
+                const formatTime = (seconds) => {
+                    const mins = Math.floor(seconds / 60);
+                    const secs = Math.floor(seconds % 60);
+                    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                };
+
+                $timeDisplay.text(`${formatTime(current)} / ${formatTime(duration)}`);
+            });
+
+            $track.on('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const percentage = clickX / rect.width;
+                const duration = $video.duration || 0;
+                $video.currentTime = duration * percentage;
+            });
+
+            let isMuted = false;
+            $controlsVolume.on('click', function(e) {
+                e.stopPropagation();
+                if (isMuted) {
+                    $video.muted = false;
+                    isMuted = false;
+                    $controlsVolume.html('<i class="fa-solid fa-volume-high"></i>');
+                } else {
+                    $video.muted = true;
+                    isMuted = true;
+                    $controlsVolume.html('<i class="fa-solid fa-volume-xmark"></i>');
+                }
+            });
+
+
+            // Main render function for lessons curriculum list
+            function renderCurriculumList() {
+                const $grid = $('#lessons-list-grid');
+                $grid.empty();
+
+                currentCourseData.lessons.forEach((lesson, index) => {
+                    const isCompleted = completedLessonIds.includes(lesson.id);
+                    const isActive = index === activeLessonIndex;
+                    
+                    // A lesson is locked if and only if it is NOT lesson 1 (index 0) AND the previous lesson has not been completed.
+                    let isLocked = false;
+                    if (index > 0) {
+                        const previousLessonId = currentCourseData.lessons[index - 1].id;
+                        isLocked = !completedLessonIds.includes(previousLessonId);
+                    }
+
+                    let lessonClass = "";
+                    let iconHTML = "";
+                    let statusLabel = "";
+
+                    if (isCompleted) {
+                        lessonClass = "completed";
+                        iconHTML = '<i class="fa-solid fa-circle-check text-success"></i>';
+                        statusLabel = `<span class="badge badge-success-class x-small fw-bold px-2 py-0.5 rounded-1">Done</span>`;
+                    } else if (isLocked) {
+                        lessonClass = "locked";
+                        iconHTML = '<i class="fa-solid fa-lock text-muted"></i>';
+                        statusLabel = `<span class="text-muted x-small font-mono"><i class="fa-solid fa-lock me-1"></i> Locked</span>`;
+                    } else if (isActive) {
+                        lessonClass = "active";
+                        iconHTML = '<i class="fa-solid fa-play-circle text-primary"></i>';
+                        statusLabel = `<span class="badge badge-active-class x-small fw-bold px-2 py-0.5 rounded-1">Playing</span>`;
+                    } else {
+                        lessonClass = "unlocked";
+                        iconHTML = '<i class="fa-solid fa-circle-play text-secondary"></i>';
+                        statusLabel = `<span class="text-secondary x-small font-mono">${lesson.duration}</span>`;
+                    }
+
+                    const activeAttr = isActive ? "active" : "";
+
+                    const itemHTML = `
+                        <div class="lesson-item ${lessonClass}" data-index="${index}" data-id="${lesson.id}" data-locked="${isLocked}">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="lesson-icon-wrapper">
+                                    ${iconHTML}
+                                </div>
+                                <div style="flex-grow: 1;">
+                                    <span class="x-small text-muted fw-bold text-uppercase d-block" style="font-size: 8px; letter-spacing: 0.05em;">LECTURE ${index + 1}</span>
+                                    <h6 class="fw-bold mb-0 text-dark small" style="line-height: 1.3;">${lesson.title}</h6>
+                                </div>
+                            </div>
+                            <div class="text-end ms-2">
+                                ${statusLabel}
+                            </div>
+                        </div>
+                    `;
+                    $grid.append(itemHTML);
+                });
+
+                // Update current lesson action context card
+                const currentPlayingLesson = currentCourseData.lessons[activeLessonIndex];
+                $('#current-active-lesson-title').html(`
+                    <span class="badge badge-active-class me-2 px-2 py-1 fs-6" style="font-size: 0.72rem !important;">Lec ${activeLessonIndex + 1}</span>
+                    ${currentPlayingLesson.title}
+                `);
+
+                // If currently playing is already marked complete, we change button appearance
+                const isCurrentComplete = completedLessonIds.includes(currentPlayingLesson.id);
+                const $completeBtn = $('#btn-mark-complete');
+                if (isCurrentComplete) {
+                    $completeBtn.removeClass('btn-primary').addClass('btn-outline-success')
+                        .prop('disabled', true)
+                        .html('<i class="fa-solid fa-circle-check"></i> Completed');
+                } else {
+                    $completeBtn.addClass('btn-primary').removeClass('btn-outline-success')
+                        .prop('disabled', false)
+                        .html('<i class="fa-solid fa-circle-check"></i> <span>Mark Lesson Complete</span>');
+                }
+
+                syncGlobalLearningsProgress();
+            }
+
+            // Click lesson lists item to switch video stream
+            $(document).on('click', '.lesson-item', function() {
+                const isLocked = $(this).attr('data-locked') === 'true';
+                if (isLocked) {
+                    // Quick user action feedback
+                    const toastHTML = `
+                        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100; margin-bottom: 2rem; margin-right: 2rem;">
+                            <div class="toast show border-0 bg-dark text-white rounded-4 shadow-lg animate-fade-in" role="alert">
+                                <div class="toast-body p-3 d-flex align-items-center gap-2.5">
+                                    <i class="fa-solid fa-lock text-warning fs-5"></i>
+                                    <div>
+                                        <span class="d-block fw-bold" style="font-size: 0.8rem;">Lecture Locked!</span>
+                                        <span class="x-small text-white-50" style="font-size: 0.7rem;">Please complete previous lessons to unlock this topic.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    const $toast = $(toastHTML);
+                    $('body').append($toast);
+                    setTimeout(() => $toast.fadeOut(600, () => $toast.remove()), 3500);
+                    return;
+                }
+
+                const clickedIndex = parseInt($(this).attr('data-index'));
+                activeLessonIndex = clickedIndex;
+
+                // Load new video URL stream
+                const newLesson = currentCourseData.lessons[clickedIndex];
+                $('#videoSource').attr('src', newLesson.videoUrl);
+                $video.load();
+                
+                // Reset Fill bars
+                $filler.css('width', '0%');
+                $playOverlay.fadeIn(100);
+
+                renderCurriculumList();
+            });
+
+            // Mark lesson complete action handler
+            $('#btn-mark-complete').on('click', function() {
+                const currentPlayingLesson = currentCourseData.lessons[activeLessonIndex];
+                
+                if (!completedLessonIds.includes(currentPlayingLesson.id)) {
+                    completedLessonIds.push(currentPlayingLesson.id);
+                    sessionStorage.setItem(sessionKey, JSON.stringify(completedLessonIds));
+
+                    // Show micro-interaction successes
+                    const toastHTML = `
+                        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100; margin-bottom: 2rem; margin-right: 2rem;">
+                            <div class="toast show border-0 bg-success text-white rounded-4 shadow-lg animate-fade-in" role="alert">
+                                <div class="toast-body p-3 d-flex align-items-center gap-2.5">
+                                    <i class="fa-solid fa-circle-check text-white fs-5"></i>
+                                    <div>
+                                        <span class="d-block fw-bold" style="font-size: 0.8rem;">Lesson Completed!</span>
+                                        <span class="x-small text-white-50" style="font-size: 0.7rem;">Next lesson is now unlocked and available.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    const $toast = $(toastHTML);
+                    $('body').append($toast);
+                    setTimeout(() => $toast.fadeOut(600, () => $toast.remove()), 3500);
+
+                    // If all lessons are completed, celebrate!
+                    if (completedLessonIds.length === currentCourseData.lessons.length) {
+                        setTimeout(() => {
+                            const celebrateModal = new bootstrap.Modal(document.getElementById('celebrationModal'));
+                            celebrateModal.show();
+                        }, 800);
+                    } else {
+                        // Automatically advance to the next lesson if there is one
+                        if (activeLessonIndex < currentCourseData.lessons.length - 1) {
+                            setTimeout(() => {
+                                activeLessonIndex++;
+                                const nextLesson = currentCourseData.lessons[activeLessonIndex];
+                                $('#videoSource').attr('src', nextLesson.videoUrl);
+                                $video.load();
+                                $filler.css('width', '0%');
+                                renderCurriculumList();
+                            }, 1000);
+                        }
+                    }
+
+                    renderCurriculumList();
+                }
+            });
+
+            // Toggle Lessons List sidebar panel callback clicker
+            $('#toggle-sidebar-btn').on('click', function() {
+                const $leftCol = $('#left-column');
+                const $rightCol = $('#right-column');
+                
+                if ($rightCol.hasClass('d-none')) {
+                    $rightCol.removeClass('d-none');
+                    $leftCol.removeClass('col-lg-12').addClass('col-lg-8');
+                    $(this).html('<i class="fa-solid fa-rectangle-list text-primary"></i> <span>Hide Lessons List</span>');
+                } else {
+                    $rightCol.addClass('d-none');
+                    $leftCol.removeClass('col-lg-8').addClass('col-lg-12');
+                    $(this).html('<i class="fa-solid fa-rectangle-list text-primary"></i> <span>Show Lessons List</span>');
+                }
+            });
+
+            // Initial view rendering
+            renderCurriculumList();
+        });
+    </script>
+</body>
+</html>

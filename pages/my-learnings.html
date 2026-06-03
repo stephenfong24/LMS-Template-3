@@ -813,52 +813,7 @@
 
         // Active learning trigger simulation launcher module
         function handleActiveAction(courseId, lesson) {
-            const modalHTML = `
-                <div class="modal fade" id="classroomModal" tabindex="-1" aria-hidden="true" style="z-index: 1055;">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content border-0 shadow rounded-4">
-                            <div class="modal-header border-0 bg-light p-3 px-4 rounded-top-4">
-                                <div class="d-flex align-items-center gap-2">
-                                    <i class="fa-solid fa-circle-play text-primary fs-4"></i>
-                                    <h5 class="modal-title fw-bold text-dark">Course Player Player</h5>
-                                </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body p-4 text-center">
-                                <div class="mb-3">
-                                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1.5 rounded-pill fw-bold" style="font-size: 0.7rem;">
-                                        <i class="fa-solid fa-tv me-1"></i> Interactive Multimedia Sandbox
-                                    </span>
-                                </div>
-                                <h4 class="fw-bold mb-2">Resuming Learning Session...</h4>
-                                <p class="text-muted small">You are returning to: <br><strong class="text-dark">${lesson}</strong></p>
-                                
-                                <div class="p-3 bg-light rounded-3 text-start small mb-4">
-                                    <div class="d-flex gap-2">
-                                        <i class="fa-solid fa-circle-info text-info mt-1 fs-6"></i>
-                                        <div>
-                                            All progress records are automatically synced with your active student profile metrics in local storage. Refer to the dashboard header for streak counts.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light rounded-3 fw-bold border" data-bs-dismiss="modal">Cancel</button>
-                                    <button onclick="simulateStudySuccess()" type="button" class="btn btn-primary rounded-3 fw-bold px-4" style="background-color: #7c3aed !important; border-color: #7c3aed !important;">
-                                        <i class="fa-solid fa-laptop-code me-1.5"></i> Launch Sandbox
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            $('#classroomModal').remove();
-            $('body').append(modalHTML);
-            
-            const modal = new bootstrap.Modal(document.getElementById('classroomModal'));
-            modal.show();
+            window.location.href = `enrolment.html?courseId=${encodeURIComponent(courseId)}`;
         }
 
         // Locked learning alert launcher module
@@ -926,7 +881,7 @@
         }
 
         // Real Enrolment Database List (highly scalable configuration in global scope)
-        const myCoursesData = [
+        const defaultCoursesData = [
             {
                 id: "data-analytics",
                 title: "Data Analytics Pro",
@@ -1021,6 +976,19 @@
             }
         ];
 
+        let myCoursesData = [];
+        try {
+            const stored = localStorage.getItem('myCoursesData');
+            if (stored) {
+                myCoursesData = JSON.parse(stored);
+            } else {
+                myCoursesData = defaultCoursesData;
+                localStorage.setItem('myCoursesData', JSON.stringify(myCoursesData));
+            }
+        } catch(e) {
+            myCoursesData = defaultCoursesData;
+        }
+
         // Global functions for Renewal
         function handleRenewAction(courseId) {
             const course = myCoursesData.find(c => c.id === courseId);
@@ -1099,6 +1067,9 @@
                 currentLesson: "Welcome Orientation & Curriculum Plan",
                 finalResult: null
             });
+
+            // Persist the state in localStorage for sync across windows
+            localStorage.setItem('myCoursesData', JSON.stringify(myCoursesData));
 
             // Hide modal
             const modalEl = document.getElementById('renewModal');
