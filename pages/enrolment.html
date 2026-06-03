@@ -162,6 +162,26 @@
             color: #10b981 !important;
         }
 
+        #btn-mark-complete {
+            background-color: #7c3aed !important;
+            border-color: #7c3aed !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.18) !important;
+            transition: all 0.2s ease;
+        }
+        #btn-mark-complete:hover {
+            background-color: #6d28d9 !important;
+            border-color: #6d28d9 !important;
+        }
+        #btn-mark-complete:disabled, #btn-mark-complete.completed-btn {
+            background-color: #f0fdf4 !important;
+            border-color: #bbf7d0 !important;
+            color: #16a34a !important;
+            box-shadow: none !important;
+            cursor: not-allowed;
+            opacity: 1 !important;
+        }
+
         .lms-sidebar-card {
             background: #ffffff;
             border: 1px solid rgba(15, 23, 42, 0.06);
@@ -355,9 +375,9 @@
                                 </h5>
                             </div>
                             <div>
-                                <button id="btn-mark-complete" class="btn btn-primary px-4 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2 style-btn" style="background-color: #7c3aed !important; border-color: #7c3aed !important; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.18);">
+                                <button id="btn-mark-complete" class="btn px-4 py-2.5 fw-bold rounded-3 d-flex align-items-center justify-content-center gap-2 style-btn">
                                     <i class="fa-solid fa-circle-check"></i>
-                                    <span>Mark Lesson Complete</span>
+                                    <span>Mark Complete</span>
                                 </button>
                             </div>
                         </div>
@@ -774,15 +794,15 @@
                     if (isCompleted) {
                         lessonClass = "completed";
                         iconHTML = '<i class="fa-solid fa-circle-check text-success"></i>';
-                        statusLabel = `<span class="text-success"><i class="fa-solid fa-check fs-5 fw-bold"></i></span>`;
+                        statusLabel = `<span class="text-muted x-small font-mono">${lesson.duration}</span>`;
                     } else if (isLocked) {
                         lessonClass = "locked";
                         iconHTML = '<i class="fa-solid fa-lock text-muted"></i>';
-                        statusLabel = `<span class="text-muted"><i class="fa-solid fa-lock"></i></span>`;
+                        statusLabel = `<span class="text-muted opacity-50 x-small font-mono">${lesson.duration}</span>`;
                     } else if (isActive) {
                         lessonClass = "active";
                         iconHTML = '<i class="fa-solid fa-play-circle text-primary"></i>';
-                        statusLabel = `<span class="text-primary"><i class="fa-solid fa-play fs-6"></i></span>`;
+                        statusLabel = `<span class="text-primary fw-bold x-small font-mono">${lesson.duration}</span>`;
                     } else {
                         lessonClass = "unlocked";
                         iconHTML = '<i class="fa-solid fa-circle-play text-secondary"></i>';
@@ -821,13 +841,13 @@
                 const isCurrentComplete = completedLessonIds.includes(currentPlayingLesson.id);
                 const $completeBtn = $('#btn-mark-complete');
                 if (isCurrentComplete) {
-                    $completeBtn.removeClass('btn-primary').addClass('btn-outline-success')
+                    $completeBtn.addClass('completed-btn')
                         .prop('disabled', true)
                         .html('<i class="fa-solid fa-circle-check"></i> Completed');
                 } else {
-                    $completeBtn.addClass('btn-primary').removeClass('btn-outline-success')
+                    $completeBtn.removeClass('completed-btn')
                         .prop('disabled', false)
-                        .html('<i class="fa-solid fa-circle-check"></i> <span>Mark Lesson Complete</span>');
+                        .html('<i class="fa-solid fa-circle-check"></i> <span>Mark Complete</span>');
                 }
 
                 syncGlobalLearningsProgress();
