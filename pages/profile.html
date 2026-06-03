@@ -544,6 +544,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="info-metric-card" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                    <div class="card-icon-wrap"><i class="fa-solid fa-building"></i></div>
+                                    <div>
+                                        <span class="info-label">Company Name</span>
+                                        <span class="info-value" id="cardCompany">Acme Corp</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info-metric-card" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                    <div class="card-icon-wrap"><i class="fa-solid fa-briefcase"></i></div>
+                                    <div>
+                                        <span class="info-label">Occupation</span>
+                                        <span class="info-value" id="cardOccupation">UX Designer</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -843,6 +861,24 @@
                                     <input type="text" class="form-control border-start-0 bg-white" id="countryInput" placeholder="e.g. Malaysia">
                                 </div>
                             </div>
+
+                            <!-- Company Name -->
+                            <div class="col-md-6">
+                                <label for="companyInput" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Company Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-building" style="font-size: 0.85rem;"></i></span>
+                                    <input type="text" class="form-control border-start-0 bg-white" id="companyInput" placeholder="e.g. Acme Corp">
+                                </div>
+                            </div>
+
+                            <!-- Occupation -->
+                            <div class="col-md-6">
+                                <label for="occupationInput" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Occupation</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-briefcase" style="font-size: 0.85rem;"></i></span>
+                                    <input type="text" class="form-control border-start-0 bg-white" id="occupationInput" placeholder="e.g. UX Designer">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer border-top bg-white py-3 px-4 d-flex justify-content-end gap-2">
@@ -985,6 +1021,8 @@
                 if (!profile.country) profile.country = "Malaysia";
                 if (!profile.address) profile.address = "Kuala Lumpur, Federal Territory";
                 if (!profile.referrerCode) profile.referrerCode = "ELEV-GUEST-779";
+                if (!profile.companyName) profile.companyName = "Acme Corp";
+                if (!profile.occupation) profile.occupation = "UX Designer";
                 // Default some missing fields safely
                 if (!profile.fullName) profile.fullName = "Guest Student";
                 if (!profile.email) profile.email = "guest@example.com";
@@ -1024,6 +1062,8 @@
                 $('#genderInput').val(profile.gender || 'Female');
                 $('#dobInput').val(profile.dob || '1998-04-12');
                 $('#countryInput').val(profile.country || 'Malaysia');
+                $('#companyInput').val(profile.companyName || 'Acme Corp');
+                $('#occupationInput').val(profile.occupation || 'UX Designer');
 
                 // Preview values in primary layout cards
                 $('#profileFullNamePreview').text(profile.fullName);
@@ -1040,6 +1080,8 @@
                 $('#cardGender').text(profile.gender || 'Not Specified').toggleClass('empty-state', !profile.gender);
                 $('#cardDob').text(profile.dob || 'Not Specified').toggleClass('empty-state', !profile.dob);
                 $('#cardCountry').text(profile.country || 'Not Specified').toggleClass('empty-state', !profile.country);
+                $('#cardCompany').text(profile.companyName || 'Not Specified').toggleClass('empty-state', !profile.companyName);
+                $('#cardOccupation').text(profile.occupation || 'Not Specified').toggleClass('empty-state', !profile.occupation);
 
                 // Determine active status avatar in portrait selector modal
                 $('.avatar-option-img').each(function() {
@@ -1149,6 +1191,8 @@
                 $('#genderInput').val(currentProfile.gender || 'Female');
                 $('#dobInput').val(currentProfile.dob || '1998-04-12');
                 $('#countryInput').val(currentProfile.country || 'Malaysia');
+                $('#companyInput').val(currentProfile.companyName || '');
+                $('#occupationInput').val(currentProfile.occupation || '');
             });
 
 
@@ -1199,6 +1243,8 @@
                     gender: $('#genderInput').val(),
                     dob: $('#dobInput').val(),
                     country: $.trim($('#countryInput').val()),
+                    companyName: $.trim($('#companyInput').val()),
+                    occupation: $.trim($('#occupationInput').val()),
                     avatar: tempSelectedAvatarUrl || $('#profileAvatarPreview').attr('src'),
                     status: $('#badgeStatus').text(),
                     joinedDate: $('#joinedDateSpan').text(),
@@ -1221,6 +1267,8 @@
                     $('#cardGender').text(updatedProfile.gender || 'Not Specified').toggleClass('empty-state', !updatedProfile.gender);
                     $('#cardDob').text(updatedProfile.dob || 'Not Specified').toggleClass('empty-state', !updatedProfile.dob);
                     $('#cardCountry').text(updatedProfile.country || 'Not Specified').toggleClass('empty-state', !updatedProfile.country);
+                    $('#cardCompany').text(updatedProfile.companyName || 'Not Specified').toggleClass('empty-state', !updatedProfile.companyName);
+                    $('#cardOccupation').text(updatedProfile.occupation || 'Not Specified').toggleClass('empty-state', !updatedProfile.occupation);
 
                     // Sync with standard global navbar headers instantly
                     $('#nav-full-name, #mobile-nav-full-name').text(updatedProfile.fullName);
