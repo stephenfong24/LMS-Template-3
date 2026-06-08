@@ -58,7 +58,7 @@
                             <label for="email" class="form-label x-small fw-bold text-muted">Email or Username</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-user"></i></span>
-                                <input type="text" class="form-control border-start-0" id="email" placeholder="e.g. guest" required style="height: 44px; font-size: var(--fs-sm);">
+                                <input type="text" class="form-control border-start-0" id="email" placeholder="e.g. guest" style="height: 44px; font-size: var(--fs-sm);">
                             </div>
                         </div>
                         <div class="mb-3">
@@ -68,7 +68,7 @@
                             </div>
                             <div class="input-group">
                                 <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-key"></i></span>
-                                <input type="password" class="form-control border-start-0" id="password" placeholder="••••••••" required style="height: 44px; font-size: var(--fs-sm);">
+                                <input type="password" class="form-control border-start-0" id="password" placeholder="••••••••" style="height: 44px; font-size: var(--fs-sm);">
                             </div>
                         </div>
                         <div class="form-check mb-4">
@@ -119,6 +119,7 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
         $(document).ready(function() {
@@ -174,11 +175,29 @@
                 const enteredUser = $.trim($('#email').val()).toLowerCase();
                 const enteredPass = $('#password').val();
                 const $btn = $('#login-submit-btn');
-                const $alert = $('#login-error-alert');
                 
+                // Programmatic check since HTML required is removed
+                if (!enteredUser) {
+                    Swal.fire({
+                        title: 'Username Required',
+                        text: 'Please fill out your Email or Username to login.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                if (!enteredPass) {
+                    Swal.fire({
+                        title: 'Password Required',
+                        text: 'Please specify a password for your account.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
                 if (enteredUser === 'guest' && enteredPass === 'guest') {
-                    $alert.addClass('d-none');
-                    
                     // Premium realistic spinner sequence
                     $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Creating Virtual Session...');
                     
@@ -202,7 +221,12 @@
                         }, 700);
                     }, 1400);
                 } else {
-                    $alert.removeClass('d-none').html('<i class="fa-solid fa-circle-exclamation me-2"></i>Authentication Failure. Try entering the credentials <strong>guest</strong> / <strong>guest</strong>.');
+                    Swal.fire({
+                        title: 'Authentication Failure',
+                        text: 'Incorrect username or password. Please use guest / guest for this sandbox experience.',
+                        icon: 'error',
+                        confirmButtonText: 'Retry'
+                    });
                     $('#password').val('');
                 }
             });

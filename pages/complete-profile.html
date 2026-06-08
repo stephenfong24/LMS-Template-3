@@ -60,52 +60,52 @@
                     <form id="completeProfileForm">
                         <!-- Full Name -->
                         <div class="mb-3 text-start">
-                            <label for="fullName" class="form-label x-small fw-bold text-muted">Full Name</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-signature"></i></span>
-                                <input type="text" class="form-control border-start-0" id="fullName" placeholder="e.g. John Doe" required style="height: 44px; font-size: var(--fs-sm);">
-                            </div>
+                             <label for="fullName" class="form-label x-small fw-bold text-muted">Full Name</label>
+                             <div class="input-group">
+                                 <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-signature"></i></span>
+                                 <input type="text" class="form-control border-start-0" id="fullName" placeholder="e.g. John Doe" style="height: 44px; font-size: var(--fs-sm);">
+                             </div>
                         </div>
 
                         <!-- Mobile Number -->
                         <div class="mb-3 text-start">
-                            <label for="mobile" class="form-label x-small fw-bold text-muted">Mobile Number</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0" style="height: 44px;"><i class="fa-solid fa-phone"></i></span>
-                                <select id="countryCode" class="form-select border-start-0 bg-light text-dark fw-medium" style="max-width: 70px; padding-left: 6px; padding-right: 20px; height: 44px; font-size: 13px; border-radius: 0; outline: none; box-shadow: none;">
-                                    <option value="+60" data-full="🇲🇾 Malaysia (+60)" selected>🇲🇾 Malaysia (+60)</option>
-                                    <option value="+65" data-full="🇸🇬 Singapore (+65)">🇸🇬 Singapore (+65)</option>
-                                    <option value="+66" data-full="🇹🇭 Thailand (+66)">🇹🇭 Thailand (+66)</option>
-                                    <option value="+62" data-full="🇮🇩 Indonesia (+62)">🇮🇩 Indonesia (+62)</option>
-                                    <option value="+63" data-full="🇵🇭 Philippines (+63)">🇵🇭 Philippines (+63)</option>
-                                    <option value="+84" data-full="🇻🇳 Vietnam (+84)">🇻🇳 Vietnam (+84)</option>
-                                    <option value="+86" data-full="🇨🇳 China (+86)">🇨🇳 China (+86)</option>
-                                    <option value="+91" data-full="🇮🇳 India (+91)">🇮🇳 India (+91)</option>
-                                    <option value="+61" data-full="🇦🇺 Australia (+61)">🇦🇺 Australia (+61)</option>
-                                    <option value="+44" data-full="🇬🇧 United Kingdom (+44)">🇬🇧 United Kingdom (+44)</option>
-                                    <option value="+1" data-full="🇺🇸 United States (+1)">🇺🇸 United States (+1)</option>
-                                </select>
-                                <input type="tel" class="form-control border-start-0" id="mobile" placeholder="e.g. 123456789" required style="height: 44px; font-size: var(--fs-sm); border-top-left-radius: 0; border-bottom-left-radius: 0;">
-                            </div>
-                            <span class="x-small text-muted mt-1 d-block" style="font-size: 11px;">Input phone digits only without country prefix, spaces, or symbols (e.g., 123456789)</span>
+                             <label for="mobile" class="form-label x-small fw-bold text-muted">Mobile Number</label>
+                             <div class="input-group">
+                                 <span class="input-group-text bg-light text-muted border-end-0" style="height: 44px;"><i class="fa-solid fa-phone"></i></span>
+                                 <select id="countryCode" class="form-select border-start-0 bg-light text-dark fw-medium" style="max-width: 70px; padding-left: 6px; padding-right: 20px; height: 44px; font-size: 13px; border-radius: 0; outline: none; box-shadow: none;">
+                                     <option value="+60" data-full="🇲🇾 Malaysia (+60)" selected>🇲🇾 Malaysia (+60)</option>
+                                     <option value="+65" data-full="🇸🇬 Singapore (+65)">🇸🇬 Singapore (+65)</option>
+                                     <option value="+66" data-full="🇹🇭 Thailand (+66)">🇹🇭 Thailand (+66)</option>
+                                     <option value="+62" data-full="🇮🇩 Indonesia (+62)">🇮🇩 Indonesia (+62)</option>
+                                     <option value="+63" data-full="🇵🇭 Philippines (+63)">🇵🇭 Philippines (+63)</option>
+                                     <option value="+84" data-full="🇻🇳 Vietnam (+84)">🇻🇳 Vietnam (+84)</option>
+                                     <option value="+86" data-full="🇨🇳 China (+86)">🇨🇳 China (+86)</option>
+                                     <option value="+91" data-full="🇮🇳 India (+91)">🇮🇳 India (+91)</option>
+                                     <option value="+61" data-full="🇦🇺 Australia (+61)">🇦🇺 Australia (+61)</option>
+                                     <option value="+44" data-full="🇬🇧 United Kingdom (+44)">🇬🇧 United Kingdom (+44)</option>
+                                     <option value="+1" data-full="🇺🇸 United States (+1)">🇺🇸 United States (+1)</option>
+                                 </select>
+                                 <input type="tel" class="form-control border-start-0" id="mobile" placeholder="e.g. 123456789" style="height: 44px; font-size: var(--fs-sm); border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                             </div>
+                             <span class="x-small text-muted mt-1 d-block" style="font-size: 11px;">Input phone digits only without country prefix, spaces, or symbols (e.g., 123456789)</span>
                         </div>
 
                         <!-- Company Name -->
                         <div class="mb-3 text-start">
-                            <label for="companyName" class="form-label x-small fw-bold text-muted">Company Name</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-building"></i></span>
-                                <input type="text" class="form-control border-start-0" id="companyName" placeholder="e.g. Google Malaysia" required style="height: 44px; font-size: var(--fs-sm);">
-                            </div>
+                             <label for="companyName" class="form-label x-small fw-bold text-muted">Company Name</label>
+                             <div class="input-group">
+                                 <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-building"></i></span>
+                                 <input type="text" class="form-control border-start-0" id="companyName" placeholder="e.g. Google Malaysia" style="height: 44px; font-size: var(--fs-sm);">
+                             </div>
                         </div>
 
                         <!-- Occupation -->
                         <div class="mb-4 text-start">
-                            <label for="occupation" class="form-label x-small fw-bold text-muted">Occupation</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-briefcase"></i></span>
-                                <input type="text" class="form-control border-start-0" id="occupation" placeholder="e.g. Senior Software Engineer" required style="height: 44px; font-size: var(--fs-sm);">
-                            </div>
+                             <label for="occupation" class="form-label x-small fw-bold text-muted">Occupation</label>
+                             <div class="input-group">
+                                 <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-briefcase"></i></span>
+                                 <input type="text" class="form-control border-start-0" id="occupation" placeholder="e.g. Senior Software Engineer" style="height: 44px; font-size: var(--fs-sm);">
+                             </div>
                         </div>
                         
                         <button type="submit" id="submit-profile-btn" class="btn btn-primary w-100 mb-2 py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2" style="height: 48px; border-radius: 12px; background-color: var(--p-600) !important;">
@@ -126,6 +126,7 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <script>
         $(document).ready(function() {
@@ -239,32 +240,78 @@
                 const companyVal = $.trim($('#companyName').val());
                 const occupationVal = $.trim($('#occupation').val());
                 
-                const $alert = $('#validation-error-alert');
                 const $btn = $('#submit-profile-btn');
                 
-                // Reset alert
-                $alert.addClass('d-none');
-                
-                // Required fields validation
-                if (!fullNameVal || !mobileVal || !companyVal || !occupationVal) {
-                    $alert.removeClass('d-none').html('<i class="fa-solid fa-circle-exclamation me-2"></i>All fields are strictly required.');
+                // Validate fields with SweetAlert2
+                if (!fullNameVal) {
+                    Swal.fire({
+                        title: 'Field Required',
+                        text: 'Full Name is required. Please fill it out.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                if (!mobileVal) {
+                    Swal.fire({
+                        title: 'Field Required',
+                        text: 'Mobile Number is required. Please fill it out.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                if (!companyVal) {
+                    Swal.fire({
+                        title: 'Field Required',
+                        text: 'Company Name is required. Please fill it out.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                if (!occupationVal) {
+                    Swal.fire({
+                        title: 'Field Required',
+                        text: 'Occupation is required. Please fill it out.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     return;
                 }
                 
                 if (!countryCodeVal) {
-                    $alert.removeClass('d-none').html('<i class="fa-solid fa-circle-exclamation me-2"></i>Country code is required.');
+                    Swal.fire({
+                        title: 'Field Required',
+                        text: 'Country code is required.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     return;
                 }
                 
                 // Only digits allowed validation
                 if (!/^\d+$/.test(mobileVal)) {
-                    $alert.removeClass('d-none').html('<i class="fa-solid fa-circle-exclamation me-2"></i>Mobile number must contain digits only.');
+                    Swal.fire({
+                        title: 'Invalid Input',
+                        text: 'Mobile number must contain digits only.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     return;
                 }
                 
                 // Basic reasonable length range verification for active phone numbers
                 if (mobileVal.length < 5 || mobileVal.length > 15) {
-                    $alert.removeClass('d-none').html('<i class="fa-solid fa-circle-exclamation me-2"></i>Please provide a valid mobile number length (5 to 15 digits).');
+                    Swal.fire({
+                        title: 'Invalid Length',
+                        text: 'Please provide a valid mobile number length (5 to 15 digits).',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     return;
                 }
                 
@@ -293,17 +340,25 @@
                         'border-color': '#10b981'
                     }).html('<i class="fa-solid fa-circle-check me-2"></i>Account Completed!');
                     
-                    // Create premium screen fade transition
-                    const $overlay = $('<div id="profile-transition-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; bg-color:#0f172a; background:rgba(15,23,42,0.96); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; opacity:0; transition:opacity 0.4s ease;"><div class="spinner-border text-primary speed-normal mb-3" role="status" style="width: 3.5rem; height: 3.5rem; color: var(--p-600) !important;"><span class="visually-hidden">Loading...</span></div><h4 class="text-white fw-bold">Synchronizing Classroom Credentials...</h4><p class="text-white-50 x-small">Securing sandbox enrollment keys.</p></div>');
-                    $('body').append($overlay);
-                    
-                    setTimeout(() => {
-                        $overlay.css('opacity', '1');
-                    }, 10);
-                    
-                    setTimeout(function() {
-                        window.location.href = 'courses.html';
-                    }, 1300);
+                    // Show validation completed with success alert
+                    Swal.fire({
+                        title: 'Profile Completed!',
+                        text: 'Your registration information has been synchronized successfully. Classroom access is now granted.',
+                        icon: 'success',
+                        confirmButtonText: 'Awesome'
+                    }).then(() => {
+                        // Create premium screen fade transition
+                        const $overlay = $('<div id="profile-transition-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; bg-color:#0f172a; background:rgba(15,23,42,0.96); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:9999; opacity:0; transition:opacity 0.4s ease;"><div class="spinner-border text-primary speed-normal mb-3" role="status" style="width: 3.5rem; height: 3.5rem; color: var(--p-600) !important;"><span class="visually-hidden">Loading...</span></div><h4 class="text-white fw-bold">Synchronizing Classroom Credentials...</h4><p class="text-white-50 x-small">Securing sandbox enrollment keys.</p></div>');
+                        $('body').append($overlay);
+                        
+                        setTimeout(() => {
+                            $overlay.css('opacity', '1');
+                        }, 10);
+                        
+                        setTimeout(function() {
+                            window.location.href = 'courses.html';
+                        }, 1300);
+                    });
                     
                 }, 1400);
             });

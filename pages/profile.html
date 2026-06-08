@@ -782,7 +782,7 @@
                                 <label for="fullNameInput" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Full Name</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-user-tie" style="font-size: 0.85rem;"></i></span>
-                                    <input type="text" class="form-control border-start-0 bg-white" id="fullNameInput" placeholder="e.g. Stephen Miller" required>
+                                    <input type="text" class="form-control border-start-0 bg-white" id="fullNameInput" placeholder="e.g. Stephen Miller">
                                 </div>
                             </div>
 
@@ -791,7 +791,7 @@
                                 <label for="emailInput" class="form-label x-small fw-bold text-muted text-uppercase tracking-wider">Email Address</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-white border-end-0 text-muted"><i class="fa-solid fa-envelope" style="font-size: 0.85rem;"></i></span>
-                                    <input type="email" class="form-control border-start-0 bg-white text-lowercase" id="emailInput" placeholder="e.g. user@domain.com" required>
+                                    <input type="email" class="form-control border-start-0 bg-white text-lowercase" id="emailInput" placeholder="e.g. user@domain.com">
                                 </div>
                             </div>
 
@@ -916,6 +916,7 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/components.js"></script>
     <script src="/js/main.js"></script>
     
@@ -1189,32 +1190,78 @@
                 e.preventDefault();
                 
                 const $btn = $('#saveBtn');
-                $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving details...');
 
+                const nameVal = $.trim($('#fullNameInput').val());
+                const emailVal = $.trim($('#emailInput').val());
                 const countryCodeVal = $('#countryCodeInput').val();
                 let mobileVal = $.trim($('#phoneInput').val());
                 
                 // Trim all spaces automatically (remove spaces)
                 mobileVal = mobileVal.replace(/\s+/g, '');
 
-                // Validation
+                // Validation with SweetAlert2
+                if (!nameVal) {
+                    Swal.fire({
+                        title: 'Field Required',
+                        text: 'Full Name is required. Please fill it out.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                if (!emailVal) {
+                    Swal.fire({
+                        title: 'Field Required',
+                        text: 'Email Address is required. Please fill it out.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailVal)) {
+                    Swal.fire({
+                        title: 'Invalid Format',
+                        text: 'Please enter a valid email address.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
                 if (!countryCodeVal) {
-                    showToast("Error", "Country code is required.");
-                    $btn.prop('disabled', false).html('<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes');
+                    Swal.fire({
+                        title: 'Field Required',
+                        text: 'Country code is required.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     return;
                 }
                 
                 if (mobileVal && !/^\d+$/.test(mobileVal)) {
-                    showToast("Error", "Mobile number must contain digits only.");
-                    $btn.prop('disabled', false).html('<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes');
+                    Swal.fire({
+                        title: 'Invalid Input',
+                        text: 'Mobile number must contain digits only.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     return;
                 }
                 
                 if (mobileVal && (mobileVal.length < 5 || mobileVal.length > 15)) {
-                    showToast("Error", "Please provide a valid mobile number length (5 to 15 digits).");
-                    $btn.prop('disabled', false).html('<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes');
+                    Swal.fire({
+                        title: 'Invalid Length',
+                        text: 'Please provide a valid mobile number length (5 to 15 digits).',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     return;
                 }
+
+                $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Saving details...');
 
                 const fullMobile = mobileVal ? (countryCodeVal + mobileVal) : '';
                 const currentProfile = JSON.parse(localStorage.getItem('userProfile')) || {};
@@ -1222,8 +1269,8 @@
                 // Form object structure
                 const updatedProfile = {
                     ...currentProfile,
-                    fullName: $.trim($('#fullNameInput').val()),
-                    email: $.trim($('#emailInput').val()).toLowerCase(),
+                    fullName: nameVal,
+                    email: emailVal.toLowerCase(),
                     countryCode: countryCodeVal,
                     mobileNumber: mobileVal,
                     phone: fullMobile,
@@ -1268,8 +1315,13 @@
                     // Re-enable save button
                     $btn.prop('disabled', false).html('<i class="fa-solid fa-floppy-disk me-2"></i> Save Changes');
 
-                    // Show beautiful toast notice
-                    showToast("Profile Saved", "Your information was successfully synced across Elevate.");
+                    // Show beautiful SweetAlert2 success box
+                    Swal.fire({
+                        title: 'Profile Saved!',
+                        text: 'Your student information was successfully synced across Elevate Academy.',
+                        icon: 'success',
+                        confirmButtonText: 'Excellent'
+                    });
                 }, 1000);
             });
 
